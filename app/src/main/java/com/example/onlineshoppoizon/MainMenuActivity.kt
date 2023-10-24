@@ -19,8 +19,6 @@ import kotlinx.coroutines.runBlocking
 class MainMenuActivity : BaseActivity<MainMenuViewModel, ActivityMainMenuBinding, MainMenuRepository>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainMenuBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         window.statusBarColor = ContextCompat.getColor(this@MainMenuActivity, R.color.dark_brown)
         FragmentHelper.openFragment(this, R.id.fragmentMainMenu, MainPageFragment())
         changeFragment()

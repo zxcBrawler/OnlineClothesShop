@@ -16,7 +16,7 @@ import javax.inject.Inject
 abstract class BaseActivity<vm : BaseViewModel, b : ViewBinding, r: BaseRepository> : AppCompatActivity(){
 
     protected lateinit var binding: b
-    private lateinit var viewModel: vm
+    lateinit var viewModel: vm
     protected val requestBuilder = RequestBuilder()
     private lateinit var userPreferences: UserPreferences
     override fun onCreate(savedInstanceState: Bundle?) {

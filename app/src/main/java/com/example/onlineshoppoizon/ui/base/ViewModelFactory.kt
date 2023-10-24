@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.onlineshoppoizon.repository.AuthRepository
 import com.example.onlineshoppoizon.repository.CartRepository
+import com.example.onlineshoppoizon.repository.ItemDetailsRepository
 import com.example.onlineshoppoizon.repository.LoadingRepository
 import com.example.onlineshoppoizon.repository.MainActivityRepository
 import com.example.onlineshoppoizon.repository.MainPageRepository
@@ -12,6 +13,7 @@ import com.example.onlineshoppoizon.repository.RegisterRepository
 import com.example.onlineshoppoizon.repository.MainMenuRepository
 import com.example.onlineshoppoizon.viewmodel.AuthViewModel
 import com.example.onlineshoppoizon.viewmodel.CartViewModel
+import com.example.onlineshoppoizon.viewmodel.ItemDetailsViewModel
 import com.example.onlineshoppoizon.viewmodel.LoadingActivityViewModel
 import com.example.onlineshoppoizon.viewmodel.MainActivityViewModel
 import com.example.onlineshoppoizon.viewmodel.MainMenuViewModel
@@ -37,6 +39,7 @@ class ViewModelFactory @Inject constructor (
              modelClass.isAssignableFrom(MainMenuViewModel::class.java) -> MainMenuViewModel(repository as MainMenuRepository) as T
              modelClass.isAssignableFrom(LoadingActivityViewModel::class.java) -> LoadingActivityViewModel(repository as LoadingRepository) as T
              modelClass.isAssignableFrom(MainActivityViewModel::class.java) -> MainActivityViewModel(repository as MainActivityRepository) as T
+             modelClass.isAssignableFrom(ItemDetailsViewModel::class.java) -> ItemDetailsViewModel(repository as ItemDetailsRepository) as T
 
             else -> throw IllegalArgumentException("ViewModelClass not found")
          }
