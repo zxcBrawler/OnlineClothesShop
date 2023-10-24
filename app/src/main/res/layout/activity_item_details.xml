@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ItemDetailsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:elevation="5dp"/>
+
+    <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+        android:id="@+id/carousel"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:showTopShadow="false"
+        app:topShadowAlpha="0.6"
+        app:topShadowHeight="32dp"
+
+        app:showBottomShadow="false"
+        app:bottomShadowAlpha="0.6"
+        app:bottomShadowHeight="64dp"
+
+        app:showCaption="false"
+        app:captionMargin="0dp"
+        app:captionTextSize="14sp"
+
+        app:showIndicator="true"
+        app:indicatorMargin="0dp"
+        android:scrollIndicators="top"
+
+        app:imageScaleType="centerCrop"
+
+        app:carouselBackground="#FFF"
+        app:imagePlaceholder="@drawable/search"
+
+        app:carouselPadding="0dp"
+        app:carouselPaddingBottom="0dp"
+        app:carouselPaddingEnd="0dp"
+        app:carouselPaddingStart="0dp"
+        app:carouselPaddingTop="0dp"
+
+        app:showNavigationButtons="false"
+        app:previousButtonLayout="@layout/previous_button_layout"
+        app:previousButtonId="@id/btn_previous"
+        app:previousButtonMargin="4dp"
+        app:nextButtonLayout="@layout/next_button_layout"
+        app:nextButtonId="@id/btn_next"
+        app:nextButtonMargin="4dp"
+
+        app:carouselType="BLOCK"
+        app:carouselGravity="CENTER"
+
+        app:scaleOnScroll="false"
+        app:scalingFactor="0.15"
+        app:autoWidthFixing="true"
+        app:autoPlay="false"
+        app:autoPlayDelay="3000"
+        app:infiniteCarousel="true"
+        app:touchToPause="true" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/product_info"
+        android:layout_width="match_parent"
+        android:layout_height="900dp"
+        android:layout_marginTop="-30dp"
+        app:layout_constraintTop_toBottomOf="@id/carousel"
+        android:background="@drawable/circle_layout">
+
+        
+        <TextView
+            android:id="@+id/product_name"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textAlignment="center"
+            android:text="product name"
+            android:textSize="30sp"
+            android:paddingTop="10dp"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#FFF"
+            app:layout_constraintTop_toBottomOf="@id/product_name"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/colors_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="20dp"
+            app:layout_constraintTop_toBottomOf="@id/separator"/>
+
+        <TextView
+            android:id="@+id/color_text"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="grey-90x"
+            android:layout_margin="20dp"
+            app:layout_constraintBottom_toTopOf="@id/separator2"
+            app:layout_constraintTop_toBottomOf="@id/colors_recycler"
+            />
+        <View
+            android:id="@+id/separator2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#FFF"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/color_text"/>
+
+        <TextView
+            android:id="@+id/choose_size"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="choose size"
+            android:layout_margin="20dp"
+            app:layout_constraintTop_toBottomOf="@id/separator2"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sizes_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="20dp"
+            app:layout_constraintTop_toBottomOf="@id/choose_size"/>
+
+        <TextView
+            android:id="@+id/product_description"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="product description"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintTop_toBottomOf="@id/sizes_recycler"
+            />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            android:layout_margin="20dp"
+            app:layout_constraintTop_toBottomOf="@id/product_description"
+            />
+
+        <Button
+            android:id="@+id/item_availability"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@drawable/buttons"
+            app:backgroundTint="@null"
+            android:text="@string/show_item_availability_in_shops"
+            android:textSize="18dp"
+            android:layout_margin="20dp"
+            app:layout_constraintTop_toBottomOf="@id/description"/>
+        <ImageView
+
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+          app:layout_constraintTop_toTopOf="@id/add_to_cart"
+            app:layout_constraintEnd_toEndOf="@id/add_to_cart"
+            app:layout_constraintBottom_toBottomOf="@id/add_to_cart"
+            android:layout_marginRight="30dp"
+
+            android:src="@drawable/add"
+            android:elevation="5dp"
+            app:tint="@color/white"
+            />
+
+        <Button
+            android:id="@+id/add_to_cart"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/buttons"
+            android:text="add to cart"
+            android:textSize="30dp"
+            app:backgroundTint="@null"
+            app:layout_constraintTop_toBottomOf="@id/item_availability" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

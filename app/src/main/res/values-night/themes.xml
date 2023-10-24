@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.OnlineShopPoizon" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:textColorHint">@color/white</item>
+        <item name="fontFamily">@font/hammersmith</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:dropDownItemStyle">@style/DropDownItemStyle</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListViewStyle</item>
+        <item name="android:colorSecondary">@color/dark_brown</item>
+        <item name="android:colorPrimary">@color/dark_brown</item>
+
+    </style>
+
+    <style name="Theme.OnlineShopPoizon" parent="Base.Theme.OnlineShopPoizon" />
+    <style name="DropDownListViewStyle" parent="Widget.AppCompat.ListView.DropDown">
+        <item name="android:background">@color/light_brown</item>
+    </style>
+    <style name="DropDownItemStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+</resources>

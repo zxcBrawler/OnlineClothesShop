@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.DeliveryFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/choose_text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_delivery_type"
+        android:textColor="@color/dark_brown"
+        android:layout_margin="20dp"/>
+
+    <RadioButton
+        android:id="@+id/pick_up_radio"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/choose_text"
+       />
+
+    <ImageView
+        android:id="@+id/pick_up_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="20dp"
+        android:background="@color/light_grey"
+        android:elevation="5dp"
+        app:layout_constraintStart_toEndOf="@id/pick_up_radio"
+        app:layout_constraintTop_toBottomOf="@id/choose_text"
+        />
+    <RadioButton
+        android:id="@+id/delivery_radio"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="20dp"
+        app:layout_constraintStart_toEndOf="@id/pick_up_image"
+        app:layout_constraintTop_toBottomOf="@id/choose_text"
+        android:checked="true"
+        app:buttonTint="@color/dark_brown"/>
+
+    <ImageView
+        android:id="@+id/delivery_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="20dp"
+        android:background="@color/light_grey"
+        android:elevation="5dp"
+        app:layout_constraintStart_toEndOf="@id/delivery_radio"
+        app:layout_constraintTop_toBottomOf="@id/choose_text"
+        />
+
+
+    <TextView
+        android:id="@+id/pick_up_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pick up from shop"
+        android:textColor="@color/dark_brown"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/pick_up_radio"
+        app:layout_constraintTop_toBottomOf="@id/pick_up_image"/>
+
+    <TextView
+        android:id="@+id/deliver_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="deliver home"
+        android:textColor="@color/dark_brown"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="25dp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/delivery_radio"
+        app:layout_constraintTop_toBottomOf="@id/delivery_image"/>
+
+    <RelativeLayout
+        android:id="@+id/spinner_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/input_fields"
+        app:layout_constraintTop_toBottomOf="@id/deliver_text"
+        android:layout_marginTop="15dp">
+        <Spinner
+            android:id="@+id/city"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingStart="13dp"
+            android:paddingEnd="20dp"
+            android:focusedByDefault="false"
+            />
+    </RelativeLayout>
+    <EditText
+        android:id="@+id/street"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:textColor="@color/white"
+        android:background="@drawable/input_fields"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner_layout"
+        android:hint="@string/street"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:letterSpacing="0.1"
+        android:inputType="text" />
+    <EditText
+        android:id="@+id/apartment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:textColor="@color/white"
+        android:background="@drawable/input_fields"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/street"
+        android:hint="@string/apartment"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:letterSpacing="0.1"
+        android:inputType="text"
+        />
+
+    <com.yandex.mapkit.mapview.MapView
+        android:id="@+id/map"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:elevation="5dp"
+        android:background="@color/light_grey"
+        app:layout_constraintTop_toBottomOf="@id/apartment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:id="@+id/delivery_cost_text"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="@string/delivery_cost"
+        android:textColor="@color/dark_brown"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/map"/>
+    <TextView
+        android:id="@+id/delivery_cost"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="@string/_300p"
+        android:textColor="@color/dark_brown"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="20dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/map"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/button_layout"
+        app:layout_constraintTop_toBottomOf="@id/delivery_cost_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="17dp"
+            app:layout_constraintEnd_toEndOf="@id/next"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="30dp"
+            android:src="@drawable/ic_chevron_right"
+            android:elevation="5dp"
+            app:tint="@color/white"
+            />
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/buttons"
+            android:text="@string/continue_to_payment"
+            android:textSize="20sp"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

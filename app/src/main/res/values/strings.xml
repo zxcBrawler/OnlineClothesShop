@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">OnlineShopPoizon</string>
+    <string name="email"><font size="20">email</font></string>
+    <string name="shop_logo">shop_logo</string>
+    <string name="password"><font size="20">password</font></string>
+    <string name="forgot_password"><font size="15">forgot password?</font></string>
+    <string name="log_in"><font size="20">log in</font></string>
+    <string name="register"><font size="20">register</font></string>
+    <string name="or"><font size="20">or</font></string>
+    <string name="ooo"><font size="20">ООО \"РЕ ТРЭЙДИНГ\"</font></string>
+    <string name="username"><font size="20">username</font></string>
+    <string name="confirm_password"><font size="20">confirm password</font></string>
+    <string name="gotonextpage">goToNextPage</string>
+    <string name="finish"><font size="20">finish</font></string>
+    <string name="userphoto">userPhoto</string>
+    <string name="phone_number"><font size="20">phone number</font></string>
+    <string name="home">home</string>
+    <string name="catalogue">catalogue</string>
+    <string name="cart">cart</string>
+    <string name="profile">profile</string>
+
+    <string-array name="gender">
+        <item>select gender</item>
+        <item>female</item>
+        <item>male</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="items_for_you">Items for you</string>
+    <string name="show_item_availability_in_shops">show item availability in shops</string>
+    <string name="continue_to_payment">continue to payment</string>
+    <string name="_3_198_p">3,198 p</string>
+    <string name="total">total:</string>
+    <string name="shop_name">shop name</string>
+    <string name="contact_info">contact info</string>
+    <string name="_2">2</string>
+    <string name="in_stock">in stock</string>
+    <string name="gender">gender</string>
+    <string name="exit">exit</string>
+    <string name="settings">settings</string>
+    <string name="change_profile_data">change profile data</string>
+    <string name="my_orders">my orders</string>
+    <string name="username_profile">username</string>
+    <string name="order_date">order date</string>
+    <string name="n_123456">n 123456</string>
+    <string name="order_sum">order sum:</string>
+    <string name="item_name">item name</string>
+    <string name="item_size">item size</string>
+    <string name="_1_599">1,599</string>
+    <string name="delivery">delivery</string>
+    <string name="choose_delivery_type">choose delivery type</string>
+    <string name="change_language">change language</string>
+    <string name="notifications">notifications</string>
+    <string name="change_theme">change theme</string>
+    <string name="men_wear">men wear</string>
+    <string name="top">top</string>
+    <string name="_300p">300p</string>
+    <string name="delivery_cost">delivery cost:</string>
+    <string name="street">street</string>
+    <string name="apartment">apartment</string>
+    <string name="_2_x_1_599">2 x 1,599</string>
+    <string name="payment">payment</string>
+    <string name="_3_498p">3,498p</string>
+    <string name="add_new_card">add new card</string>
+    <string name="pay_by_card">pay by card</string>
+    <string name="add_card">add card</string>
+
+</resources>

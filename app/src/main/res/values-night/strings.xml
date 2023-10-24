@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">OnlineShopPoizon</string>
+    <string name="email"><font size="20">email</font></string>
+    <string name="shop_logo">shop_logo</string>
+    <string name="password"><font size="20">password</font></string>
+    <string name="forgot_password"><font size="15">forgot password?</font></string>
+    <string name="log_in"><font size="20">log in</font></string>
+    <string name="register"><font size="20">register</font></string>
+    <string name="or"><font size="20">or</font></string>
+    <string name="ooo"><font size="20">ООО \"РЕ ТРЭЙДИНГ\"</font></string>
+    <string name="username"><font size="20">username</font></string>
+    <string name="confirm_password"><font size="20">confirm password</font></string>
+    <string name="gotonextpage">goToNextPage</string>
+    <string name="finish"><font size="20">finish</font></string>
+    <string name="userphoto">userPhoto</string>
+    <string name="phone_number"><font size="20">phone number</font></string>
+    <string name="home">home</string>
+    <string name="catalogue">catalogue</string>
+    <string name="cart">cart</string>
+    <string name="profile">profile</string>
+
+    <string-array name="gender">
+        <item>select gender</item>
+        <item>female</item>
+        <item>male</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="items_for_you">Items for you</string>
+    <string name="show_item_availability_in_shops">show item availability in shops</string>
+    <string name="continue_to_payment">continue to payment</string>
+    <string name="_3_198_p">3,198 p</string>
+    <string name="total">total:</string>
+    <string name="shop_name">shop name</string>
+    <string name="contact_info">contact info</string>
+    <string name="_2">2</string>
+    <string name="in_stock">in stock</string>
+    <string name="gender">gender</string>
+    <string name="exit">exit</string>
+    <string name="settings">settings</string>
+    <string name="change_profile_data">change profile data</string>
+    <string name="my_orders">my orders</string>
+    <string name="username_profile">username</string>
+
+</resources>
