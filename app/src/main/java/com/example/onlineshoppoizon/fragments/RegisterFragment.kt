@@ -51,14 +51,15 @@ class RegisterFragment : BaseFragment<RegisterViewModel,FragmentRegisterBinding,
             }
         }
     }
-    override fun getViewModel(): Class<RegisterViewModel> = RegisterViewModel::class.java
+    override fun getViewModel(): Class<RegisterViewModel>
+    = RegisterViewModel::class.java
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentRegisterBinding = FragmentRegisterBinding.inflate(inflater, container, false)
+    ): FragmentRegisterBinding
+    = FragmentRegisterBinding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository(): RegisterRepository = RegisterRepository((requestBuilder.buildRequest(ApiInterface::class.java)))
-
-
+    override fun getFragmentRepository(): RegisterRepository
+    = RegisterRepository((requestBuilder.buildRequest(ApiInterface::class.java)))
 }

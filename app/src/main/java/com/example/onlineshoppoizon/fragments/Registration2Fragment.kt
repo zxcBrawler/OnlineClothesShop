@@ -12,6 +12,7 @@ import com.example.onlineshoppoizon.repository.RegisterRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
+import com.example.onlineshoppoizon.utils.startNewActivity
 import com.example.onlineshoppoizon.viewmodel.RegisterViewModel
 
 
@@ -25,8 +26,8 @@ class Registration2Fragment : BaseFragment<RegisterViewModel,FragmentRegistratio
         viewModel.registerResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
-                    val intent = Intent(requireContext(), MainMenuActivity::class.java)
-                    startActivity(intent)
+                    requireActivity().startNewActivity(MainMenuActivity::class.java)
+                    activity?.finish()
                 }
 
                 is Resource.Failure -> {
@@ -59,13 +60,16 @@ class Registration2Fragment : BaseFragment<RegisterViewModel,FragmentRegistratio
         }
     }
 
-    override fun getViewModel(): Class<RegisterViewModel> = RegisterViewModel::class.java
+    override fun getViewModel(): Class<RegisterViewModel>
+    = RegisterViewModel::class.java
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentRegistration2Binding = FragmentRegistration2Binding.inflate(inflater, container, false)
+    ): FragmentRegistration2Binding
+    = FragmentRegistration2Binding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository(): RegisterRepository = RegisterRepository((requestBuilder.buildRequest(
+    override fun getFragmentRepository(): RegisterRepository
+    = RegisterRepository((requestBuilder.buildRequest(
         ApiInterface::class.java)))
 }

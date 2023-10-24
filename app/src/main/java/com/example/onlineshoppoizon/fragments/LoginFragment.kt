@@ -1,14 +1,11 @@
 package com.example.onlineshoppoizon.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.example.onlineshoppoizon.MainMenuActivity
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.databinding.FragmentLoginBinding
@@ -17,11 +14,9 @@ import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
 import com.example.onlineshoppoizon.ui.base.FragmentHelper
-import com.example.onlineshoppoizon.utils.enable
 import com.example.onlineshoppoizon.utils.startNewActivity
 import com.example.onlineshoppoizon.utils.visible
 import com.example.onlineshoppoizon.viewmodel.AuthViewModel
-import kotlinx.coroutines.launch
 
 
 class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepository>() {
@@ -45,7 +40,6 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
         binding.loginButton.setOnClickListener {
             val email = binding.email.text.toString().trim()
             val password = binding.password.text.toString().trim()
-            //add validation
             binding.loading.visible(true)
             viewModel.login(email, password)
         }

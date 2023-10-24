@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import com.example.onlineshoppoizon.ChangeProfileActivity
 import com.example.onlineshoppoizon.MainActivity
 import com.example.onlineshoppoizon.R
@@ -14,7 +15,9 @@ import com.example.onlineshoppoizon.databinding.FragmentProfileBinding
 import com.example.onlineshoppoizon.repository.ProfileRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.ui.base.BaseFragment
+import com.example.onlineshoppoizon.utils.startNewActivity
 import com.example.onlineshoppoizon.viewmodel.ProfileViewModel
+import kotlinx.coroutines.launch
 
 class ProfileFragment: BaseFragment<ProfileViewModel,FragmentProfileBinding,ProfileRepository> () {
 
@@ -32,11 +35,17 @@ class ProfileFragment: BaseFragment<ProfileViewModel,FragmentProfileBinding,Prof
         }
 
         binding.endSession.setOnClickListener {
-            val intent = Intent(context, MainActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
+            logout()
         }
 
+    }
+
+    private fun logout() {
+        lifecycleScope.launch {
+            userPreferences.clear()
+        }
+        requireActivity().startNewActivity(MainActivity::class.java)
+        requireActivity().finish()
     }
 
     override fun getViewModel(): Class<ProfileViewModel> =

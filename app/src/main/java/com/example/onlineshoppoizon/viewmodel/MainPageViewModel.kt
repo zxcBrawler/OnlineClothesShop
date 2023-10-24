@@ -9,12 +9,13 @@ import com.example.onlineshoppoizon.repository.MainPageRepository
 import com.example.onlineshoppoizon.response.ClothesResponse
 import com.example.onlineshoppoizon.response.PhotosOfClothesResponse
 import com.example.onlineshoppoizon.retrofit.Resource
+import com.example.onlineshoppoizon.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainPageViewModel @Inject constructor (
     private val repository: MainPageRepository
-): ViewModel() {
+): BaseViewModel(repository) {
     private val _clothesResponse : MutableLiveData<Resource<List<Clothes>>> = MutableLiveData()
     val clothesResponse : LiveData<Resource<List<Clothes>>>
         get() = _clothesResponse

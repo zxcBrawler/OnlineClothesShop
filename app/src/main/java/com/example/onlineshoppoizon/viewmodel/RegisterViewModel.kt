@@ -8,12 +8,13 @@ import com.example.onlineshoppoizon.model.CategoryClothes
 import com.example.onlineshoppoizon.repository.RegisterRepository
 import com.example.onlineshoppoizon.response.RegisterResponse
 import com.example.onlineshoppoizon.retrofit.Resource
+import com.example.onlineshoppoizon.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class RegisterViewModel @Inject constructor (
     private val repository: RegisterRepository
-): ViewModel() {
+): BaseViewModel(repository) {
     private val _registerResponse : MutableLiveData<Resource<RegisterResponse>> = MutableLiveData()
     val registerResponse : LiveData<Resource<RegisterResponse>>
         get() = _registerResponse

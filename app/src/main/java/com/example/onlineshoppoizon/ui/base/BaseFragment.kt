@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-abstract class BaseFragment<vm: ViewModel, b: ViewBinding, r: BaseRepository>: Fragment() {
+abstract class BaseFragment<vm: BaseViewModel, b: ViewBinding, r: BaseRepository>: Fragment() {
 
     protected lateinit var binding: b
     protected lateinit var viewModel: vm

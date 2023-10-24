@@ -3,6 +3,7 @@ package com.example.onlineshoppoizon.response
 import android.content.Context
 import androidx.datastore.DataStore
 import androidx.datastore.preferences.Preferences
+import androidx.datastore.preferences.clear
 import androidx.datastore.preferences.createDataStore
 import androidx.datastore.preferences.edit
 import androidx.datastore.preferences.preferencesKey
@@ -29,6 +30,10 @@ class UserPreferences (
         dataStore.edit { it ->
             it[KEY_AUTH] = token
         }
+    }
+
+    suspend fun clear(){
+        dataStore.edit { it.clear() }
     }
 
     companion object {
