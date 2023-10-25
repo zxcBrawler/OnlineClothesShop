@@ -1,6 +1,7 @@
 package com.example.onlineshoppoizon
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
@@ -8,20 +9,31 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlineshoppoizon.adapters.ItemAvailabilityAdapter
 import com.example.onlineshoppoizon.databinding.ActivityItemAvailabilityBinding
-import com.example.onlineshoppoizon.databinding.ActivityItemDetailsBinding
+import com.example.onlineshoppoizon.databinding.MapPopupBinding
 import com.example.onlineshoppoizon.model.ShopGarnish
 import com.example.onlineshoppoizon.repository.ItemAvailabilityRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseActivity
+import com.example.onlineshoppoizon.utils.MapKitInitializer
 import com.example.onlineshoppoizon.viewmodel.ItemAvailabilityViewModel
+import com.yandex.mapkit.MapKitFactory
+
+private const val MAPKIT_API_KEY = "ecb00ce6-7bd1-419f-997e-0dec530e04c7"
 
 class ItemAvailabilityActivity : BaseActivity<ItemAvailabilityViewModel, ActivityItemAvailabilityBinding, ItemAvailabilityRepository>() {
     private lateinit var adapter : ItemAvailabilityAdapter
+    private lateinit var bind : MapPopupBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MapKitInitializer.initialize(MAPKIT_API_KEY, this)
+        bind = MapPopupBinding.inflate(layoutInflater)
+        val dialog = Dialog(this)
+        dialog.setContentView(bind.root)
+
         val intent = intent
-        val id = intent.getIntExtra("id", 0)
         val selectedColor = intent.getIntExtra("selectedColor", 0)
         val selectedSize = intent.getIntExtra("selectedSize", 0)
         viewModel.getItemAvailability()
@@ -45,7 +57,8 @@ class ItemAvailabilityActivity : BaseActivity<ItemAvailabilityViewModel, Activit
                     binding.availabilityRecycler.adapter = adapter
                     adapter.setOnItemClickListener(object : ItemAvailabilityAdapter.OnItemClickListener{
                         override fun onItemClick(position: Int) {
-                            TODO("Not yet implemented")
+
+                            dialog.show()
                         }
 
                     })
@@ -59,6 +72,11 @@ class ItemAvailabilityActivity : BaseActivity<ItemAvailabilityViewModel, Activit
 
     }
 
+    //TODO()
+    private fun showShop(){
+
+    }
+
     override fun getViewModel(): Class<ItemAvailabilityViewModel> =
         ItemAvailabilityViewModel::class.java
 
@@ -67,4 +85,16 @@ class ItemAvailabilityActivity : BaseActivity<ItemAvailabilityViewModel, Activit
 
     override fun getActivityRepository(): ItemAvailabilityRepository =
         ItemAvailabilityRepository(requestBuilder.buildRequest(ApiInterface::class.java))
+
+    override fun onStart() {
+        super.onStart()
+        MapKitFactory.getInstance().onStart()
+        bind.map.onStart()
+    }
+
+    override fun onStop() {
+        bind.map.onStop()
+        MapKitFactory.getInstance().onStop()
+        super.onStop()
+    }
 }

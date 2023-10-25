@@ -16,7 +16,9 @@ class ItemAvailabilityAdapter(private val shopGarnish: List<ShopGarnish>): Recyc
     }
     class AvailabilityViewHolder(listener: OnItemClickListener, val binding: AvailabilityCardBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
-
+            itemView.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+            }
         }
     }
 
