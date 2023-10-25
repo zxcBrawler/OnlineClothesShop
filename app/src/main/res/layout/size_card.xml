@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="150dp"
+    android:layout_height="50dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="5dp"
-    app:cardUseCompatPadding="true">
+    android:layout_margin="10dp"
+    app:cardCornerRadius="40dp"
+    app:cardElevation="10dp">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/size_button"
         android:layout_width="150dp"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         app:backgroundTint="@null"
-        android:background="@drawable/buttons"
+        android:background="@color/dark_brown"
         android:text="XS"/>
 </androidx.cardview.widget.CardView>

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.onlineshoppoizon.repository.AuthRepository
 import com.example.onlineshoppoizon.repository.CartRepository
+import com.example.onlineshoppoizon.repository.ItemAvailabilityRepository
 import com.example.onlineshoppoizon.repository.ItemDetailsRepository
 import com.example.onlineshoppoizon.repository.LoadingRepository
 import com.example.onlineshoppoizon.repository.MainActivityRepository
@@ -13,6 +14,7 @@ import com.example.onlineshoppoizon.repository.RegisterRepository
 import com.example.onlineshoppoizon.repository.MainMenuRepository
 import com.example.onlineshoppoizon.viewmodel.AuthViewModel
 import com.example.onlineshoppoizon.viewmodel.CartViewModel
+import com.example.onlineshoppoizon.viewmodel.ItemAvailabilityViewModel
 import com.example.onlineshoppoizon.viewmodel.ItemDetailsViewModel
 import com.example.onlineshoppoizon.viewmodel.LoadingActivityViewModel
 import com.example.onlineshoppoizon.viewmodel.MainActivityViewModel
@@ -40,6 +42,7 @@ class ViewModelFactory @Inject constructor (
              modelClass.isAssignableFrom(LoadingActivityViewModel::class.java) -> LoadingActivityViewModel(repository as LoadingRepository) as T
              modelClass.isAssignableFrom(MainActivityViewModel::class.java) -> MainActivityViewModel(repository as MainActivityRepository) as T
              modelClass.isAssignableFrom(ItemDetailsViewModel::class.java) -> ItemDetailsViewModel(repository as ItemDetailsRepository) as T
+             modelClass.isAssignableFrom(ItemAvailabilityViewModel::class.java) -> ItemAvailabilityViewModel(repository as ItemAvailabilityRepository) as T
 
             else -> throw IllegalArgumentException("ViewModelClass not found")
          }
