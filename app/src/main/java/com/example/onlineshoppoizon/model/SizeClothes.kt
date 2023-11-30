@@ -1,6 +1,6 @@
 package com.example.onlineshoppoizon.model
 
 data class SizeClothes(
-    val idSize : Int,
-    val nameSize: String,
+    val id : Int = 0,
+    val nameSize: String = "",
 )

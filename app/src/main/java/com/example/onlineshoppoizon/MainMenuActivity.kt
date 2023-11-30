@@ -33,6 +33,7 @@ class MainMenuActivity : BaseActivity<MainMenuViewModel, ActivityMainMenuBinding
         return MainMenuRepository(requestBuilder.buildRequest(ApiInterface::class.java))
     }
 
+
     private fun changeFragment(){
         binding.bottomNav.setOnItemSelectedListener {
             when(it.itemId){
@@ -55,3 +56,4 @@ class MainMenuActivity : BaseActivity<MainMenuViewModel, ActivityMainMenuBinding
         }
     }
 }
+

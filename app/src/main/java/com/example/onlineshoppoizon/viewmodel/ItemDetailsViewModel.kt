@@ -8,7 +8,7 @@ import com.example.onlineshoppoizon.model.ClothesColors
 import com.example.onlineshoppoizon.model.ClothesSizeClothes
 import com.example.onlineshoppoizon.model.PhotosOfClothes
 import com.example.onlineshoppoizon.repository.ItemDetailsRepository
-import com.example.onlineshoppoizon.response.LoginResponse
+import com.example.onlineshoppoizon.response.CartResponse
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
@@ -33,20 +33,42 @@ class ItemDetailsViewModel @Inject constructor(
     val clothesColorsResponse : LiveData<Resource<List<ClothesColors>>>
         get() = _clothesColorsResponse
 
+    private val _cartResponse : MutableLiveData<Resource<CartResponse>> = MutableLiveData()
+    val cartResponse : LiveData<Resource<CartResponse>>
+        get() = _cartResponse
+
+
     fun getClothesById(id : Int) =
         viewModelScope.launch {
             _clothesByIdResponse.value = repository.getClothesById(id)
         }
-    fun getPhotos() =
+    fun getPhotos(
+        id : Long
+    ) =
         viewModelScope.launch {
-            _clothesPhotoResponse.value = repository.getClothesPhoto()
+            _clothesPhotoResponse.value = repository.getClothesPhoto(id)
         }
-    fun getClothesColors() =
+    fun getClothesColors(
+        id : Long
+    ) =
         viewModelScope.launch {
-            _clothesColorsResponse.value = repository.getClothesColors()
+            _clothesColorsResponse.value = repository.getClothesColors(id)
         }
-    fun getClothesSizes() =
+    fun getClothesSizes(
+        id : Long
+    ) =
         viewModelScope.launch {
-            _clothesSizesResponse.value = repository.getClothesSizes()
+            _clothesSizesResponse.value = repository.getClothesSizes(id)
+        }
+
+    fun addToCart(
+        user: Int,
+        colorClothes: Int,
+        quantity: Int,
+        sizeClothes: Int
+    ) =
+        viewModelScope.launch {
+            _cartResponse.value = repository.
+            addToCart(user, colorClothes, quantity, sizeClothes)
         }
 }

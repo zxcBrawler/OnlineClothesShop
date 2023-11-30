@@ -35,8 +35,8 @@ class ItemAvailabilityAdapter(private val shopGarnish: List<ShopGarnish>): Recyc
         position: Int
     ) {
         holder.binding.count.text = shopGarnish[position].quantity.toString()
-        holder.binding.shopName.text = shopGarnish[position].shopAddresses.shopAddressDirection
-        holder.binding.contactInfo.text = shopGarnish[position].shopAddresses.shopMetro
+        holder.binding.shopName.text = shopGarnish[position].shopAddressesGarnish.shopAddressDirection
+        holder.binding.contactInfo.text = shopGarnish[position].shopAddressesGarnish.shopMetro
     }
 
     override fun getItemCount(): Int

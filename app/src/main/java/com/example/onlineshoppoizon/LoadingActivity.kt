@@ -17,8 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoadingActivity : BaseActivity<LoadingActivityViewModel, ActivityLoadingBinding, LoadingRepository>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val userPreferences = UserPreferences(this)
-        userPreferences.authToken.asLiveData().observe(this, Observer {
+
+        val getUserId = userPreferences.get().asLiveData()
+        getUserId.observe(this, Observer {
             val activity =  if (it != null) MainMenuActivity::class.java else MainActivity::class.java
             startNewActivity(activity)
         })

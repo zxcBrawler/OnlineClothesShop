@@ -1,7 +1,6 @@
 package com.example.onlineshoppoizon
 
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
@@ -36,40 +35,29 @@ class ItemAvailabilityActivity : BaseActivity<ItemAvailabilityViewModel, Activit
         val intent = intent
         val selectedColor = intent.getIntExtra("selectedColor", 0)
         val selectedSize = intent.getIntExtra("selectedSize", 0)
-        viewModel.getItemAvailability()
+        viewModel.getItemAvailability(selectedColor.toLong(), selectedSize.toLong())
         viewModel.itemAvailabilityResponse.observe(this, Observer {
             when(it){
                 is Resource.Success -> {
                     val list : MutableList<ShopGarnish> = ArrayList()
-                    for(i in it.value){
-                        if(it.value[i.shopGarnishId.toInt() - 1].colorClothes.id == selectedColor.toLong()
-                            && it.value[i.shopGarnishId.toInt() - 1].sizeClothes.id == selectedSize){
-                            list.add(ShopGarnish(it.value[i.shopGarnishId.toInt() - 1].shopGarnishId,
-                                it.value[i.shopGarnishId.toInt() - 1].colorClothes,
-                                it.value[i.shopGarnishId.toInt() - 1].sizeClothes,
-                                it.value[i.shopGarnishId.toInt() - 1].shopAddresses,
-                                it.value[i.shopGarnishId.toInt() - 1].quantity))
-                        }
-                    }
+
+                    list.addAll(it.value)
+
                     Toast.makeText(applicationContext, list.size.toString(), Toast.LENGTH_SHORT).show()
                     binding.availabilityRecycler.layoutManager = LinearLayoutManager(this)
                     adapter = ItemAvailabilityAdapter(list)
                     binding.availabilityRecycler.adapter = adapter
                     adapter.setOnItemClickListener(object : ItemAvailabilityAdapter.OnItemClickListener{
                         override fun onItemClick(position: Int) {
-
                             dialog.show()
                         }
-
                     })
-
                 }
                 is Resource.Failure -> {
 
                 }
             }
         })
-
     }
 
     //TODO()

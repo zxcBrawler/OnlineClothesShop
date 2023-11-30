@@ -7,8 +7,11 @@ import javax.inject.Inject
 class ItemAvailabilityRepository @Inject constructor(private val apiInterface: ApiInterface)
     : BaseRepository()  {
 
-        suspend fun getItemAvailability() =
+        suspend fun getItemAvailability(
+            colorId : Long,
+            sizeId : Long
+        ) =
             safeApiCall {
-                apiInterface.getItemAvailability()
+                apiInterface.getItemAvailability(colorId, sizeId)
             }
 }

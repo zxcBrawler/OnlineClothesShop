@@ -18,8 +18,11 @@ class ItemAvailabilityViewModel @Inject constructor(
     val itemAvailabilityResponse : LiveData<Resource<List<ShopGarnish>>>
         get() = _itemAvailabilityResponse
 
-    fun getItemAvailability() =
+    fun getItemAvailability(
+        colorId : Long,
+        sizeId : Long
+    ) =
         viewModelScope.launch {
-            _itemAvailabilityResponse.value = repository.getItemAvailability()
+            _itemAvailabilityResponse.value = repository.getItemAvailability(colorId, sizeId)
         }
 }

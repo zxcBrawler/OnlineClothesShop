@@ -1,6 +1,6 @@
 package com.example.onlineshoppoizon.model
 
 data class CategoryClothes(
-    val id : Long,
-    val nameCategory: String,
+    val id : Long = 0,
+    val nameCategory: String = "",
 )

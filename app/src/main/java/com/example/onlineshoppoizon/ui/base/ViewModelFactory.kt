@@ -43,6 +43,7 @@ class ViewModelFactory @Inject constructor (
              modelClass.isAssignableFrom(MainActivityViewModel::class.java) -> MainActivityViewModel(repository as MainActivityRepository) as T
              modelClass.isAssignableFrom(ItemDetailsViewModel::class.java) -> ItemDetailsViewModel(repository as ItemDetailsRepository) as T
              modelClass.isAssignableFrom(ItemAvailabilityViewModel::class.java) -> ItemAvailabilityViewModel(repository as ItemAvailabilityRepository) as T
+             modelClass.isAssignableFrom(CartViewModel::class.java) -> CartViewModel(repository as CartRepository) as T
 
             else -> throw IllegalArgumentException("ViewModelClass not found")
          }

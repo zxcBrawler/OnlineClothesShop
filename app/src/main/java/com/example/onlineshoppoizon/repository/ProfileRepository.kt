@@ -6,4 +6,11 @@ import javax.inject.Inject
 
 class ProfileRepository @Inject constructor (private val apiInterface: ApiInterface)
     : BaseRepository() {
+
+        suspend fun getUserById(
+            id : Long
+        )
+        = safeApiCall {
+            apiInterface.getUserById(id)
+        }
 }

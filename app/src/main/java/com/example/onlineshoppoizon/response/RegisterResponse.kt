@@ -9,6 +9,6 @@ data class RegisterResponse(
     var passwordHash: String,
     var email: String = "",
     val phoneNumber: String = "",
-    val gender: CategoryClothes = CategoryClothes(0,""),
+    val gender: CategoryClothes = CategoryClothes(),
     val profilePhoto: String = "",
 )

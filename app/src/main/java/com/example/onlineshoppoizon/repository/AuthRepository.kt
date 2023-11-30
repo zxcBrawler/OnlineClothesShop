@@ -17,7 +17,4 @@ class AuthRepository @Inject constructor (
             api.login(email, password)
         }
 
-    suspend fun saveAuthToken(token: String){
-        userPreferences.saveAuthToken(token)
-    }
 }

@@ -10,16 +10,31 @@ class ItemDetailsRepository
         suspend fun getClothesById(id : Int) = safeApiCall {
             apiInterface.getClothesById(id)
         }
-    suspend fun getClothesPhoto() =
+    suspend fun getClothesPhoto(
+        id : Long
+    ) =
         safeApiCall {
-            apiInterface.getClothesPhotos()
+            apiInterface.getClothesPhotos(id)
         }
-    suspend fun getClothesSizes() =
+    suspend fun getClothesSizes(
+        id : Long
+    ) =
         safeApiCall {
-            apiInterface.getSizes()
+            apiInterface.getSizes(id)
         }
-    suspend fun getClothesColors() =
+    suspend fun getClothesColors(
+        id : Long
+    ) =
         safeApiCall {
-            apiInterface.getColorsClothes()
+            apiInterface.getColorsClothes(id)
+        }
+    suspend fun addToCart(
+        userId: Int,
+        colorClothesId : Int,
+        quantity : Int,
+        sizeClothesId : Int
+    ) =
+        safeApiCall {
+            apiInterface.addToCart(userId, colorClothesId, sizeClothesId, quantity)
         }
 }

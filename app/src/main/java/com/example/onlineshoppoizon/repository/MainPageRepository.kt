@@ -9,5 +9,11 @@ class MainPageRepository @Inject constructor(private val apiInterface: ApiInterf
     suspend fun getClothes() = safeApiCall {
         apiInterface.getClothes()
     }
+    suspend fun getCartItems(
+        id : Long
+    ) =
+        safeApiCall {
+            apiInterface.getCart(id)
+        }
 
 }

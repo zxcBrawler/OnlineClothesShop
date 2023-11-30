@@ -3,7 +3,7 @@ package com.example.onlineshoppoizon.utils
 import android.app.Activity
 import android.content.Intent
 import android.view.View
-import com.example.onlineshoppoizon.MainMenuActivity
+import androidx.fragment.app.Fragment
 
 fun<A : Activity> Activity.startNewActivity(activity: Class<A>){
     Intent(this, activity).also {
@@ -11,6 +11,13 @@ fun<A : Activity> Activity.startNewActivity(activity: Class<A>){
         startActivity(it)
     }
 }
+fun<A : Activity> Fragment.startNewActivity(activity: Class<A>, id: Int){
+    Intent(requireContext(), activity).also {
+        it.putExtra("id", id)
+        startActivity(it)
+    }
+}
+
 
 fun View.visible(isVisible : Boolean){
     visibility = if(isVisible) View.VISIBLE else View.GONE

@@ -2,22 +2,14 @@ package com.example.onlineshoppoizon
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.asLiveData
 import com.example.onlineshoppoizon.databinding.ActivityMainBinding
 import com.example.onlineshoppoizon.fragments.LoginFragment
 import com.example.onlineshoppoizon.repository.MainActivityRepository
-import com.example.onlineshoppoizon.repository.MainMenuRepository
-import com.example.onlineshoppoizon.response.UserPreferences
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.ui.base.BaseActivity
 import com.example.onlineshoppoizon.ui.base.FragmentHelper
-import com.example.onlineshoppoizon.utils.startNewActivity
 import com.example.onlineshoppoizon.viewmodel.MainActivityViewModel
-import dagger.hilt.android.AndroidEntryPoint
 
 
 class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding, MainActivityRepository>(){

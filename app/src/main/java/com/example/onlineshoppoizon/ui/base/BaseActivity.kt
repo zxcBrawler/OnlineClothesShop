@@ -18,7 +18,7 @@ abstract class BaseActivity<vm : BaseViewModel, b : ViewBinding, r: BaseReposito
     protected lateinit var binding: b
     lateinit var viewModel: vm
     protected val requestBuilder = RequestBuilder()
-    private lateinit var userPreferences: UserPreferences
+    protected lateinit var userPreferences: UserPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userPreferences = UserPreferences(this)

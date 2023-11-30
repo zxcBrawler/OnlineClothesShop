@@ -2,8 +2,8 @@ package com.example.onlineshoppoizon.model
 
 data class ShopGarnish(
     val shopGarnishId: Long,
-    val colorClothes: ClothesColors,
-    val sizeClothes: ClothesSizeClothes,
-    val shopAddresses: ShopAddresses,
+    val colorClothesGarnish: ClothesColors,
+    val sizeClothesGarnish: ClothesSizeClothes,
+    val shopAddressesGarnish: ShopAddresses,
     val quantity: Int,
 )

@@ -1,26 +1,55 @@
 package com.example.onlineshoppoizon.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.onlineshoppoizon.ItemDetailsActivity
 import com.example.onlineshoppoizon.adapters.ClothesAdapter
 import com.example.onlineshoppoizon.databinding.FragmentMainPageBinding
+import com.example.onlineshoppoizon.model.Cart
 import com.example.onlineshoppoizon.repository.MainPageRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
+import com.example.onlineshoppoizon.utils.startNewActivity
 import com.example.onlineshoppoizon.viewmodel.MainPageViewModel
 
 class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding,MainPageRepository >() {
     private lateinit var adapter : ClothesAdapter
+    private var userId = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val getUserId = userPreferences.get().asLiveData()
+
+        getUserId.observe(viewLifecycleOwner) {
+            userId = it
+            viewModel.getCart(userId.toLong())
+        }
+
+
+        viewModel.cartResponse.observe(viewLifecycleOwner, Observer{
+            when(it){
+                is Resource.Success -> {
+                    val list : MutableList<Cart> = ArrayList()
+                    list.addAll(it.value)
+
+                    var itemQuantity = 0
+
+                    for(item in list){
+                        itemQuantity += item.quantity.toInt()
+                    }
+                    binding.quantity.text = itemQuantity.toString()
+                }
+                is Resource.Failure -> {
+                    TODO()
+                }
+            }
+        })
 
         viewModel.getClothes()
 
@@ -32,9 +61,8 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
                     binding.itemsRecycler.adapter = adapter
                     adapter.setOnItemClickListener(object: ClothesAdapter.OnItemClickListener{
                         override fun onItemClick(position: Int) {
-                            val intent = Intent(requireContext(),ItemDetailsActivity::class.java)
-                            intent.putExtra("id",it.value[position].idClothes)
-                            startActivity(intent)
+                            val activity = ItemDetailsActivity::class.java
+                            startNewActivity(activity,it.value[position].idClothes)
                         }
 
                     })
@@ -45,9 +73,6 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
                 }
             }
         } )
-
-
-
     }
 
     override fun getViewModel(): Class<MainPageViewModel>

@@ -1,7 +1,7 @@
 package com.example.onlineshoppoizon.model
 
 data class ClothesSizeClothes(
-    val id: Int,
-    val clothes: Clothes,
-    val sizeClothes: SizeClothes,
+    val id: Int = 0,
+    val clothes: Clothes = Clothes(),
+    val sizeClothes: SizeClothes = SizeClothes(),
 )
