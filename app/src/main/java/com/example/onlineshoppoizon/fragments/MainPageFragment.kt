@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.onlineshoppoizon.ItemDetailsActivity
+import com.example.onlineshoppoizon.activities.ItemDetailsActivity
 import com.example.onlineshoppoizon.adapters.ClothesAdapter
 import com.example.onlineshoppoizon.databinding.FragmentMainPageBinding
 import com.example.onlineshoppoizon.model.Cart
@@ -16,7 +15,7 @@ import com.example.onlineshoppoizon.repository.MainPageRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
-import com.example.onlineshoppoizon.utils.startNewActivity
+import com.example.onlineshoppoizon.utils.startNewActivityWithId
 import com.example.onlineshoppoizon.viewmodel.MainPageViewModel
 
 class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding,MainPageRepository >() {
@@ -32,47 +31,50 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
         }
 
 
-        viewModel.cartResponse.observe(viewLifecycleOwner, Observer{
-            when(it){
+        viewModel.cartResponse.observe(viewLifecycleOwner) {
+            when (it) {
                 is Resource.Success -> {
-                    val list : MutableList<Cart> = ArrayList()
+                    val list: MutableList<Cart> = ArrayList()
                     list.addAll(it.value)
 
                     var itemQuantity = 0
 
-                    for(item in list){
+                    for (item in list) {
                         itemQuantity += item.quantity.toInt()
                     }
                     binding.quantity.text = itemQuantity.toString()
                 }
+
                 is Resource.Failure -> {
                     TODO()
                 }
             }
-        })
+        }
 
         viewModel.getClothes()
 
-        viewModel.clothesResponse.observe(viewLifecycleOwner, Observer{
-            when(it){
+        viewModel.clothesResponse.observe(viewLifecycleOwner) {
+            when (it) {
                 is Resource.Success -> {
                     binding.itemsRecycler.layoutManager = GridLayoutManager(view.context, 2)
                     adapter = ClothesAdapter(it.value)
                     binding.itemsRecycler.adapter = adapter
-                    adapter.setOnItemClickListener(object: ClothesAdapter.OnItemClickListener{
+                    adapter.setOnItemClickListener(object : ClothesAdapter.OnItemClickListener {
                         override fun onItemClick(position: Int) {
                             val activity = ItemDetailsActivity::class.java
-                            startNewActivity(activity,it.value[position].idClothes)
+                            startNewActivityWithId(activity, it.value[position].idClothes)
                         }
 
                     })
                     Toast.makeText(requireContext(), it.value.toString(), Toast.LENGTH_SHORT).show()
                 }
+
                 is Resource.Failure -> {
-                    Toast.makeText(requireContext(), it.errorCode.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), it.errorCode.toString(), Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
-        } )
+        }
     }
 
     override fun getViewModel(): Class<MainPageViewModel>

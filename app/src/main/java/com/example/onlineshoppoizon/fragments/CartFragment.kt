@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.onlineshoppoizon.ItemDetailsActivity
+import com.example.onlineshoppoizon.R
+import com.example.onlineshoppoizon.activities.DeliveryActivity
+import com.example.onlineshoppoizon.activities.ItemDetailsActivity
+import com.example.onlineshoppoizon.activities.MainMenuActivity
 import com.example.onlineshoppoizon.adapters.CartAdapter
 import com.example.onlineshoppoizon.databinding.FragmentCartBinding
 import com.example.onlineshoppoizon.model.Cart
@@ -15,8 +18,10 @@ import com.example.onlineshoppoizon.repository.CartRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
+import com.example.onlineshoppoizon.ui.base.FragmentHelper
 import com.example.onlineshoppoizon.utils.Const
-import com.example.onlineshoppoizon.utils.startNewActivity
+import com.example.onlineshoppoizon.utils.startNewActivityFromFragment
+import com.example.onlineshoppoizon.utils.startNewActivityWithId
 import com.example.onlineshoppoizon.utils.visible
 import com.example.onlineshoppoizon.viewmodel.CartViewModel
 
@@ -24,6 +29,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
 
     private lateinit var adapter : CartAdapter
     private var userId = 0
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,7 +67,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                     adapter.setOnItemClickListener(object : CartAdapter.OnItemClickListener {
                         override fun onItemClick(position: Long) {
                             val activity = ItemDetailsActivity::class.java
-                            startNewActivity(activity, position.toInt())
+                            startNewActivityWithId(activity, position.toInt())
                         }
 
                         override fun onDeleteItem(position: Long) {
@@ -78,6 +84,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                                     is Resource.Failure -> {}
                                 }
                             }
+                            updateCart(list)
                         }
 
                         override fun onAddItem(position: Long) {
@@ -98,6 +105,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                                 }
 
                             }
+                            updateCart(list)
 
                         }
 
@@ -109,6 +117,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                                     is Resource.Failure -> {}
                                 }
                             }
+                            updateCart(list)
                         }
                     })
 
@@ -141,6 +150,10 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
             }
         }
 
+        binding.continueButton.setOnClickListener {
+            val activity = DeliveryActivity::class.java
+            startNewActivityFromFragment(activity)
+        }
     }
 
 
@@ -170,5 +183,23 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
         binding.continueButton.visible(true)
         binding.emptyCart.visible(false)
         binding.emptyCartText.visible(false)
+    }
+
+    fun updateCart(list : MutableList<Cart>){
+        viewModel.getCart(userId.toLong())
+        viewModel.cartResponse.observe(viewLifecycleOwner){ new ->
+            when(new){
+                is Resource.Success -> {
+                    list.clear()
+                    list.addAll(new.value)
+                    FragmentHelper.openFragment(requireContext(), R.id.fragmentMainMenu, CartFragment())
+                }
+                is Resource.Failure -> {
+
+                }
+
+            }
+
+        }
     }
 }

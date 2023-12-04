@@ -19,9 +19,9 @@ class AuthViewModel @Inject constructor (
 
     fun login(
         email: String,
-        password: String
+        passwordHash: String
     ) = viewModelScope.launch {
-        _loginResponse.value =  repository.login(email, password)
+        _loginResponse.value =  repository.login(email, passwordHash)
     }
 
 }

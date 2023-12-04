@@ -7,14 +7,13 @@ import javax.inject.Inject
 
 class AuthRepository @Inject constructor (
     private val api: ApiInterface,
-    private val userPreferences: UserPreferences,
     )
     : BaseRepository(){
         suspend fun login(
             email: String,
-            password: String
+            passwordHash: String
         ) = safeApiCall {
-            api.login(email, password)
+            api.login(email, passwordHash)
         }
 
 }

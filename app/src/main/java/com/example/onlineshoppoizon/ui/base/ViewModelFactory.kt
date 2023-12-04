@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.onlineshoppoizon.repository.AuthRepository
 import com.example.onlineshoppoizon.repository.CartRepository
+import com.example.onlineshoppoizon.repository.DeliveryActivityRepository
+import com.example.onlineshoppoizon.repository.DeliveryFragmentRepository
 import com.example.onlineshoppoizon.repository.ItemAvailabilityRepository
 import com.example.onlineshoppoizon.repository.ItemDetailsRepository
 import com.example.onlineshoppoizon.repository.LoadingRepository
@@ -12,16 +14,22 @@ import com.example.onlineshoppoizon.repository.MainPageRepository
 import com.example.onlineshoppoizon.repository.ProfileRepository
 import com.example.onlineshoppoizon.repository.RegisterRepository
 import com.example.onlineshoppoizon.repository.MainMenuRepository
+import com.example.onlineshoppoizon.repository.PickUpRepository
+import com.example.onlineshoppoizon.repository.UserOrdersRepository
 import com.example.onlineshoppoizon.viewmodel.AuthViewModel
 import com.example.onlineshoppoizon.viewmodel.CartViewModel
+import com.example.onlineshoppoizon.viewmodel.DeliveryActivityViewModel
+import com.example.onlineshoppoizon.viewmodel.DeliveryFragmentViewModel
 import com.example.onlineshoppoizon.viewmodel.ItemAvailabilityViewModel
 import com.example.onlineshoppoizon.viewmodel.ItemDetailsViewModel
 import com.example.onlineshoppoizon.viewmodel.LoadingActivityViewModel
 import com.example.onlineshoppoizon.viewmodel.MainActivityViewModel
 import com.example.onlineshoppoizon.viewmodel.MainMenuViewModel
 import com.example.onlineshoppoizon.viewmodel.MainPageViewModel
+import com.example.onlineshoppoizon.viewmodel.PickUpViewModel
 import com.example.onlineshoppoizon.viewmodel.ProfileViewModel
 import com.example.onlineshoppoizon.viewmodel.RegisterViewModel
+import com.example.onlineshoppoizon.viewmodel.UserOrdersViewModel
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
@@ -44,6 +52,10 @@ class ViewModelFactory @Inject constructor (
              modelClass.isAssignableFrom(ItemDetailsViewModel::class.java) -> ItemDetailsViewModel(repository as ItemDetailsRepository) as T
              modelClass.isAssignableFrom(ItemAvailabilityViewModel::class.java) -> ItemAvailabilityViewModel(repository as ItemAvailabilityRepository) as T
              modelClass.isAssignableFrom(CartViewModel::class.java) -> CartViewModel(repository as CartRepository) as T
+             modelClass.isAssignableFrom(UserOrdersViewModel::class.java) -> UserOrdersViewModel(repository as UserOrdersRepository) as T
+             modelClass.isAssignableFrom(DeliveryActivityViewModel::class.java) -> DeliveryActivityViewModel(repository as DeliveryActivityRepository) as T
+             modelClass.isAssignableFrom(PickUpViewModel::class.java) -> PickUpViewModel(repository as PickUpRepository) as T
+             modelClass.isAssignableFrom(DeliveryFragmentViewModel::class.java) -> DeliveryFragmentViewModel(repository as DeliveryFragmentRepository) as T
 
             else -> throw IllegalArgumentException("ViewModelClass not found")
          }

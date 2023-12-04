@@ -9,7 +9,6 @@ class RegisterRepository @Inject constructor (private val apiInterface: ApiInter
 
    suspend fun register(
         email: String,
-        password: String,
         gender: Long,
         phoneNumber: String,
         profilePhoto: String,
@@ -18,7 +17,6 @@ class RegisterRepository @Inject constructor (private val apiInterface: ApiInter
     ) = safeApiCall {
         apiInterface.register(
             email,
-            password,
             passwordHash,
             gender,
             phoneNumber,

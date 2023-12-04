@@ -11,6 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.example.onlineshoppoizon.response.UserPreferences
 import com.example.onlineshoppoizon.retrofit.RequestBuilder
+import com.example.onlineshoppoizon.utils.Const
+import com.example.onlineshoppoizon.utils.MapKitInitializer
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +28,7 @@ abstract class BaseFragment<vm: BaseViewModel, b: ViewBinding, r: BaseRepository
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        MapKitInitializer.initialize(Const.MAPKIT_API_KEY, requireContext())
         userPreferences = UserPreferences(requireContext())
         binding = getFragmentBinding(inflater, container)
         val factory = ViewModelFactory(getFragmentRepository())

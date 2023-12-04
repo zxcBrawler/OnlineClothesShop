@@ -1,24 +1,23 @@
 package com.example.onlineshoppoizon.fragments
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
-import com.example.onlineshoppoizon.ChangeProfileActivity
-import com.example.onlineshoppoizon.MainActivity
-import com.example.onlineshoppoizon.UserOrdersActivity
+import com.example.onlineshoppoizon.activities.ChangeProfileActivity
+import com.example.onlineshoppoizon.activities.MainActivity
+import com.example.onlineshoppoizon.activities.UserOrdersActivity
 import com.example.onlineshoppoizon.databinding.FragmentProfileBinding
 import com.example.onlineshoppoizon.repository.ProfileRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
-import com.example.onlineshoppoizon.utils.startNewActivity
+import com.example.onlineshoppoizon.utils.startNewActivityFromFragment
+import com.example.onlineshoppoizon.utils.startNewActivityFromActivity
+import com.example.onlineshoppoizon.utils.startNewActivityWithId
 import com.example.onlineshoppoizon.viewmodel.ProfileViewModel
 import kotlinx.coroutines.launch
 
@@ -30,33 +29,39 @@ class ProfileFragment: BaseFragment<ProfileViewModel,FragmentProfileBinding,Prof
 
         val getUserId = userPreferences.get().asLiveData()
 
-        getUserId.observe(viewLifecycleOwner, Observer {
+        getUserId.observe(viewLifecycleOwner) {
             userId = it
             viewModel.getUserById(userId.toLong())
-        })
+        }
 
-        viewModel.profileResponse.observe(viewLifecycleOwner, Observer {
-            when(it){
+        viewModel.profileResponse.observe(viewLifecycleOwner) {
+            when (it) {
                 is Resource.Success -> {
                     binding.username.text = it.value.username
                     binding.email.text = it.value.email
                     binding.gender.text = it.value.gender.nameCategory
                     Toast.makeText(context, userId.toString(), Toast.LENGTH_SHORT).show()
                 }
+
                 is Resource.Failure -> {
                     Toast.makeText(context, "-", Toast.LENGTH_SHORT).show()
                 }
             }
-        })
+        }
 
         binding.ordersLayout.setOnClickListener {
-            val intent = Intent(context, UserOrdersActivity::class.java)
-            startActivity(intent)
+            val activity = UserOrdersActivity::class.java
+            startNewActivityWithId(activity, userId)
         }
 
         binding.changeProfileLayout.setOnClickListener {
-            val intent = Intent(context, ChangeProfileActivity::class.java)
-            startActivity(intent)
+            val activity = ChangeProfileActivity::class.java
+            startNewActivityFromFragment(activity)
+        }
+
+        binding.myPaymentMethods.setOnClickListener {
+            val activity = ChangeProfileActivity::class.java
+            startNewActivityFromFragment(activity)
         }
 
         binding.endSession.setOnClickListener {
@@ -69,7 +74,7 @@ class ProfileFragment: BaseFragment<ProfileViewModel,FragmentProfileBinding,Prof
         lifecycleScope.launch {
            userPreferences.clear()
         }
-        requireActivity().startNewActivity(MainActivity::class.java)
+        requireActivity().startNewActivityFromActivity(MainActivity::class.java)
         requireActivity().finish()
     }
 
@@ -84,6 +89,4 @@ class ProfileFragment: BaseFragment<ProfileViewModel,FragmentProfileBinding,Prof
 
     override fun getFragmentRepository(): ProfileRepository  =
         ProfileRepository(requestBuilder.buildRequest(ApiInterface::class.java))
-
-
 }

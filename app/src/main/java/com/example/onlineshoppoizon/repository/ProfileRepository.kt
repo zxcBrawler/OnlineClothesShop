@@ -13,4 +13,5 @@ class ProfileRepository @Inject constructor (private val apiInterface: ApiInterf
         = safeApiCall {
             apiInterface.getUserById(id)
         }
+
 }

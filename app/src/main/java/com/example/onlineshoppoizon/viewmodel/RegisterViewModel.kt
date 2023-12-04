@@ -21,7 +21,6 @@ class RegisterViewModel @Inject constructor (
 
     fun register(
         email: String,
-        password: String,
         gender: Long,
         phoneNumber: String,
         profilePhoto: String,
@@ -30,7 +29,6 @@ class RegisterViewModel @Inject constructor (
     ) = viewModelScope.launch {
         _registerResponse.value = repository.register(
             email,
-            password,
             gender,
             phoneNumber,
             profilePhoto,
