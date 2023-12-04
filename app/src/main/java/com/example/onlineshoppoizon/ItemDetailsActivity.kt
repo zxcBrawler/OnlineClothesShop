@@ -37,14 +37,14 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
         super.onCreate(savedInstanceState)
         window.statusBarColor = ContextCompat.getColor(this@ItemDetailsActivity, R.color.grey_white)
         val intent = intent
-        val id = intent.getIntExtra("id", 0)
+        val clothsId = intent.getIntExtra("id", 0)
         val getUserId = userPreferences.get().asLiveData()
 
         getUserId.observe(this) {
             userId = it
         }
 
-        viewModel.getClothesById(id)
+        viewModel.getClothesById(clothsId)
         viewModel.clothesByIdResponse.observe(this) {
             when (it) {
                 is Resource.Success -> {
@@ -59,7 +59,7 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                 }
             }
         }
-        viewModel.getPhotos(id.toLong())
+        viewModel.getPhotos(clothsId.toLong())
         viewModel.clothesPhotoResponse.observe(this) {
             when (it) {
                 is Resource.Success -> {
@@ -80,7 +80,7 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
             }
         }
 
-        viewModel.getClothesColors(id.toLong())
+        viewModel.getClothesColors(clothsId.toLong())
         viewModel.clothesColorsResponse.observe(this) {
             when (it) {
                 is Resource.Success -> {
@@ -109,7 +109,7 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                 }
             }
         }
-        viewModel.getClothesSizes(id.toLong())
+        viewModel.getClothesSizes(clothsId.toLong())
         viewModel.clothesSizesResponse.observe(this) {
             when (it) {
                 is Resource.Success -> {
@@ -140,33 +140,75 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
             }
         }
         binding.itemAvailability.setOnClickListener {
-            val itemIntent  = Intent(this, ItemAvailabilityActivity::class.java)
-            itemIntent.putExtra("id", id)
-            itemIntent.putExtra("selectedSize", selectedSize)
-            itemIntent.putExtra("selectedColor", selectedColor)
 
-            if (binding.colorText.text.isEmpty() || binding.sizesText.text.isEmpty()){
+            if (selectedSize == 0 || selectedColor == 0){
                 Toast.makeText(this, "Choose size and color first", Toast.LENGTH_SHORT).show()
             }
             else {
+                val itemIntent  = Intent(this, ItemAvailabilityActivity::class.java)
+                itemIntent.putExtra("id", clothsId)
+                itemIntent.putExtra("selectedSize", selectedSize)
+                itemIntent.putExtra("selectedColor", selectedColor)
                 startActivity(itemIntent)
             }
+
         }
         //WORKS!
         binding.addToCart.setOnClickListener {
-            val foundColor = list.find { it.colors.colorId.toInt() == selectedColor }
-            val foundSize = listClothesSizes.find { it.sizeClothes.id == selectedSize }
-            viewModel.addToCart(userId,foundColor!!.id.toInt(),1, foundSize!!.id)
-            viewModel.cartResponse.observe(this) {
-                when (it) {
-                    is Resource.Success -> {
-                        Toast.makeText(this, it.value.toString(), Toast.LENGTH_SHORT).show()
-                    }
+            if (selectedSize == 0 || selectedColor == 0){
+                Toast.makeText(this, "Choose size and color first", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                val foundColor = list.find { it.colors.colorId.toInt() == selectedColor }
+                val foundSize = listClothesSizes.find { it.sizeClothes.id == selectedSize }
+                if (foundSize != null && foundColor != null) {
+                    viewModel.checkIfItemExistsInCart(
+                        foundSize.sizeClothes.id.toLong(),
+                        foundColor.colors.colorId,
+                        userId.toLong(),
+                        clothsId.toLong()
+                    )
+                    viewModel.existsResponse.observe(this) { exists ->
+                        when(exists) {
+                            is Resource.Success -> {
+                                if (exists.value.toInt() != -1){
+                                    viewModel.updateQuantity(exists.value, 1)
+                                    viewModel.existsResponse.observe(this){ r ->
+                                        when(r){
+                                            is Resource.Success -> {
+                                                Toast.makeText(this, "Item already exists updating quantity", Toast.LENGTH_SHORT).show()
+                                                this.finish()
 
-                    is Resource.Failure -> {
-                        Toast.makeText(this, it.errorCode.toString(), Toast.LENGTH_SHORT).show()
+                                            }
+                                            is Resource.Failure -> {
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    viewModel.addToCart(userId,foundColor!!.id.toInt(),1, foundSize!!.id)
+                                    viewModel.cartResponse.observe(this) {
+                                        when (it) {
+                                            is Resource.Success -> {
+                                                Toast.makeText(this, it.value.toString(), Toast.LENGTH_SHORT).show()
+                                                this.finish()
+                                            }
+
+                                            is Resource.Failure -> {
+                                                Toast.makeText(this, it.errorCode.toString(), Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                            is Resource.Failure -> {
+
+                            }
+                        }
                     }
                 }
+
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.example.onlineshoppoizon.repository
 
+import com.example.onlineshoppoizon.model.ClothesColors
+import com.example.onlineshoppoizon.model.ClothesSizeClothes
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.ui.base.BaseRepository
 import javax.inject.Inject
@@ -36,5 +38,23 @@ class ItemDetailsRepository
     ) =
         safeApiCall {
             apiInterface.addToCart(userId, colorClothesId, sizeClothesId, quantity)
+        }
+
+    suspend fun checkIfItemExistsInCart(
+        size : Long,
+        color: Long,
+        user : Long,
+        clothes : Long
+    ) =
+        safeApiCall {
+            apiInterface.checkIfItemExistsInCart(size, color, user, clothes)
+        }
+
+    suspend fun updateQuantity(
+        id : Long,
+        updateType : Int
+    ) =
+        safeApiCall {
+            apiInterface.updateQuantity(id, updateType)
         }
 }

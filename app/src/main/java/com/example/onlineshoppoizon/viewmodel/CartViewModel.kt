@@ -33,10 +33,8 @@ class CartViewModel @Inject constructor(private val repository: CartRepository)
     fun updateQuantity(
         id : Long,
         updateType : Int,
-
     ) =
         viewModelScope.launch {
             _cartResponse.value = repository.updateQuantity(id, updateType)
         }
-
 }

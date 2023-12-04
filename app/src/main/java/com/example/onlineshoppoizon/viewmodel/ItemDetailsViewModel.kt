@@ -3,6 +3,7 @@ package com.example.onlineshoppoizon.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.onlineshoppoizon.model.Cart
 import com.example.onlineshoppoizon.model.Clothes
 import com.example.onlineshoppoizon.model.ClothesColors
 import com.example.onlineshoppoizon.model.ClothesSizeClothes
@@ -37,6 +38,14 @@ class ItemDetailsViewModel @Inject constructor(
     val cartResponse : LiveData<Resource<CartResponse>>
         get() = _cartResponse
 
+    private val _updateResponse : MutableLiveData<Resource<List<Cart>>> = MutableLiveData()
+    val updateResponse : LiveData<Resource<List<Cart>>>
+        get() = _updateResponse
+
+    private val _existsResponse : MutableLiveData<Resource<Long>> = MutableLiveData()
+    val existsResponse : LiveData<Resource<Long>>
+        get() = _existsResponse
+
 
     fun getClothesById(id : Int) =
         viewModelScope.launch {
@@ -70,5 +79,24 @@ class ItemDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             _cartResponse.value = repository.
             addToCart(user, colorClothes, quantity, sizeClothes)
+        }
+
+    fun checkIfItemExistsInCart (
+        size : Long,
+        color: Long,
+        user : Long,
+        clothes : Long
+    ) =
+        viewModelScope.launch {
+            _existsResponse.value =
+            repository.checkIfItemExistsInCart(size, color, user, clothes)
+        }
+
+    fun updateQuantity(
+        id : Long,
+        updateType : Int,
+    ) =
+        viewModelScope.launch {
+            _updateResponse.value = repository.updateQuantity(id, updateType)
         }
 }

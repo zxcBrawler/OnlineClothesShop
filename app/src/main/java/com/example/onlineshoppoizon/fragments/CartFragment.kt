@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlineshoppoizon.ItemDetailsActivity
@@ -16,9 +15,10 @@ import com.example.onlineshoppoizon.repository.CartRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
+import com.example.onlineshoppoizon.utils.Const
 import com.example.onlineshoppoizon.utils.startNewActivity
+import com.example.onlineshoppoizon.utils.visible
 import com.example.onlineshoppoizon.viewmodel.CartViewModel
-import java.math.MathContext
 
 class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartRepository>() {
 
@@ -29,35 +29,36 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
         super.onViewCreated(view, savedInstanceState)
         val getUserId = userPreferences.get().asLiveData()
 
-        getUserId.observe(viewLifecycleOwner, Observer {
+        getUserId.observe(viewLifecycleOwner) {
             userId = it
             viewModel.getCart(userId.toLong())
-        })
-        viewModel.cartResponse.observe(viewLifecycleOwner, Observer {
-            when(it){
+        }
+        viewModel.cartResponse.observe(viewLifecycleOwner) {
+            when (it) {
                 is Resource.Success -> {
-                    val list : MutableList<Cart> = ArrayList()
+                    val list: MutableList<Cart> = ArrayList()
                     list.addAll(it.value)
 
-                    if (list.isNotEmpty()){
+                    if (list.isNotEmpty()) {
                         showElements()
                     }
 
-                    var totalPrice = 0.0
-                    val m = MathContext(5)
-                    for (price in list){
+                    var doublePrice = 0.0
+                    for (price in list) {
 
-                        totalPrice += (price.sizeClothes.clothes.priceClothes.toBigDecimal(m) *
-                                price.quantity.toBigDecimal(m)).toDouble()
+                        doublePrice += (price.sizeClothes.clothes.priceClothes.toBigDecimal() *
+                                price.quantity.toBigDecimal()).toDouble()
+
+                        val totalPrice = String.format("%.3f", doublePrice)
+
+                        binding.totalPrice.text = totalPrice
                     }
 
-
-                    binding.totalPrice.text = totalPrice.toString()
 
                     binding.cartItems.layoutManager = LinearLayoutManager(view.context)
                     adapter = CartAdapter(list)
                     binding.cartItems.adapter = adapter
-                    adapter.setOnItemClickListener(object: CartAdapter.OnItemClickListener{
+                    adapter.setOnItemClickListener(object : CartAdapter.OnItemClickListener {
                         override fun onItemClick(position: Long) {
                             val activity = ItemDetailsActivity::class.java
                             startNewActivity(activity, position.toInt())
@@ -66,65 +67,79 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                         override fun onDeleteItem(position: Long) {
                             viewModel.deleteFromCart(position)
                             list.removeIf { l -> l.id == position }
-                            viewModel.cartResponse.observe(viewLifecycleOwner, Observer { its ->
-                                when(its){
-                                    is Resource.Success ->{
-                                        if (list.isEmpty()){
+                            viewModel.cartResponse.observe(viewLifecycleOwner) { its ->
+                                when (its) {
+                                    is Resource.Success -> {
+                                        if (list.isEmpty()) {
                                             hideElements()
                                         }
                                     }
-                                    is Resource.Failure ->{}
+
+                                    is Resource.Failure -> {}
                                 }
-                            })
+                            }
                         }
 
                         override fun onAddItem(position: Long) {
-                            viewModel.updateQuantity(position, 1)
-                            viewModel.cartResponse.observe(viewLifecycleOwner, Observer { p ->
-                                when(p){
-                                    is Resource.Success ->{}
-                                    is Resource.Failure ->{}
+                            for (item in list) {
+                                if (item.quantity.toInt() < Const.MAX_ITEM_COUNT) {
+                                    viewModel.updateQuantity(position, Const.ADD_ITEM)
+                                    viewModel.cartResponse.observe(viewLifecycleOwner) { p ->
+                                        when (p) {
+                                            is Resource.Success -> {}
+                                            is Resource.Failure -> {}
+                                        }
+                                    }
                                 }
-                            })
+                                else {
+                                    Toast.makeText(context,
+                                        "Cannot add more than ${Const.MAX_ITEM_COUNT} of single item",
+                                        Toast.LENGTH_SHORT).show()
+                                }
+
+                            }
+
                         }
 
                         override fun onDecreaseItem(position: Long) {
-                            viewModel.updateQuantity(position, 2)
-                            viewModel.cartResponse.observe(viewLifecycleOwner, Observer { a ->
-                                when(a){
-                                    is Resource.Success ->{}
-                                    is Resource.Failure ->{}
+                            viewModel.updateQuantity(position, Const.DECREASE_ITEM)
+                            viewModel.cartResponse.observe(viewLifecycleOwner) { a ->
+                                when (a) {
+                                    is Resource.Success -> {}
+                                    is Resource.Failure -> {}
                                 }
-                            })
+                            }
                         }
                     })
 
-                    for (item in list){
+                    val itr = list.iterator()
+
+                    while (itr.hasNext()){
+                        val item = itr.next()
                         if (item.quantity.toInt() == 0){
-                            list.remove(item)
                             viewModel.deleteFromCart(item.id)
-                            viewModel.cartResponse.observe(viewLifecycleOwner, Observer { u ->
-                                when(u){
-                                    is Resource.Success ->{
-                                        if (list.isEmpty()){
+                            itr.remove()
+                            viewModel.cartResponse.observe(viewLifecycleOwner) { u ->
+                                when (u) {
+                                    is Resource.Success -> {
+                                        if (list.isEmpty()) {
                                             hideElements()
                                         }
-
                                     }
-                                    is Resource.Failure ->{}
+
+                                    is Resource.Failure -> {}
                                 }
-                            })
+                            }
                         }
                     }
-
-
                 }
+
                 is Resource.Failure -> {
                     Toast.makeText(context, it.errorBody.toString(), Toast.LENGTH_SHORT).show()
 
                 }
             }
-        })
+        }
 
     }
 
@@ -141,19 +156,19 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
         = CartRepository(requestBuilder.buildRequest(ApiInterface::class.java))
 
     private fun hideElements(){
-        binding.cartItems.visibility = View.GONE
-        binding.totalPrice.visibility = View.GONE
-        binding.totalText.visibility = View.GONE
-        binding.continueButton.visibility = View.GONE
-        binding.emptyCart.visibility = View.VISIBLE
-        binding.emptyCartText.visibility = View.VISIBLE
+        binding.cartItems.visible(false)
+        binding.totalPrice.visible(false)
+        binding.totalText.visible(false)
+        binding.continueButton.visible(false)
+        binding.emptyCart.visible(true)
+        binding.emptyCartText.visible(true)
     }
     private fun showElements(){
-        binding.cartItems.visibility = View.VISIBLE
-        binding.totalPrice.visibility = View.VISIBLE
-        binding.totalText.visibility = View.VISIBLE
-        binding.continueButton.visibility = View.VISIBLE
-        binding.emptyCart.visibility = View.GONE
-        binding.emptyCartText.visibility = View.GONE
+        binding.cartItems.visible(true)
+        binding.totalPrice.visible(true)
+        binding.totalText.visible(true)
+        binding.continueButton.visible(true)
+        binding.emptyCart.visible(false)
+        binding.emptyCartText.visible(false)
     }
 }

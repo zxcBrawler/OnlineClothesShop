@@ -60,7 +60,6 @@
             android:textColor="@color/dark_brown"
             app:layout_constraintBottom_toTopOf="@id/continue_button"
             android:text="0 p"
-            android:maxLength="6"
             android:layout_margin="20dp"
             app:layout_constraintEnd_toEndOf="parent"/>
         <Button
