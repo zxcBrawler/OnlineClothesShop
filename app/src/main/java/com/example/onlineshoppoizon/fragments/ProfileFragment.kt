@@ -1,10 +1,15 @@
 package com.example.onlineshoppoizon.fragments
 
+import android.R.attr.path
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.example.onlineshoppoizon.activities.ChangeProfileActivity
@@ -15,14 +20,15 @@ import com.example.onlineshoppoizon.repository.ProfileRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
-import com.example.onlineshoppoizon.utils.startNewActivityFromFragment
 import com.example.onlineshoppoizon.utils.startNewActivityFromActivity
+import com.example.onlineshoppoizon.utils.startNewActivityFromFragment
 import com.example.onlineshoppoizon.utils.startNewActivityWithId
 import com.example.onlineshoppoizon.viewmodel.ProfileViewModel
 import kotlinx.coroutines.launch
 
-class ProfileFragment: BaseFragment<ProfileViewModel,FragmentProfileBinding,ProfileRepository> () {
 
+class ProfileFragment: BaseFragment<ProfileViewModel,FragmentProfileBinding,ProfileRepository> () {
+    private lateinit var path : Uri
     private var userId = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,10 +43,12 @@ class ProfileFragment: BaseFragment<ProfileViewModel,FragmentProfileBinding,Prof
         viewModel.profileResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
+
+                   path = it.value.profilePhoto.toUri()
+                    binding.profilePhoto.setImageURI(path)
                     binding.username.text = it.value.username
                     binding.email.text = it.value.email
                     binding.gender.text = it.value.gender.nameCategory
-                    Toast.makeText(context, userId.toString(), Toast.LENGTH_SHORT).show()
                 }
 
                 is Resource.Failure -> {
@@ -56,7 +64,7 @@ class ProfileFragment: BaseFragment<ProfileViewModel,FragmentProfileBinding,Prof
 
         binding.changeProfileLayout.setOnClickListener {
             val activity = ChangeProfileActivity::class.java
-            startNewActivityFromFragment(activity)
+            startNewActivityWithId(activity, userId)
         }
 
         binding.myPaymentMethods.setOnClickListener {

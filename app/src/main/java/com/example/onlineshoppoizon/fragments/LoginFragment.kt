@@ -37,8 +37,11 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
                 }
 
                 is Resource.Failure -> {
-                    Toast.makeText(requireContext(), it.errorCode.toString(), Toast.LENGTH_SHORT)
-                        .show()
+                    if (it.errorCode == 400){
+                        Toast.makeText(requireContext(), "Invalid email or password", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+
                 }
             }
         }

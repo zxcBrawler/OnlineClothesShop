@@ -34,14 +34,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="150dp"
         >
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_photo"
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="20dp"
-            android:src="@drawable/plus"
-            android:padding="35dp"
             android:background="@drawable/add_photo"
             app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="@string/userphoto" />
