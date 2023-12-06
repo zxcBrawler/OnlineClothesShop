@@ -7,14 +7,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.activities.ItemDetailsActivity
+import com.example.onlineshoppoizon.activities.MainMenuActivity
 import com.example.onlineshoppoizon.adapters.ClothesAdapter
+import com.example.onlineshoppoizon.databinding.ActivityMainBinding
 import com.example.onlineshoppoizon.databinding.FragmentMainPageBinding
 import com.example.onlineshoppoizon.model.Cart
 import com.example.onlineshoppoizon.repository.MainPageRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
+import com.example.onlineshoppoizon.ui.base.FragmentHelper
 import com.example.onlineshoppoizon.utils.startNewActivityWithId
 import com.example.onlineshoppoizon.viewmodel.MainPageViewModel
 
@@ -74,6 +78,12 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
                         .show()
                 }
             }
+        }
+
+        binding.cart.setOnClickListener {
+            val activity = requireActivity() as MainMenuActivity
+            activity.binding.bottomNav.selectedItemId = R.id.cart
+            FragmentHelper.openFragment(requireContext(), R.id.fragmentMainMenu, CartFragment())
         }
     }
 

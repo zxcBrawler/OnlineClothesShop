@@ -38,7 +38,6 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(this@ItemDetailsActivity, R.color.grey_white)
         val intent = intent
         val clothesId = intent.getIntExtra("id", 0)
         val getUserId = userPreferences.get().asLiveData()

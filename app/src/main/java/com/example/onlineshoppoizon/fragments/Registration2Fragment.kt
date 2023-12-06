@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
+import com.example.onlineshoppoizon.activities.MainActivity
 import com.example.onlineshoppoizon.activities.MainMenuActivity
 import com.example.onlineshoppoizon.databinding.FragmentRegistration2Binding
 import com.example.onlineshoppoizon.repository.RegisterRepository
@@ -18,6 +20,7 @@ import com.example.onlineshoppoizon.ui.base.BaseFragment
 import com.example.onlineshoppoizon.utils.RealPathUtil
 import com.example.onlineshoppoizon.utils.startNewActivityFromActivity
 import com.example.onlineshoppoizon.viewmodel.RegisterViewModel
+import kotlinx.coroutines.launch
 
 
 class Registration2Fragment : BaseFragment<RegisterViewModel,FragmentRegistration2Binding,RegisterRepository>() {
@@ -30,7 +33,7 @@ class Registration2Fragment : BaseFragment<RegisterViewModel,FragmentRegistratio
         viewModel.registerResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
-                    requireActivity().startNewActivityFromActivity(MainMenuActivity::class.java)
+                    requireActivity().startNewActivityFromActivity(MainActivity::class.java)
                     activity?.finish()
                 }
 
@@ -66,6 +69,8 @@ class Registration2Fragment : BaseFragment<RegisterViewModel,FragmentRegistratio
                     profilePhoto,
                     bundle.getString("username")!!,
                     bundle.getString("password")!!,)
+                Toast.makeText(requireContext(), "Successfully registered", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }

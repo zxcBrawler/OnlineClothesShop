@@ -15,7 +15,6 @@ import com.example.onlineshoppoizon.viewmodel.DeliveryActivityViewModel
 class DeliveryActivity : BaseActivity<DeliveryActivityViewModel, ActivityDeliveryBinding, DeliveryActivityRepository> () {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
         FragmentHelper.openFragment(this, R.id.delivery_container, PickUpFragment())
         binding.back.setOnClickListener {
             this.finish()

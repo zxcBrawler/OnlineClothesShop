@@ -6,4 +6,9 @@ import javax.inject.Inject
 
 class PickUpRepository @Inject constructor(private val apiInterface: ApiInterface)
     : BaseRepository (){
+
+        suspend fun getShops() =
+            safeApiCall {
+                apiInterface.getShops()
+            }
 }

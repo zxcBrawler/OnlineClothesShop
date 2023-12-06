@@ -66,5 +66,14 @@
     <string name="pay_by_card">pay by card</string>
     <string name="add_card">add card</string>
     <string name="my_payment_methods">payment methods</string>
+    <string name="my_cards">my cards</string>
+    <string name="shop_info">Shop info</string>
+    <string name="contact_number">"Contact number: "</string>
+    <string name="shop_metro">"Shop metro: "</string>
+    <string name="product_name">product name</string>
+    <string name="product_barcode">product barcode</string>
+    <string name="choose_size">choose size</string>
+    <string name="product_price">product price</string>
+    <string name="add_to_cart">add to cart</string>
 
 </resources>

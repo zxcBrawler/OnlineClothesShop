@@ -41,5 +41,10 @@
     <string name="change_profile_data">change profile data</string>
     <string name="my_orders">my orders</string>
     <string name="username_profile">username</string>
+    <string name="product_name">product name</string>
+    <string name="product_barcode">product barcode</string>
+    <string name="choose_size">choose size</string>
+    <string name="product_price">product price</string>
+    <string name="add_to_cart">add to cart</string>
 
 </resources>

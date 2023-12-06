@@ -17,7 +17,6 @@ import com.example.onlineshoppoizon.viewmodel.MainMenuViewModel
 class MainMenuActivity : BaseActivity<MainMenuViewModel, ActivityMainMenuBinding, MainMenuRepository>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(this@MainMenuActivity, R.color.dark_brown)
         FragmentHelper.openFragment(this, R.id.fragmentMainMenu, MainPageFragment())
         changeFragment()
     }

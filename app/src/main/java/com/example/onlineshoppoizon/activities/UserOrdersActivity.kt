@@ -18,7 +18,6 @@ class UserOrdersActivity : BaseActivity<UserOrdersViewModel, ActivityUserOrdersB
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val userId = intent.getIntExtra("id", 0)
-        window.statusBarColor = ContextCompat.getColor(this@UserOrdersActivity, R.color.white)
         viewModel.getUserOrders(userId.toLong())
         viewModel.userOrderResponse.observe(this){
             when(it){

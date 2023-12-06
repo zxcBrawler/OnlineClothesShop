@@ -15,7 +15,6 @@ import com.example.onlineshoppoizon.viewmodel.MainActivityViewModel
 class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding, MainActivityRepository>(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.white)
         FragmentHelper.openRegisterFragment(
             this@MainActivity,
             R.id.fragmentContainerView,

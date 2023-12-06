@@ -83,7 +83,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/add_card"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="20dp"

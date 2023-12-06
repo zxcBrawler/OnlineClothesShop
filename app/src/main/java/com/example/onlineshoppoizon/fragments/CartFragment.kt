@@ -24,6 +24,7 @@ import com.example.onlineshoppoizon.utils.startNewActivityFromFragment
 import com.example.onlineshoppoizon.utils.startNewActivityWithId
 import com.example.onlineshoppoizon.utils.visible
 import com.example.onlineshoppoizon.viewmodel.CartViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartRepository>() {
 
@@ -71,20 +72,30 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                         }
 
                         override fun onDeleteItem(position: Long) {
-                            viewModel.deleteFromCart(position)
-                            list.removeIf { l -> l.id == position }
-                            viewModel.cartResponse.observe(viewLifecycleOwner) { its ->
-                                when (its) {
-                                    is Resource.Success -> {
-                                        if (list.isEmpty()) {
-                                            hideElements()
+                            var dialog = MaterialAlertDialogBuilder(context!!, R.style.CustomDialogTheme)
+                            dialog.setTitle("Delete this item?")
+                                .setPositiveButton("Yes"
+                                ) { newDialog, _ ->
+                                    newDialog.dismiss()
+                                    viewModel.deleteFromCart(position)
+                                    list.removeIf { l -> l.id == position }
+                                    viewModel.cartResponse.observe(viewLifecycleOwner) { its ->
+                                        when (its) {
+                                            is Resource.Success -> {
+                                                if (list.isEmpty()) {
+                                                    hideElements()
+                                                }
+                                            }
+
+                                            is Resource.Failure -> {}
                                         }
                                     }
+                                    updateCart(list)
+                                }.setNegativeButton("No"){
+                                        newDialog, _ ->
+                                    newDialog.dismiss()
+                                }. show()
 
-                                    is Resource.Failure -> {}
-                                }
-                            }
-                            updateCart(list)
                         }
 
                         override fun onAddItem(position: Long) {
@@ -106,7 +117,6 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
 
                             }
                             updateCart(list)
-
                         }
 
                         override fun onDecreaseItem(position: Long) {
@@ -120,7 +130,6 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                             updateCart(list)
                         }
                     })
-
                     val itr = list.iterator()
 
                     while (itr.hasNext()){
@@ -135,7 +144,6 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                                             hideElements()
                                         }
                                     }
-
                                     is Resource.Failure -> {}
                                 }
                             }
@@ -156,18 +164,6 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
         }
     }
 
-
-    override fun getViewModel(): Class<CartViewModel>
-        = CartViewModel::class.java
-
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentCartBinding = FragmentCartBinding.inflate(layoutInflater)
-
-    override fun getFragmentRepository(): CartRepository
-        = CartRepository(requestBuilder.buildRequest(ApiInterface::class.java))
-
     private fun hideElements(){
         binding.cartItems.visible(false)
         binding.totalPrice.visible(false)
@@ -185,7 +181,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
         binding.emptyCartText.visible(false)
     }
 
-    fun updateCart(list : MutableList<Cart>){
+    private fun updateCart(list : MutableList<Cart>){
         viewModel.getCart(userId.toLong())
         viewModel.cartResponse.observe(viewLifecycleOwner){ new ->
             when(new){
@@ -194,12 +190,18 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                     list.addAll(new.value)
                     FragmentHelper.openFragment(requireContext(), R.id.fragmentMainMenu, CartFragment())
                 }
-                is Resource.Failure -> {
-
-                }
-
+                is Resource.Failure -> {}
             }
-
         }
     }
+    override fun getViewModel(): Class<CartViewModel>
+            = CartViewModel::class.java
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentCartBinding = FragmentCartBinding.inflate(layoutInflater)
+
+    override fun getFragmentRepository(): CartRepository
+            = CartRepository(requestBuilder.buildRequest(ApiInterface::class.java))
 }

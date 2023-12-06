@@ -15,7 +15,6 @@ import com.example.onlineshoppoizon.viewmodel.LoadingActivityViewModel
 class LoadingActivity : BaseActivity<LoadingActivityViewModel, ActivityLoadingBinding, LoadingRepository>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
         val getUserId = userPreferences.get().asLiveData()
         getUserId.observe(this) {
             val activity =

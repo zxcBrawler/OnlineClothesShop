@@ -2,6 +2,7 @@ package com.example.onlineshoppoizon.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.onlineshoppoizon.repository.AddCardRepository
 import com.example.onlineshoppoizon.repository.AuthRepository
 import com.example.onlineshoppoizon.repository.CartRepository
 import com.example.onlineshoppoizon.repository.ChangeProfileRepository
@@ -15,8 +16,10 @@ import com.example.onlineshoppoizon.repository.MainPageRepository
 import com.example.onlineshoppoizon.repository.ProfileRepository
 import com.example.onlineshoppoizon.repository.RegisterRepository
 import com.example.onlineshoppoizon.repository.MainMenuRepository
+import com.example.onlineshoppoizon.repository.MyCardsRepository
 import com.example.onlineshoppoizon.repository.PickUpRepository
 import com.example.onlineshoppoizon.repository.UserOrdersRepository
+import com.example.onlineshoppoizon.viewmodel.AddCardViewModel
 import com.example.onlineshoppoizon.viewmodel.AuthViewModel
 import com.example.onlineshoppoizon.viewmodel.CartViewModel
 import com.example.onlineshoppoizon.viewmodel.ChangeProfileViewModel
@@ -28,6 +31,7 @@ import com.example.onlineshoppoizon.viewmodel.LoadingActivityViewModel
 import com.example.onlineshoppoizon.viewmodel.MainActivityViewModel
 import com.example.onlineshoppoizon.viewmodel.MainMenuViewModel
 import com.example.onlineshoppoizon.viewmodel.MainPageViewModel
+import com.example.onlineshoppoizon.viewmodel.MyCardsViewModel
 import com.example.onlineshoppoizon.viewmodel.PickUpViewModel
 import com.example.onlineshoppoizon.viewmodel.ProfileViewModel
 import com.example.onlineshoppoizon.viewmodel.RegisterViewModel
@@ -59,6 +63,8 @@ class ViewModelFactory @Inject constructor (
              modelClass.isAssignableFrom(PickUpViewModel::class.java) -> PickUpViewModel(repository as PickUpRepository) as T
              modelClass.isAssignableFrom(DeliveryFragmentViewModel::class.java) -> DeliveryFragmentViewModel(repository as DeliveryFragmentRepository) as T
              modelClass.isAssignableFrom(ChangeProfileViewModel::class.java) -> ChangeProfileViewModel(repository as ChangeProfileRepository) as T
+             modelClass.isAssignableFrom(AddCardViewModel::class.java) -> AddCardViewModel(repository as AddCardRepository) as T
+             modelClass.isAssignableFrom(MyCardsViewModel::class.java) -> MyCardsViewModel(repository as MyCardsRepository) as T
 
             else -> throw IllegalArgumentException("ViewModelClass not found")
          }

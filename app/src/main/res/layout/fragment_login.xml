@@ -121,7 +121,8 @@
 
          <TextView
              android:id="@+id/or_text"
-             android:layout_width="30dp"
+             android:layout_width="40dp"
+             android:textAlignment="center"
              android:layout_height="wrap_content"
              app:layout_constraintStart_toEndOf="@id/first_line"
              app:layout_constraintTop_toTopOf="parent"

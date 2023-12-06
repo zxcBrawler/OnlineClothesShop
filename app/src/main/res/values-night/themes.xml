@@ -22,4 +22,22 @@
         <item name="android:textSize">20sp</item>
         <item name="android:letterSpacing">0.1</item>
     </style>
+
+    <style name="CustomDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialogText</item>
+        <item name="android:background">@color/white </item>
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/dark_brown</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/dark_brown</item>
+    </style>
+    <style name="MaterialAlertDialogText" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/dark_brown</item>
+    </style>
 </resources>

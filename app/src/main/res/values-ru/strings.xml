@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnlineShopPoizon</string>
+    <string name="email"><font size="20"><b>Почта</b></font></string>
+    <string name="shop_logo">shop_logo</string>
+    <string name="password"><font size="20"><b>Пароль</b></font></string>
+    <string name="forgot_password"><font size="15"><b>Забыли пароль?</b></font></string>
+    <string name="log_in"><font size="20"><b>Войти</b></font></string>
+    <string name="register"><font size="20"><b>Зарегестрироваться</b></font></string>
+    <string name="or"><font size="17"><b>или</b></font></string>
+    <string name="ooo"><font size="20"><b>ООО \"РЕ ТРЭЙДИНГ\"</b></font></string>
+    <string name="username"><font size="20"><b>Логин</b></font></string>
+    <string name="confirm_password"><font size="20"><b>Подтвердить пароль</b></font></string>
+    <string name="gotonextpage">goToNextPage</string>
+    <string name="finish"><font size="20"><b>Зарегестрироваться</b></font></string>
+    <string name="userphoto">userPhoto</string>
+    <string name="phone_number"><font size="20"><b>Номер телефона</b></font></string>
+    <string name="home"><b>Главная</b></string>
+    <string name="catalogue"><b>Каталог</b></string>
+    <string name="cart"><b>Корзина</b></string>
+    <string name="profile"><b>Профиль</b></string>
+
+    <string-array name="gender">
+        <item><b>Пол</b></item>
+        <item><b>Мужской</b></item>
+        <item><b>Женский</b></item>
+
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="items_for_you"><b>Для вас</b></string>
+    <string name="show_item_availability_in_shops"><b>Узнать наличие</b></string>
+    <string name="continue_to_payment"><b>К оплате</b></string>
+    <string name="_3_198_p">3,198 p</string>
+    <string name="total"><b>Итого:</b></string>
+    <string name="shop_name"><b>Название магазина</b></string>
+    <string name="contact_info"><b>Контактная информация</b></string>
+    <string name="_2">2</string>
+    <string name="in_stock"><b>В наличии</b></string>
+    <string name="gender"><b>Пол</b></string>
+    <string name="exit"><b>Выход</b></string>
+    <string name="settings"><b>Настройки</b></string>
+    <string name="change_profile_data"><b>Данные профиля</b></string>
+    <string name="my_orders"><b>Мои заказы</b></string>
+    <string name="username_profile"><b>Логин</b></string>
+    <string name="order_date"><b>Номер заказа</b></string>
+    <string name="n_123456">n 123456</string>
+    <string name="order_sum"><b>Сумма заказа:</b></string>
+    <string name="item_name"><b>Название товара</b></string>
+    <string name="item_size"><b>Размер</b></string>
+    <string name="_1_599">1,599</string>
+    <string name="delivery"><b>Доставка</b></string>
+    <string name="choose_delivery_type"><b>Выберите способ доставки</b></string>
+    <string name="change_language"><b>Изменить язык</b></string>
+    <string name="notifications"><b>Уведомления</b></string>
+    <string name="change_theme"><b>Изменить тему</b></string>
+    <string name="men_wear">men wear</string>
+    <string name="top">top</string>
+    <string name="_300p">300p</string>
+    <string name="delivery_cost"><b>Цена доставки:</b></string>
+    <string name="street"><b>Улица</b></string>
+    <string name="apartment"><b>Дом</b></string>
+    <string name="_2_x_1_599">2 x 1,599</string>
+    <string name="payment"><b>Оплата</b></string>
+    <string name="_3_498p">3,498p</string>
+    <string name="add_new_card"><b>Добавить новую карту</b></string>
+    <string name="pay_by_card"><b>Оплатить картой</b></string>
+    <string name="add_card"><b>Добавить карту</b></string>
+    <string name="my_payment_methods"><b>Способы оплаты</b></string>
+    <string name="my_cards"><b>Мои карты</b></string>
+    <string name="shop_info"><b>Информация о магазине</b></string>
+    <string name="contact_number"><b>Контактная информация: </b></string>
+    <string name="shop_metro"><b>Метро: </b></string>
+    <string name="product_name"><b>Название продукта</b></string>
+    <string name="product_barcode"><b>Артикул</b></string>
+    <string name="choose_size"><b>Выберите размер</b></string>
+    <string name="product_price"><b>Цена</b></string>
+    <string name="add_to_cart"><font size="17" weight="bold"><b>Добавить в корзину</b></font></string>
+</resources>

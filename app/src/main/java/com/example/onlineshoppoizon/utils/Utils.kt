@@ -11,6 +11,12 @@ fun<A : Activity> Activity.startNewActivityFromActivity(activity: Class<A>){
         startActivity(it)
     }
 }
+fun<A : Activity> Activity.startNewActivityWithId(activity: Class<A>, id: Int){
+    Intent(this, activity).also {
+        it.putExtra("id", id)
+        startActivity(it)
+    }
+}
 fun<A : Activity> Fragment.startNewActivityWithId(activity: Class<A>, id: Int){
     Intent(requireContext(), activity).also {
         it.putExtra("id", id)
