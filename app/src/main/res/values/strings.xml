@@ -75,5 +75,6 @@
     <string name="choose_size">choose size</string>
     <string name="product_price">product price</string>
     <string name="add_to_cart">add to cart</string>
+    <string name="my_addresses">my addresses</string>
 
 </resources>

@@ -21,8 +21,8 @@
 
     <string-array name="gender">
         <item>select gender</item>
-        <item>female</item>
         <item>male</item>
+        <item>female</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -46,5 +46,6 @@
     <string name="choose_size">choose size</string>
     <string name="product_price">product price</string>
     <string name="add_to_cart">add to cart</string>
+    <string name="my_addresses">my addresses</string>
 
 </resources>

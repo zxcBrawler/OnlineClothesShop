@@ -10,6 +10,8 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import com.example.onlineshoppoizon.R
+import com.example.onlineshoppoizon.activities.DeliveryActivity
+import com.example.onlineshoppoizon.activities.PaymentActivity
 import com.example.onlineshoppoizon.databinding.FragmentPickUpBinding
 import com.example.onlineshoppoizon.model.ShopAddresses
 import com.example.onlineshoppoizon.repository.PickUpRepository
@@ -18,6 +20,7 @@ import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
 import com.example.onlineshoppoizon.ui.base.FragmentHelper
 import com.example.onlineshoppoizon.utils.Const
+import com.example.onlineshoppoizon.utils.startNewActivityWithDeliveryPickUpInfo
 import com.example.onlineshoppoizon.viewmodel.PickUpViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yandex.mapkit.Animation
@@ -28,10 +31,15 @@ import com.yandex.runtime.image.ImageProvider
 
 
 class PickUpFragment : BaseFragment<PickUpViewModel, FragmentPickUpBinding, PickUpRepository>() {
-
+    var currentAddress : ShopAddresses? = ShopAddresses()
+    private var sum : Double = 0.0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val activity = requireActivity() as DeliveryActivity
+
+        sum = activity.getCartSum()
 
         var geoPosition = binding.map.map.mapObjects.addPlacemark(Const.START_PLACE,ImageProvider.fromBitmap(createPointIcon()))
 
@@ -56,6 +64,7 @@ class PickUpFragment : BaseFragment<PickUpViewModel, FragmentPickUpBinding, Pick
                     val arrayAdapter =
                         ArrayAdapter(requireContext(),android.R.layout.simple_spinner_dropdown_item,shopAddresses)
                     binding.addresses.adapter = arrayAdapter
+                    binding.addresses.setSelection(0)
 
 
                     binding.addresses.onItemSelectedListener = object : OnItemSelectedListener {
@@ -66,13 +75,13 @@ class PickUpFragment : BaseFragment<PickUpViewModel, FragmentPickUpBinding, Pick
                             id: Long
                         ) {
 
-                            var currentAddress = findCurrentAddress(it.value)
+                            currentAddress = findCurrentAddress(it.value)
                             if (currentAddress?.shopAddressId == currentAddress?.shopAddressId
                             ){
 
                                 geoPosition.geometry = Point(
                                     currentAddress!!.latitude.toDouble(),
-                                    currentAddress.longitude.toDouble())
+                                    currentAddress!!.longitude.toDouble())
 
                                 binding.map.map.move(
                                     CameraPosition(geoPosition.geometry, 16.5f, 0.0f, 0.0f),
@@ -108,6 +117,15 @@ class PickUpFragment : BaseFragment<PickUpViewModel, FragmentPickUpBinding, Pick
 
                 }
             }
+        }
+
+        binding.payment.setOnClickListener {
+            val activity = PaymentActivity::class.java
+            startNewActivityWithDeliveryPickUpInfo(
+                activity,
+                Const.TYPE_PICK_UP.toLong(),
+                currentAddress!!.shopAddressId,
+                sum)
         }
 
     }

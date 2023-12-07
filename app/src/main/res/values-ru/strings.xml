@@ -76,4 +76,5 @@
     <string name="choose_size"><b>Выберите размер</b></string>
     <string name="product_price"><b>Цена</b></string>
     <string name="add_to_cart"><font size="17" weight="bold"><b>Добавить в корзину</b></font></string>
+    <string name="my_addresses">my addresses</string>
 </resources>

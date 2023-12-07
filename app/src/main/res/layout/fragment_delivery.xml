@@ -95,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@id/deliver_text"
         android:layout_marginTop="15dp">
         <Spinner
-            android:id="@+id/city"
+            android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -105,37 +105,7 @@
             android:focusedByDefault="false"
             />
     </RelativeLayout>
-    <EditText
-        android:id="@+id/street"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="20dp"
-        android:textColor="@color/white"
-        android:background="@drawable/input_fields"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner_layout"
-        android:hint="@string/street"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:letterSpacing="0.1"
-        android:inputType="text" />
-    <EditText
-        android:id="@+id/apartment"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="20dp"
-        android:textColor="@color/white"
-        android:background="@drawable/input_fields"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/street"
-        android:hint="@string/apartment"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:letterSpacing="0.1"
-        android:inputType="text"
-        />
+
 
     <com.example.onlineshoppoizon.utils.AppMapView
         android:id="@+id/map"
@@ -143,7 +113,7 @@
         android:layout_height="350dp"
         android:elevation="5dp"
         android:background="@color/light_grey"
-        app:layout_constraintTop_toBottomOf="@id/apartment"
+        app:layout_constraintTop_toBottomOf="@id/spinner_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"/>
@@ -172,7 +142,8 @@
         android:id="@+id/button_layout"
         app:layout_constraintTop_toBottomOf="@id/delivery_cost_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
 
         <ImageView
             android:layout_width="30dp"
@@ -193,6 +164,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
+
             android:layout_marginBottom="10dp"
             android:background="@drawable/buttons"
             android:text="@string/continue_to_payment"

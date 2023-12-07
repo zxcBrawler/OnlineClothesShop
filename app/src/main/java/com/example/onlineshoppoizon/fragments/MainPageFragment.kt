@@ -50,7 +50,7 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
                 }
 
                 is Resource.Failure -> {
-                    TODO()
+                    Toast.makeText(context, "-", Toast.LENGTH_SHORT).show()
                 }
             }
         }

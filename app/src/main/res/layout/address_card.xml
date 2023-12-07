@@ -1,0 +1,60 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="10dp"
+    android:layout_margin="20dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:id="@+id/nameAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="name"
+            android:textColor="@color/dark_brown"
+            android:layout_margin="20dp"
+
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="30dp"
+           app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/directionAddress"
+            android:layout_width="235dp"
+            app:flow_wrapMode = "aligned"
+            android:layout_height="wrap_content"
+            android:text="directionaaaaaaaaaaddddddddaaaaaaaaaa"
+            android:layout_marginEnd="20dp"
+
+            android:textColor="@color/light_grey"
+            android:layout_margin="20dp"
+            app:layout_constraintTop_toBottomOf="@id/nameAddress"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="city"
+            android:textColor="@color/light_grey"
+            android:layout_margin="20dp"
+            app:layout_constraintTop_toBottomOf="@id/directionAddress"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <ImageView
+            android:id="@+id/delete_address"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/close"
+            android:padding="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

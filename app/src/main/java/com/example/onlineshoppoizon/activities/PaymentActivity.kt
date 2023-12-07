@@ -1,12 +1,120 @@
 package com.example.onlineshoppoizon.activities
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.asLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlineshoppoizon.R
+import com.example.onlineshoppoizon.adapters.CardAdapter
+import com.example.onlineshoppoizon.adapters.CardPaymentAdapter
+import com.example.onlineshoppoizon.databinding.ActivityPaymentBinding
+import com.example.onlineshoppoizon.model.UserCard
+import com.example.onlineshoppoizon.repository.PaymentRepository
+import com.example.onlineshoppoizon.retrofit.ApiInterface
+import com.example.onlineshoppoizon.retrofit.Resource
+import com.example.onlineshoppoizon.ui.base.BaseActivity
+import com.example.onlineshoppoizon.utils.startNewActivityFromActivity
+import com.example.onlineshoppoizon.utils.visible
+import com.example.onlineshoppoizon.viewmodel.PaymentViewModel
 
-class PaymentActivity : AppCompatActivity() {
+class PaymentActivity : BaseActivity<PaymentViewModel, ActivityPaymentBinding, PaymentRepository>() {
+    private lateinit var adapter : CardPaymentAdapter
+    var selectedCardId : Long  = 0
+    private val cartIds : MutableList<Long> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_payment)
+        val typeDelivery = intent.getLongExtra("typeDelivery", 0)
+        val shopAddress = intent.getLongExtra("shopAddress", 0)
+        val sum = intent.getDoubleExtra("sum", 0.0)
+
+        var userId : Long = 0
+
+        userPreferences.get().asLiveData().observe(this){
+            userId = it.toLong()
+            viewModel.getUserCards(userId)
+            viewModel.getCart(userId)
+        }
+        viewModel.cardResponse.observe(this){
+            when(it){
+                is Resource.Success -> {
+                    var cardList : MutableList<UserCard> = arrayListOf()
+                    cardList.addAll(it.value)
+                    binding.cards.layoutManager = LinearLayoutManager(this)
+                    adapter = CardPaymentAdapter(cardList)
+                    binding.cards.adapter = adapter
+                    adapter.setOnItemClickListener(object : CardPaymentAdapter.OnItemClickListener{
+                        override fun onItemClick(position: Long) {
+                            selectedCardId = position
+                        }
+                    })
+
+
+                }
+                is Resource.Failure -> {
+
+                }
+            }
+        }
+        viewModel.cartResponse.observe(this){
+            when(it){
+                is Resource.Success -> {
+                    for (item in it.value){
+                        cartIds.add(item.id)
+                    }
+
+                }
+                is Resource.Failure -> {
+
+                }
+            }
+        }
+
+
+
+        binding.pay.setOnClickListener {
+
+            viewModel.placeNewOrder(sum.toString(),selectedCardId,typeDelivery,shopAddress,null,cartIds)
+            viewModel.orderResponse.observe(this){
+                when(it){
+                    is Resource.Success -> {
+                        Toast.makeText(applicationContext, "+", Toast.LENGTH_SHORT).show()
+                        viewModel.clearUserCart(userId)
+                        viewModel.deleteResponse.observe(this){ its ->
+                            when(its){
+                                is Resource.Success -> {
+                                    Toast.makeText(applicationContext, "+", Toast.LENGTH_SHORT).show()
+                                    startNewActivityFromActivity(MainMenuActivity::class.java)
+                                    this.finish()
+                                }
+                                is Resource.Failure -> {
+
+                                }
+                            }
+                        }
+
+                    }
+                    is Resource.Failure -> {
+                        Toast.makeText(applicationContext, "-", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        binding.totalCostText.text = sum.toString()
+        if (typeDelivery.toInt() == 1){
+            binding.deliveryText.visible(false)
+            binding.deliveryCostText.visible(false)
+        }
     }
+
+    override fun getViewModel(): Class<PaymentViewModel> =
+        PaymentViewModel::class.java
+
+    override fun getActivityBinding(inflater: LayoutInflater): ActivityPaymentBinding =
+        ActivityPaymentBinding.inflate(inflater)
+
+    override fun getActivityRepository(): PaymentRepository =
+        PaymentRepository(requestBuilder.buildRequest(ApiInterface::class.java))
 }

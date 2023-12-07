@@ -11,4 +11,6 @@ class PickUpRepository @Inject constructor(private val apiInterface: ApiInterfac
             safeApiCall {
                 apiInterface.getShops()
             }
+
+
 }

@@ -20,6 +20,7 @@ class DeliveryActivity : BaseActivity<DeliveryActivityViewModel, ActivityDeliver
             this.finish()
         }
     }
+    fun getCartSum() = intent.getDoubleExtra("sum", 0.0)
 
     override fun getViewModel(): Class<DeliveryActivityViewModel>  =
         DeliveryActivityViewModel::class.java

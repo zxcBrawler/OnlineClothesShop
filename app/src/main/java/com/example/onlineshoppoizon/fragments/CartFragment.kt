@@ -19,10 +19,7 @@ import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
 import com.example.onlineshoppoizon.ui.base.FragmentHelper
-import com.example.onlineshoppoizon.utils.Const
-import com.example.onlineshoppoizon.utils.startNewActivityFromFragment
-import com.example.onlineshoppoizon.utils.startNewActivityWithId
-import com.example.onlineshoppoizon.utils.visible
+import com.example.onlineshoppoizon.utils.*
 import com.example.onlineshoppoizon.viewmodel.CartViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -30,6 +27,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
 
     private lateinit var adapter : CartAdapter
     private var userId = 0
+    private var doublePrice = 0.0
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,7 +48,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                         showElements()
                     }
 
-                    var doublePrice = 0.0
+
                     for (price in list) {
 
                         doublePrice += (price.sizeClothes.clothes.priceClothes.toBigDecimal() *
@@ -160,7 +158,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
 
         binding.continueButton.setOnClickListener {
             val activity = DeliveryActivity::class.java
-            startNewActivityFromFragment(activity)
+            startNewActivityWithCartSum(activity, doublePrice)
         }
     }
 

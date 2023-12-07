@@ -17,6 +17,8 @@ import com.example.onlineshoppoizon.repository.ProfileRepository
 import com.example.onlineshoppoizon.repository.RegisterRepository
 import com.example.onlineshoppoizon.repository.MainMenuRepository
 import com.example.onlineshoppoizon.repository.MyCardsRepository
+import com.example.onlineshoppoizon.repository.OrderDetailsRepository
+import com.example.onlineshoppoizon.repository.PaymentRepository
 import com.example.onlineshoppoizon.repository.PickUpRepository
 import com.example.onlineshoppoizon.repository.UserOrdersRepository
 import com.example.onlineshoppoizon.viewmodel.AddCardViewModel
@@ -32,6 +34,8 @@ import com.example.onlineshoppoizon.viewmodel.MainActivityViewModel
 import com.example.onlineshoppoizon.viewmodel.MainMenuViewModel
 import com.example.onlineshoppoizon.viewmodel.MainPageViewModel
 import com.example.onlineshoppoizon.viewmodel.MyCardsViewModel
+import com.example.onlineshoppoizon.viewmodel.OrderDetailsViewModel
+import com.example.onlineshoppoizon.viewmodel.PaymentViewModel
 import com.example.onlineshoppoizon.viewmodel.PickUpViewModel
 import com.example.onlineshoppoizon.viewmodel.ProfileViewModel
 import com.example.onlineshoppoizon.viewmodel.RegisterViewModel
@@ -65,6 +69,8 @@ class ViewModelFactory @Inject constructor (
              modelClass.isAssignableFrom(ChangeProfileViewModel::class.java) -> ChangeProfileViewModel(repository as ChangeProfileRepository) as T
              modelClass.isAssignableFrom(AddCardViewModel::class.java) -> AddCardViewModel(repository as AddCardRepository) as T
              modelClass.isAssignableFrom(MyCardsViewModel::class.java) -> MyCardsViewModel(repository as MyCardsRepository) as T
+             modelClass.isAssignableFrom(PaymentViewModel::class.java) -> PaymentViewModel(repository as PaymentRepository) as T
+             modelClass.isAssignableFrom(OrderDetailsViewModel::class.java) -> OrderDetailsViewModel(repository as OrderDetailsRepository) as T
 
             else -> throw IllegalArgumentException("ViewModelClass not found")
          }

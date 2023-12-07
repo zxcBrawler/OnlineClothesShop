@@ -17,9 +17,34 @@ fun<A : Activity> Activity.startNewActivityWithId(activity: Class<A>, id: Int){
         startActivity(it)
     }
 }
+fun<A : Activity> Fragment.startNewActivityWithDeliveryPickUpInfo
+            (activity: Class<A>, typeDelivery: Long, shopAddress : Long, sum : Double){
+    Intent(requireContext(), activity).also {
+        it.putExtra("typeDelivery", typeDelivery)
+        it.putExtra("shopAddress", shopAddress)
+        it.putExtra("sum", sum)
+        startActivity(it)
+    }
+}
+fun<A : Activity> Fragment.startNewActivityWithDeliveryHomeInfo
+            (activity: Class<A>, typeDelivery: Long, userAddress : Long, sum : Double){
+    Intent(requireContext(), activity).also {
+        it.putExtra("typeDelivery", typeDelivery)
+        it.putExtra("userAddress", userAddress)
+        it.putExtra("sum", sum)
+        startActivity(it)
+    }
+}
+
 fun<A : Activity> Fragment.startNewActivityWithId(activity: Class<A>, id: Int){
     Intent(requireContext(), activity).also {
         it.putExtra("id", id)
+        startActivity(it)
+    }
+}
+fun<A : Activity> Fragment.startNewActivityWithCartSum(activity: Class<A>, sum: Double){
+    Intent(requireContext(), activity).also {
+        it.putExtra("sum", sum)
         startActivity(it)
     }
 }
