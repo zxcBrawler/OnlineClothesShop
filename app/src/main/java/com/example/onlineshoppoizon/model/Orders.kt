@@ -7,4 +7,5 @@ data class Orders(
     val dateOrder: String = "",
     val sumOrder: String = "",
     val currentStatus: StatusOrder = StatusOrder(),
+    var userCard: UserCard = UserCard(),
 )

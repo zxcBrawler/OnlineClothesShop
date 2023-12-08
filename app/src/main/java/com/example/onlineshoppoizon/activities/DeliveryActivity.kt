@@ -10,6 +10,7 @@ import com.example.onlineshoppoizon.repository.DeliveryActivityRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.ui.base.BaseActivity
 import com.example.onlineshoppoizon.ui.base.FragmentHelper
+import com.example.onlineshoppoizon.utils.finishActivity
 import com.example.onlineshoppoizon.viewmodel.DeliveryActivityViewModel
 
 class DeliveryActivity : BaseActivity<DeliveryActivityViewModel, ActivityDeliveryBinding, DeliveryActivityRepository> () {
@@ -17,7 +18,7 @@ class DeliveryActivity : BaseActivity<DeliveryActivityViewModel, ActivityDeliver
         super.onCreate(savedInstanceState)
         FragmentHelper.openFragment(this, R.id.delivery_container, PickUpFragment())
         binding.back.setOnClickListener {
-            this.finish()
+            finishActivity()
         }
     }
     fun getCartSum() = intent.getDoubleExtra("sum", 0.0)

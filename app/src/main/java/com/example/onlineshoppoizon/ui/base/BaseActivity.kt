@@ -2,6 +2,7 @@ package com.example.onlineshoppoizon.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
@@ -32,7 +33,17 @@ abstract class BaseActivity<vm : BaseViewModel, b : ViewBinding, r: BaseReposito
         lifecycleScope.launch {
             userPreferences.authToken.first()
         }
+        onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finishAfterTransition()
+                overridePendingTransition(0, android.R.anim.fade_out);
+            }
+        })
     }
+
+
+
+
 
     abstract fun getViewModel() : Class<vm>
     abstract fun getActivityBinding(inflater: LayoutInflater): b

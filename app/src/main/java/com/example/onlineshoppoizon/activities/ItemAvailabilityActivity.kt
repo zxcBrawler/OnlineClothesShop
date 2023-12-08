@@ -16,6 +16,7 @@ import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseActivity
 import com.example.onlineshoppoizon.utils.Const
 import com.example.onlineshoppoizon.utils.MapKitInitializer
+import com.example.onlineshoppoizon.utils.finishActivity
 import com.example.onlineshoppoizon.viewmodel.ItemAvailabilityViewModel
 import com.yandex.mapkit.MapKitFactory
 
@@ -59,12 +60,11 @@ class ItemAvailabilityActivity : BaseActivity<ItemAvailabilityViewModel, Activit
                 }
             }
         }
+        binding.back.setOnClickListener {
+            finishActivity()
+        }
     }
 
-    //TODO()
-    private fun showShop(){
-
-    }
 
     override fun getViewModel(): Class<ItemAvailabilityViewModel> =
         ItemAvailabilityViewModel::class.java

@@ -95,8 +95,9 @@ class ItemDetailsViewModel @Inject constructor(
     fun updateQuantity(
         id : Long,
         updateType : Int,
+        userId : Long
     ) =
         viewModelScope.launch {
-            _updateResponse.value = repository.updateQuantity(id, updateType)
+            _updateResponse.value = repository.updateQuantity(id, updateType, userId)
         }
 }

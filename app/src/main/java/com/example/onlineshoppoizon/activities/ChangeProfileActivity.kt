@@ -14,6 +14,7 @@ import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseActivity
 import com.example.onlineshoppoizon.utils.RealPathUtil
+import com.example.onlineshoppoizon.utils.finishActivity
 import com.example.onlineshoppoizon.viewmodel.ChangeProfileViewModel
 
 
@@ -39,6 +40,9 @@ class ChangeProfileActivity : BaseActivity<ChangeProfileViewModel, ActivityChang
 
                 }
             }
+        }
+        binding.back.setOnClickListener {
+            finishActivity()
         }
         binding.logo.setOnClickListener {
             val intent = Intent()

@@ -19,6 +19,9 @@
         android:theme="@style/Base.Theme.OnlineShopPoizon"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.FilteredCatalogueActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AddAddressActivity"
             android:exported="false" />
         <activity

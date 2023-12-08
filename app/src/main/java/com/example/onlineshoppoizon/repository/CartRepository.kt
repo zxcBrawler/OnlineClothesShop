@@ -14,17 +14,19 @@ class CartRepository @Inject constructor(private val apiInterface: ApiInterface)
             }
 
         suspend fun deleteFromCart(
-            id : Long
+            id : Long,
+            userId : Long
         ) =
             safeApiCall {
-                apiInterface.deleteItem(id)
+                apiInterface.deleteItem(id, userId)
             }
 
         suspend fun updateQuantity(
             id : Long,
-            updateType : Int
+            updateType : Int,
+            userId : Long
         ) =
             safeApiCall {
-                apiInterface.updateQuantity(id, updateType)
+                apiInterface.updateQuantity(id, updateType, userId)
             }
 }

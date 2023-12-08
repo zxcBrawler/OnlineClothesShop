@@ -2,10 +2,11 @@ package com.example.onlineshoppoizon.activities
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.core.content.ContextCompat
+import androidx.core.app.ActivityCompat
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.databinding.ActivityMainMenuBinding
 import com.example.onlineshoppoizon.fragments.CartFragment
+import com.example.onlineshoppoizon.fragments.CatalogueFragment
 import com.example.onlineshoppoizon.fragments.MainPageFragment
 import com.example.onlineshoppoizon.fragments.ProfileFragment
 import com.example.onlineshoppoizon.repository.MainMenuRepository
@@ -13,6 +14,7 @@ import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.ui.base.BaseActivity
 import com.example.onlineshoppoizon.ui.base.FragmentHelper
 import com.example.onlineshoppoizon.viewmodel.MainMenuViewModel
+
 
 class MainMenuActivity : BaseActivity<MainMenuViewModel, ActivityMainMenuBinding, MainMenuRepository>() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +40,7 @@ class MainMenuActivity : BaseActivity<MainMenuViewModel, ActivityMainMenuBinding
                     FragmentHelper.openFragment(this, R.id.fragmentMainMenu, MainPageFragment())
                 }
                 R.id.catalogue ->{
+                    FragmentHelper.openFragment(this, R.id.fragmentMainMenu, CatalogueFragment())
                 }
                 R.id.profile ->{
                     FragmentHelper.openFragment(this, R.id.fragmentMainMenu, ProfileFragment())

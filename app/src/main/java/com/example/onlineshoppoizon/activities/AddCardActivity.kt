@@ -11,6 +11,7 @@ import com.example.onlineshoppoizon.repository.AddCardRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseActivity
+import com.example.onlineshoppoizon.utils.finishActivity
 import com.example.onlineshoppoizon.viewmodel.AddCardViewModel
 
 class AddCardActivity : BaseActivity<AddCardViewModel, ActivityAddCardBinding, AddCardRepository>() {
@@ -37,6 +38,10 @@ class AddCardActivity : BaseActivity<AddCardViewModel, ActivityAddCardBinding, A
                     }
                 }
             }
+
+        }
+        binding.back.setOnClickListener {
+            finishActivity()
         }
     }
 

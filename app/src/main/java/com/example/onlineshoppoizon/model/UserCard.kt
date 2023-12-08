@@ -1,7 +1,7 @@
 package com.example.onlineshoppoizon.model
 
 data class UserCard(
-    val id: Long,
-    val user: User,
-    val card: Card,
+    val id: Long = 0,
+    val user: User = User(),
+    val card: Card = Card(),
 )

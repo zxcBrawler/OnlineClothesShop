@@ -15,6 +15,7 @@ import com.example.onlineshoppoizon.repository.MyAddressesRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseActivity
+import com.example.onlineshoppoizon.utils.finishActivity
 import com.example.onlineshoppoizon.utils.startNewActivityFromActivity
 import com.example.onlineshoppoizon.viewmodel.MyAddressesViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -87,7 +88,7 @@ class MyAddressesActivity : BaseActivity<MyAddressesViewModel, ActivityMyAddress
         }
 
         binding.back.setOnClickListener {
-            this.finish()
+            finishActivity()
         }
 
     }

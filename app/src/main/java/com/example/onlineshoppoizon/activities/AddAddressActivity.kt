@@ -11,6 +11,7 @@ import com.example.onlineshoppoizon.repository.AddAddressRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseActivity
+import com.example.onlineshoppoizon.utils.finishActivity
 import com.example.onlineshoppoizon.viewmodel.AddAddressViewModel
 
 class AddAddressActivity : BaseActivity<AddAddressViewModel, ActivityAddAddressBinding, AddAddressRepository>() {
@@ -40,8 +41,9 @@ class AddAddressActivity : BaseActivity<AddAddressViewModel, ActivityAddAddressB
                 }
             }
         }
-
-
+        binding.back.setOnClickListener {
+            finishActivity()
+        }
 
     }
 

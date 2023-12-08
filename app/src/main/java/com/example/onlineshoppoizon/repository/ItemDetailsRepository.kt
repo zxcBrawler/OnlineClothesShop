@@ -52,9 +52,10 @@ class ItemDetailsRepository
 
     suspend fun updateQuantity(
         id : Long,
-        updateType : Int
+        updateType : Int,
+        userId: Long
     ) =
         safeApiCall {
-            apiInterface.updateQuantity(id, updateType)
+            apiInterface.updateQuantity(id, updateType, userId)
         }
 }

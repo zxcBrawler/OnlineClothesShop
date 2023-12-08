@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.activities.ItemDetailsActivity
 import com.example.onlineshoppoizon.activities.MainMenuActivity
 import com.example.onlineshoppoizon.adapters.ClothesAdapter
-import com.example.onlineshoppoizon.databinding.ActivityMainBinding
 import com.example.onlineshoppoizon.databinding.FragmentMainPageBinding
 import com.example.onlineshoppoizon.model.Cart
 import com.example.onlineshoppoizon.repository.MainPageRepository
@@ -21,6 +22,7 @@ import com.example.onlineshoppoizon.ui.base.BaseFragment
 import com.example.onlineshoppoizon.ui.base.FragmentHelper
 import com.example.onlineshoppoizon.utils.startNewActivityWithId
 import com.example.onlineshoppoizon.viewmodel.MainPageViewModel
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 
 class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding,MainPageRepository >() {
     private lateinit var adapter : ClothesAdapter
@@ -33,7 +35,6 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
             userId = it
             viewModel.getCart(userId.toLong())
         }
-
 
         viewModel.cartResponse.observe(viewLifecycleOwner) {
             when (it) {
@@ -50,7 +51,7 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
                 }
 
                 is Resource.Failure -> {
-                    Toast.makeText(context, "-", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Check network connection", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -61,8 +62,11 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
             when (it) {
                 is Resource.Success -> {
                     binding.itemsRecycler.layoutManager = GridLayoutManager(view.context, 2)
+
                     adapter = ClothesAdapter(it.value)
-                    binding.itemsRecycler.adapter = adapter
+
+                    binding.itemsRecycler.adapter = setAnimationAlpha(adapter)
+
                     adapter.setOnItemClickListener(object : ClothesAdapter.OnItemClickListener {
                         override fun onItemClick(position: Int) {
                             val activity = ItemDetailsActivity::class.java
@@ -70,11 +74,10 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
                         }
 
                     })
-                    Toast.makeText(requireContext(), it.value.toString(), Toast.LENGTH_SHORT).show()
                 }
 
                 is Resource.Failure -> {
-                    Toast.makeText(requireContext(), it.errorCode.toString(), Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "Check network connection", Toast.LENGTH_SHORT)
                         .show()
                 }
             }
@@ -83,8 +86,17 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
         binding.cart.setOnClickListener {
             val activity = requireActivity() as MainMenuActivity
             activity.binding.bottomNav.selectedItemId = R.id.cart
-            FragmentHelper.openFragment(requireContext(), R.id.fragmentMainMenu, CartFragment())
         }
+    }
+
+    private fun setAnimationAlpha (adapter : RecyclerView.Adapter<ClothesAdapter.ClothesViewHolder>) : AlphaInAnimationAdapter{
+        val alphaInAnimationAdapter = AlphaInAnimationAdapter(adapter)
+        alphaInAnimationAdapter.setDuration(400)
+        alphaInAnimationAdapter.setInterpolator(AccelerateDecelerateInterpolator())
+        alphaInAnimationAdapter.setFirstOnly(true)
+
+        return alphaInAnimationAdapter
+
     }
 
     override fun getViewModel(): Class<MainPageViewModel>

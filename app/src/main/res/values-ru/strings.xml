@@ -81,4 +81,10 @@
     <string name="city"><b>Город</b></string>
     <string name="direction"><b>Точный адрес</b></string>
     <string name="name_address"><b>Название</b></string>
+    <string name="add_address">add address</string>
+    <string name="order_details">order details</string>
+    <string name="order_total_sum">Order total sum: </string>
+    <string name="delivery_type">Delivery type: </string>
+    <string name="payment_card">Payment card:</string>
+    <string name="delivery_pick_up_address">Delivery / pick up address:</string>
 </resources>

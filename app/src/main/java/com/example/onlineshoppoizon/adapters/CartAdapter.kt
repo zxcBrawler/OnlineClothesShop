@@ -43,15 +43,12 @@ class CartAdapter(private val cart: List<Cart>): RecyclerView.Adapter<CartAdapte
 
         holder.binding.addItem.setOnClickListener {
            mListener.onAddItem(cart[position].id)
-            notifyDataSetChanged()
         }
         holder.binding.decreaseItem.setOnClickListener {
             mListener.onDecreaseItem(cart[position].id)
-            notifyDataSetChanged()
         }
         holder.binding.deleteItem.setOnClickListener{
             mListener.onDeleteItem(cart[position].id)
-            notifyDataSetChanged()
         }
         holder.binding.itemPhoto.setOnClickListener {
             mListener.onItemClick(cart[position].sizeClothes.clothes.idClothes.toLong())

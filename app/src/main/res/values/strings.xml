@@ -80,5 +80,11 @@
     <string name="city">city</string>
     <string name="direction">direction</string>
     <string name="name_address">name address</string>
+    <string name="add_address">add address</string>
+    <string name="order_details">order details</string>
+    <string name="order_total_sum">Order total sum:</string>
+    <string name="delivery_type">Delivery type:</string>
+    <string name="payment_card">Payment card:</string>
+    <string name="delivery_pick_up_address">Delivery / pick up address:</string>
 
 </resources>

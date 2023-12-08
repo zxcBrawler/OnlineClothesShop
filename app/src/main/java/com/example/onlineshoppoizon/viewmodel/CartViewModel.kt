@@ -25,16 +25,18 @@ class CartViewModel @Inject constructor(private val repository: CartRepository)
         }
 
     fun deleteFromCart(
-        id : Long
+        id : Long,
+        userId : Long
     ) = viewModelScope.launch {
-        _cartResponse.value = repository.deleteFromCart(id)
+        _cartResponse.value = repository.deleteFromCart(id, userId)
     }
 
     fun updateQuantity(
         id : Long,
         updateType : Int,
+        userId : Long,
     ) =
         viewModelScope.launch {
-            _cartResponse.value = repository.updateQuantity(id, updateType)
+            _cartResponse.value = repository.updateQuantity(id, updateType, userId)
         }
 }

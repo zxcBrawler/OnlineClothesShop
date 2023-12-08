@@ -20,6 +20,7 @@ object FragmentHelper {
 
     fun openFragment(context: Context, frameId: Int, fragment: Fragment) {
         getFragmentManager(context).beginTransaction()
+            .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
             .replace(frameId, fragment, fragment.activity.toString())
             .addToBackStack(null).commit()
     }

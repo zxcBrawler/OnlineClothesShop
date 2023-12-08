@@ -2,6 +2,7 @@ package com.example.onlineshoppoizon.activities
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.databinding.ActivityMainBinding
@@ -19,6 +20,14 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding, Ma
             this@MainActivity,
             R.id.fragmentContainerView,
             LoginFragment()
+        )
+        val permissions = arrayOf(
+            android.Manifest.permission.READ_MEDIA_IMAGES,
+        )
+        ActivityCompat.requestPermissions(
+            this,
+            permissions,
+            0
         )
     }
 

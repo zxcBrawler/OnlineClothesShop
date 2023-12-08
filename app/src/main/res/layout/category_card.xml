@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
-            android:id="@+id/order_num"
+            android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="category name"
@@ -20,6 +20,7 @@
             android:textSize="30dp"
             app:layout_constraintStart_toStartOf="parent"/>
         <ImageView
+            android:id="@+id/next"
             android:layout_width="50dp"
             android:layout_height="50dp"
             app:layout_constraintEnd_toEndOf="parent"

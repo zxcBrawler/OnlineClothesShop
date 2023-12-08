@@ -21,6 +21,8 @@ import com.example.onlineshoppoizon.repository.ItemDetailsRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseActivity
+import com.example.onlineshoppoizon.utils.finishActivity
+import com.example.onlineshoppoizon.utils.startNewActivityWithClothesInfo
 import com.example.onlineshoppoizon.viewmodel.ItemDetailsViewModel
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
@@ -140,20 +142,23 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
             }
         }
 
+        binding.back.setOnClickListener {
+            finishActivity()
+        }
+
         binding.itemAvailability.setOnClickListener {
             if (selectedSize == 0 || selectedColor == 0){
                 Toast.makeText(this, "Choose size and color first", Toast.LENGTH_SHORT).show()
             }
             else {
-                val itemIntent  = Intent(this, ItemAvailabilityActivity::class.java)
-                itemIntent.putExtra("id", clothesId)
-                itemIntent.putExtra("selectedSize", selectedSize)
-                itemIntent.putExtra("selectedColor", selectedColor)
-                startActivity(itemIntent)
+                val activity = ItemAvailabilityActivity::class.java
+                startNewActivityWithClothesInfo(activity,clothesId, selectedSize, selectedColor)
             }
 
         }
-        //WORKS!
+        binding.back.setOnClickListener {
+            finishActivity()
+        }
         binding.addToCart.setOnClickListener {
             if (selectedSize == 0 || selectedColor == 0){
                 Toast.makeText(this, "Choose size and color first", Toast.LENGTH_SHORT).show()
@@ -172,7 +177,7 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                         when(exists) {
                             is Resource.Success -> {
                                 if (exists.value.toInt() != -1){
-                                    viewModel.updateQuantity(exists.value, 1)
+                                    viewModel.updateQuantity(exists.value, 1, userId.toLong())
                                     viewModel.existsResponse.observe(this){ r ->
                                         when(r){
                                             is Resource.Success -> {

@@ -43,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:layoutAnimation="@anim/recycler_orders_anim"
         app:layout_constraintTop_toBottomOf="@id/separator"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

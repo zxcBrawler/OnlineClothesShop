@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.onlineshoppoizon"
-        minSdk 33
+        minSdk 34
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -69,4 +69,5 @@ dependencies {
     implementation("com.yandex.android:maps.mobile:4.4.0-lite")
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
+    implementation 'jp.wasabeef:recyclerview-animators:4.0.2'
 }

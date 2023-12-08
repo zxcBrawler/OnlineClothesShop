@@ -19,6 +19,7 @@ import com.example.onlineshoppoizon.repository.MyCardsRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseActivity
+import com.example.onlineshoppoizon.utils.finishActivity
 import com.example.onlineshoppoizon.utils.startNewActivityWithId
 import com.example.onlineshoppoizon.viewmodel.MyCardsViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -89,6 +90,9 @@ class MyCardsActivity : BaseActivity<MyCardsViewModel, ActivityMyCardsBinding, M
             val activity = AddCardActivity::class.java
             startNewActivityWithId(activity, userId.toInt())
             this.finish()
+        }
+        binding.back.setOnClickListener {
+            finishActivity()
         }
 
     }

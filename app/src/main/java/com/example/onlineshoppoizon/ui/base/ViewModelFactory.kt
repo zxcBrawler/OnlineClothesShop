@@ -6,9 +6,11 @@ import com.example.onlineshoppoizon.repository.AddAddressRepository
 import com.example.onlineshoppoizon.repository.AddCardRepository
 import com.example.onlineshoppoizon.repository.AuthRepository
 import com.example.onlineshoppoizon.repository.CartRepository
+import com.example.onlineshoppoizon.repository.CatalogueRepository
 import com.example.onlineshoppoizon.repository.ChangeProfileRepository
 import com.example.onlineshoppoizon.repository.DeliveryActivityRepository
 import com.example.onlineshoppoizon.repository.DeliveryFragmentRepository
+import com.example.onlineshoppoizon.repository.FilteredCatalogueRepository
 import com.example.onlineshoppoizon.repository.ItemAvailabilityRepository
 import com.example.onlineshoppoizon.repository.ItemDetailsRepository
 import com.example.onlineshoppoizon.repository.LoadingRepository
@@ -22,14 +24,17 @@ import com.example.onlineshoppoizon.repository.MyCardsRepository
 import com.example.onlineshoppoizon.repository.OrderDetailsRepository
 import com.example.onlineshoppoizon.repository.PaymentRepository
 import com.example.onlineshoppoizon.repository.PickUpRepository
+import com.example.onlineshoppoizon.repository.TypeClothesRepository
 import com.example.onlineshoppoizon.repository.UserOrdersRepository
 import com.example.onlineshoppoizon.viewmodel.AddAddressViewModel
 import com.example.onlineshoppoizon.viewmodel.AddCardViewModel
 import com.example.onlineshoppoizon.viewmodel.AuthViewModel
 import com.example.onlineshoppoizon.viewmodel.CartViewModel
+import com.example.onlineshoppoizon.viewmodel.CatalogueViewModel
 import com.example.onlineshoppoizon.viewmodel.ChangeProfileViewModel
 import com.example.onlineshoppoizon.viewmodel.DeliveryActivityViewModel
 import com.example.onlineshoppoizon.viewmodel.DeliveryFragmentViewModel
+import com.example.onlineshoppoizon.viewmodel.FilteredCatalogueViewModel
 import com.example.onlineshoppoizon.viewmodel.ItemAvailabilityViewModel
 import com.example.onlineshoppoizon.viewmodel.ItemDetailsViewModel
 import com.example.onlineshoppoizon.viewmodel.LoadingActivityViewModel
@@ -43,6 +48,7 @@ import com.example.onlineshoppoizon.viewmodel.PaymentViewModel
 import com.example.onlineshoppoizon.viewmodel.PickUpViewModel
 import com.example.onlineshoppoizon.viewmodel.ProfileViewModel
 import com.example.onlineshoppoizon.viewmodel.RegisterViewModel
+import com.example.onlineshoppoizon.viewmodel.TypeClothesViewModel
 import com.example.onlineshoppoizon.viewmodel.UserOrdersViewModel
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
@@ -77,6 +83,9 @@ class ViewModelFactory @Inject constructor (
              modelClass.isAssignableFrom(OrderDetailsViewModel::class.java) -> OrderDetailsViewModel(repository as OrderDetailsRepository) as T
              modelClass.isAssignableFrom(MyAddressesViewModel::class.java) -> MyAddressesViewModel(repository as MyAddressesRepository) as T
              modelClass.isAssignableFrom(AddAddressViewModel::class.java) -> AddAddressViewModel(repository as AddAddressRepository) as T
+             modelClass.isAssignableFrom(CatalogueViewModel::class.java) -> CatalogueViewModel(repository as CatalogueRepository) as T
+             modelClass.isAssignableFrom(TypeClothesViewModel::class.java) -> TypeClothesViewModel(repository as TypeClothesRepository) as T
+             modelClass.isAssignableFrom(FilteredCatalogueViewModel::class.java) -> FilteredCatalogueViewModel(repository as FilteredCatalogueRepository) as T
 
             else -> throw IllegalArgumentException("ViewModelClass not found")
          }
