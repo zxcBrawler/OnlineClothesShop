@@ -1,7 +1,8 @@
 package com.example.onlineshoppoizon.model
 
 data class Address(
-    val idAddress: Int,
-    val nameAddress: String,
-    val directionAddress: String,
+    val idAddress: Long = 0,
+    val nameAddress: String = "",
+    val directionAddress: String = "",
+    val city: String = "",
 )

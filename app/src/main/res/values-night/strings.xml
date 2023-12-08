@@ -47,5 +47,9 @@
     <string name="product_price">product price</string>
     <string name="add_to_cart">add to cart</string>
     <string name="my_addresses">my addresses</string>
+    <string name="add_new_address">add new address</string>
+    <string name="city">city</string>
+    <string name="direction">direction</string>
+    <string name="name_address">name address</string>
 
 </resources>

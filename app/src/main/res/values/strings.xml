@@ -55,7 +55,7 @@
     <string name="change_theme">change theme</string>
     <string name="men_wear">men wear</string>
     <string name="top">top</string>
-    <string name="_300p">300p</string>
+    <string name="_300p">300</string>
     <string name="delivery_cost">delivery cost:</string>
     <string name="street">street</string>
     <string name="apartment">apartment</string>
@@ -76,5 +76,9 @@
     <string name="product_price">product price</string>
     <string name="add_to_cart">add to cart</string>
     <string name="my_addresses">my addresses</string>
+    <string name="add_new_address">add new address</string>
+    <string name="city">city</string>
+    <string name="direction">direction</string>
+    <string name="name_address">name address</string>
 
 </resources>

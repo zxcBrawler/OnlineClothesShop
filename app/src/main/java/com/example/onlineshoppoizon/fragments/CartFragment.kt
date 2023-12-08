@@ -29,7 +29,6 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
     private var userId = 0
     private var doublePrice = 0.0
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val getUserId = userPreferences.get().asLiveData()
@@ -93,7 +92,6 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                                         newDialog, _ ->
                                     newDialog.dismiss()
                                 }. show()
-
                         }
 
                         override fun onAddItem(position: Long) {
@@ -112,7 +110,6 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                                         "Cannot add more than ${Const.MAX_ITEM_COUNT} of single item",
                                         Toast.LENGTH_SHORT).show()
                                 }
-
                             }
                             updateCart(list)
                         }
@@ -148,10 +145,8 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                         }
                     }
                 }
-
                 is Resource.Failure -> {
                     Toast.makeText(context, it.errorBody.toString(), Toast.LENGTH_SHORT).show()
-
                 }
             }
         }

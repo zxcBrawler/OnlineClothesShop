@@ -6,4 +6,68 @@
     android:layout_height="match_parent"
     tools:context=".activities.AddAddressActivity">
 
+    <EditText
+        android:id="@+id/city"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:textColor="@color/white"
+        android:background="@drawable/input_fields"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:hint="@string/city"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:letterSpacing="0.1"
+        android:inputType="textPersonName"
+        android:autofillHints="username" />
+    <EditText
+        android:id="@+id/nameAddress"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:textColor="@color/white"
+        android:background="@drawable/input_fields"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/city"
+        android:hint="@string/name_address"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:letterSpacing="0.1"
+        android:inputType="textEmailAddress"
+        android:autofillHints="emailAddress" />
+    <EditText
+        android:id="@+id/directionAddress"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:textColor="@color/white"
+        android:background="@drawable/input_fields"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nameAddress"
+        android:hint="@string/direction"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:letterSpacing="0.1"
+        android:inputType="textPassword"
+        android:autofillHints="password" />
+    <Button
+        android:id="@+id/add_address"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/buttons"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:letterSpacing="0.1"
+        android:text="@string/add_new_address"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

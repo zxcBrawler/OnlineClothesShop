@@ -27,6 +27,7 @@ class CardAdapter (private val cards: List<UserCard>): RecyclerView.Adapter<Card
         holder.binding.orderNum.text = cards[position].card.cardNum
         holder.binding.deleteCard.setOnClickListener {
             mListener.onItemDelete(cards[position].card.id)
+            notifyDataSetChanged()
         }
     }
 

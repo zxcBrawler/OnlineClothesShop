@@ -14,6 +14,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.example.onlineshoppoizon.activities.ChangeProfileActivity
 import com.example.onlineshoppoizon.activities.MainActivity
+import com.example.onlineshoppoizon.activities.MyAddressesActivity
 import com.example.onlineshoppoizon.activities.MyCardsActivity
 import com.example.onlineshoppoizon.activities.UserOrdersActivity
 import com.example.onlineshoppoizon.databinding.FragmentProfileBinding
@@ -66,6 +67,11 @@ class ProfileFragment: BaseFragment<ProfileViewModel,FragmentProfileBinding,Prof
         binding.changeProfileLayout.setOnClickListener {
             val activity = ChangeProfileActivity::class.java
             startNewActivityWithId(activity, userId)
+        }
+
+        binding.addresses.setOnClickListener {
+            val activity = MyAddressesActivity::class.java
+            startNewActivityFromFragment(activity)
         }
 
         binding.myPaymentMethods.setOnClickListener {

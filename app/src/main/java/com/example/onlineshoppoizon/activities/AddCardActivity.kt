@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.asLiveData
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.databinding.ActivityAddCardBinding
 import com.example.onlineshoppoizon.repository.AddCardRepository
@@ -16,8 +17,9 @@ class AddCardActivity : BaseActivity<AddCardViewModel, ActivityAddCardBinding, A
     private var userId : Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent = intent.getIntExtra("id", 0)
-        userId = intent.toLong()
+        userPreferences.get().asLiveData().observe(this){
+            userId = it.toLong()
+        }
         binding.addCard.setOnClickListener {
             val cardNum = binding.cardNum.text.toString()
             val cvv = binding.cvv.text.toString()
@@ -33,8 +35,6 @@ class AddCardActivity : BaseActivity<AddCardViewModel, ActivityAddCardBinding, A
                     is Resource.Failure -> {
                         Toast.makeText(this, "-", Toast.LENGTH_SHORT).show()
                     }
-
-                    else -> {}
                 }
             }
         }

@@ -1,7 +1,7 @@
 package com.example.onlineshoppoizon.model
 
 data class UserAddress(
-    val userAddressId: Long,
-    val user: User,
-    val address: Address,
+    val userAddressId: Long = 0,
+    val user: User = User(),
+    val address: Address = Address(),
 )

@@ -55,7 +55,6 @@ class PickUpFragment : BaseFragment<PickUpViewModel, FragmentPickUpBinding, Pick
                     val shopAddresses : MutableList<String> = arrayListOf()
                     val itr = it.value.iterator()
 
-
                     while (itr.hasNext()){
                         val item = itr.next()
                         shopAddresses.add(item.shopAddressDirection)
@@ -76,9 +75,6 @@ class PickUpFragment : BaseFragment<PickUpViewModel, FragmentPickUpBinding, Pick
                         ) {
 
                             currentAddress = findCurrentAddress(it.value)
-                            if (currentAddress?.shopAddressId == currentAddress?.shopAddressId
-                            ){
-
                                 geoPosition.geometry = Point(
                                     currentAddress!!.latitude.toDouble(),
                                     currentAddress!!.longitude.toDouble())
@@ -101,9 +97,6 @@ class PickUpFragment : BaseFragment<PickUpViewModel, FragmentPickUpBinding, Pick
 
                                     true
                                 }
-
-
-                            }
                         }
 
                         override fun onNothingSelected(parent: AdapterView<*>?) {

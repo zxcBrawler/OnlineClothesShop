@@ -56,7 +56,7 @@
     <string name="change_theme"><b>Изменить тему</b></string>
     <string name="men_wear">men wear</string>
     <string name="top">top</string>
-    <string name="_300p">300p</string>
+    <string name="_300p">300</string>
     <string name="delivery_cost"><b>Цена доставки:</b></string>
     <string name="street"><b>Улица</b></string>
     <string name="apartment"><b>Дом</b></string>
@@ -76,5 +76,9 @@
     <string name="choose_size"><b>Выберите размер</b></string>
     <string name="product_price"><b>Цена</b></string>
     <string name="add_to_cart"><font size="17" weight="bold"><b>Добавить в корзину</b></font></string>
-    <string name="my_addresses">my addresses</string>
+    <string name="my_addresses"><b>Мои адресы</b></string>
+    <string name="add_new_address"><b>Добавить новый адрес</b></string>
+    <string name="city"><b>Город</b></string>
+    <string name="direction"><b>Точный адрес</b></string>
+    <string name="name_address"><b>Название</b></string>
 </resources>

@@ -6,4 +6,11 @@ import javax.inject.Inject
 
 class DeliveryFragmentRepository @Inject constructor(private val apiInterface: ApiInterface)
     : BaseRepository (){
+
+    suspend fun getUserAddresses(
+        id : Long
+    ) =
+        safeApiCall {
+            apiInterface.getUserAddresses(id)
+        }
 }

@@ -12,13 +12,24 @@
 
         <TextView
             android:id="@+id/order_num"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/n_123456"
             android:textColor="@color/dark_brown"
             android:layout_margin="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="created"
+            android:padding="10dp"
+            android:background="@drawable/input_fields"
+            android:textColor="@color/white"
+            android:layout_margin="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
         <TextView
             android:id="@+id/order_date"
             android:layout_width="match_parent"

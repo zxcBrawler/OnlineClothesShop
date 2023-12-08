@@ -27,15 +27,14 @@ class CartAdapter(private val cart: List<Cart>): RecyclerView.Adapter<CartAdapte
     fun setOnItemClickListener(listener: OnItemClickListener){
         mListener = listener
     }
-    class CartViewHolder(listener: CartAdapter.OnItemClickListener, val binding: ItemInCartCardBinding) : RecyclerView.ViewHolder(binding.root) {
-    }
+    class CartViewHolder(listener: OnItemClickListener, val binding: ItemInCartCardBinding) : RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartAdapter.CartViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val itemView = ItemInCartCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CartViewHolder(mListener, itemView)
     }
 
-    override fun onBindViewHolder(holder: CartAdapter.CartViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         holder.binding.itemName.text = cart[position].sizeClothes.clothes.nameClothes
         holder.binding.itemPrice.text = cart[position].sizeClothes.clothes.priceClothes
         holder.binding.itemSize.text = cart[position].sizeClothes.sizeClothes.nameSize
@@ -44,12 +43,15 @@ class CartAdapter(private val cart: List<Cart>): RecyclerView.Adapter<CartAdapte
 
         holder.binding.addItem.setOnClickListener {
            mListener.onAddItem(cart[position].id)
+            notifyDataSetChanged()
         }
         holder.binding.decreaseItem.setOnClickListener {
             mListener.onDecreaseItem(cart[position].id)
+            notifyDataSetChanged()
         }
         holder.binding.deleteItem.setOnClickListener{
             mListener.onDeleteItem(cart[position].id)
+            notifyDataSetChanged()
         }
         holder.binding.itemPhoto.setOnClickListener {
             mListener.onItemClick(cart[position].sizeClothes.clothes.idClothes.toLong())
