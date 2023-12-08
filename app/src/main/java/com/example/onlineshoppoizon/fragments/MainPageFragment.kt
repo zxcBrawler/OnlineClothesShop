@@ -51,7 +51,7 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
                 }
 
                 is Resource.Failure -> {
-                    Toast.makeText(context, "Check network connection", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -77,8 +77,7 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
                 }
 
                 is Resource.Failure -> {
-                    Toast.makeText(requireContext(), "Check network connection", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }

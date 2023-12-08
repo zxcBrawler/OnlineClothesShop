@@ -65,6 +65,7 @@ class PaymentActivity : BaseActivity<PaymentViewModel, ActivityPaymentBinding, P
 
                  }
                  is Resource.Failure -> {
+                     Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
 
                  }
              }
@@ -87,7 +88,7 @@ class PaymentActivity : BaseActivity<PaymentViewModel, ActivityPaymentBinding, P
 
                 }
                 is Resource.Failure -> {
-
+                    Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -98,7 +99,9 @@ class PaymentActivity : BaseActivity<PaymentViewModel, ActivityPaymentBinding, P
                         cartIds.add(item.id)
                     }
                 }
-                is Resource.Failure -> {}
+                is Resource.Failure -> {
+                    Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -119,24 +122,21 @@ class PaymentActivity : BaseActivity<PaymentViewModel, ActivityPaymentBinding, P
             viewModel.orderResponse.observe(this){
                 when(it){
                     is Resource.Success -> {
-                        Toast.makeText(applicationContext, "+", Toast.LENGTH_SHORT).show()
                         viewModel.clearUserCart(userId)
                         viewModel.deleteResponse.observe(this){ its ->
                             when(its){
                                 is Resource.Success -> {
-                                    Toast.makeText(applicationContext, "+", Toast.LENGTH_SHORT).show()
                                     startNewActivityFromActivity(MainMenuActivity::class.java)
-                                    this.finish()
                                 }
                                 is Resource.Failure -> {
-
+                                    Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
 
                     }
                     is Resource.Failure -> {
-                        Toast.makeText(applicationContext, "-", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                     }
                 }
             }

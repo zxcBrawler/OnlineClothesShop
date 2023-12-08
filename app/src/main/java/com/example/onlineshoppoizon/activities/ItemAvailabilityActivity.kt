@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.adapters.ItemAvailabilityAdapter
 import com.example.onlineshoppoizon.databinding.ActivityItemAvailabilityBinding
 import com.example.onlineshoppoizon.databinding.MapPopupBinding
@@ -56,6 +57,7 @@ class ItemAvailabilityActivity : BaseActivity<ItemAvailabilityViewModel, Activit
                 }
 
                 is Resource.Failure -> {
+                    Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
 
                 }
             }

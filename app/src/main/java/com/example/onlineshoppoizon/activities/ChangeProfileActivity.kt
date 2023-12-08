@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
+import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.databinding.ActivityChangeProfileBinding
 import com.example.onlineshoppoizon.repository.ChangeProfileRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
@@ -64,12 +65,10 @@ class ChangeProfileActivity : BaseActivity<ChangeProfileViewModel, ActivityChang
         viewModel.userResponse.observe(this){ user ->
             when(user){
                 is Resource.Success -> {
-                    Toast.makeText(this, "+", Toast.LENGTH_SHORT).show()
-                    this.finish()
-
+                    finishActivity()
                 }
                 is Resource.Failure -> {
-                    Toast.makeText(this, "-", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }

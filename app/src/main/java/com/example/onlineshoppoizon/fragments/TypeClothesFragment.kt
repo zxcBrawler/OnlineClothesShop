@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.activities.FilteredCatalogueActivity
@@ -46,7 +47,7 @@ class TypeClothesFragment : BaseFragment<TypeClothesViewModel, FragmentTypeCloth
 
                 }
                 is Resource.Failure -> {
-
+                    Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }

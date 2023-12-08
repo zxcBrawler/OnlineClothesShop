@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.adapters.ClothesAdapter
 import com.example.onlineshoppoizon.databinding.ActivityFilteredCatalogueBinding
+import com.example.onlineshoppoizon.model.Clothes
 import com.example.onlineshoppoizon.repository.FilteredCatalogueRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
@@ -29,6 +31,14 @@ class FilteredCatalogueActivity : BaseActivity<FilteredCatalogueViewModel, Activ
         viewModel.typeClothesResponse.observe(this){
             when(it){
                 is Resource.Success -> {
+
+                    val list : MutableList<Clothes> = arrayListOf()
+                    list.addAll(it.value)
+
+                    if (list.size > 0){
+                        binding.nameType.text = list[0].typeClothes.nameType
+                    }
+
                     binding.itemsRecycler.layoutManager = GridLayoutManager(applicationContext, 2)
                     adapter = ClothesAdapter(it.value)
                     binding.itemsRecycler.adapter = setAnimationAlpha(adapter)
@@ -42,6 +52,7 @@ class FilteredCatalogueActivity : BaseActivity<FilteredCatalogueViewModel, Activ
 
                 }
                 is Resource.Failure -> {
+                    Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
 
                 }
             }

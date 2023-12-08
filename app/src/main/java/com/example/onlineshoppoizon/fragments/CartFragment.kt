@@ -69,8 +69,8 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
 
                         override fun onDeleteItem(position: Long) {
                             var dialog = MaterialAlertDialogBuilder(context!!, R.style.CustomDialogTheme)
-                            dialog.setTitle("Delete this item?")
-                                .setPositiveButton("Yes"
+                            dialog.setTitle(getString(R.string.delete_this_item))
+                                .setPositiveButton(getString(R.string.yes)
                                 ) { newDialog, _ ->
                                     newDialog.dismiss()
                                     viewModel.deleteFromCart(position, userId.toLong())
@@ -83,10 +83,12 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                                                 }
                                             }
 
-                                            is Resource.Failure -> {}
+                                            is Resource.Failure -> {
+                                                Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+                                            }
                                         }
                                     }
-                                }.setNegativeButton("No"){
+                                }.setNegativeButton(getString(R.string.no)){
                                         newDialog, _ ->
                                     newDialog.dismiss()
                                 }. show()
@@ -100,15 +102,18 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                                     viewModel.cartResponse.observe(viewLifecycleOwner) { p ->
                                         when (p) {
                                             is Resource.Success -> {
-
                                             }
-                                            is Resource.Failure -> {}
+                                            is Resource.Failure -> {
+                                                Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+                                            }
                                         }
                                     }
                                 }
                                 else {
                                     Toast.makeText(context,
-                                        "Cannot add more than ${Const.MAX_ITEM_COUNT} of single item",
+                                        getString(
+                                            R.string.cannot_add_more_than_of_single_item
+                                        ),
                                         Toast.LENGTH_SHORT).show()
                                 }
                             }
@@ -119,10 +124,10 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                             viewModel.updateQuantity(position, Const.DECREASE_ITEM, userId.toLong())
                             viewModel.cartResponse.observe(viewLifecycleOwner) { a ->
                                 when (a) {
-                                    is Resource.Success -> {
-
+                                    is Resource.Success -> {}
+                                    is Resource.Failure -> {
+                                        Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                                     }
-                                    is Resource.Failure -> {}
                                 }
                             }
                             updateList(list)
@@ -131,6 +136,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                     })
                 }
                 is Resource.Failure -> {
+                    Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -172,13 +178,17 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                                             hideElements()
                                         }
                                     }
-                                    is Resource.Failure -> {}
+                                    is Resource.Failure -> {
+                                        Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                is Resource.Failure -> {}
+                is Resource.Failure -> {
+                    Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+                }
             }
         }
         if (list.isNotEmpty()) {

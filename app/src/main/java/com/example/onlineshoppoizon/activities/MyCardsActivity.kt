@@ -52,8 +52,8 @@ class MyCardsActivity : BaseActivity<MyCardsViewModel, ActivityMyCardsBinding, M
 
                         override fun onItemDelete(position: Long) {
                             var dialog = MaterialAlertDialogBuilder(this@MyCardsActivity, R.style.CustomDialogTheme)
-                            dialog.setTitle("Delete this card?")
-                                .setPositiveButton("Yes"
+                            dialog.setTitle(getString(R.string.delete_this_card))
+                                .setPositiveButton(getString(R.string.yes)
                             ) {
                                     newDialog, _ ->
                                 newDialog.dismiss()
@@ -61,7 +61,7 @@ class MyCardsActivity : BaseActivity<MyCardsViewModel, ActivityMyCardsBinding, M
                                 viewModel.deleteResponse.observe(this@MyCardsActivity){ its ->
                                     when (its){
                                         is Resource.Success -> {
-                                            Toast.makeText(applicationContext, "Successfully deleted", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(applicationContext, getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show()
                                             this@MyCardsActivity.finish()
                                         }
                                         is Resource.Failure -> {
@@ -70,7 +70,7 @@ class MyCardsActivity : BaseActivity<MyCardsViewModel, ActivityMyCardsBinding, M
                                     }
                                 }
 
-                            }.setNegativeButton("No"
+                            }.setNegativeButton(getString(R.string.no)
                             ) { newDialog, _ ->
                                 newDialog.dismiss()
                             }
@@ -78,10 +78,9 @@ class MyCardsActivity : BaseActivity<MyCardsViewModel, ActivityMyCardsBinding, M
                         }
 
                     })
-                    Toast.makeText(this, "+", Toast.LENGTH_SHORT).show()
                 }
                 is Resource.Failure -> {
-                    Toast.makeText(this, "-", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -16,9 +16,10 @@
         android:layout_margin="20dp"/>
     <TextView
         android:id="@+id/change_text"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:textSize="35sp"
+        app:flow_wrapMode="chain"
         android:textColor="@color/dark_brown"
         android:text="@string/add_card"
         app:layout_constraintStart_toEndOf="@id/back"
@@ -49,7 +50,7 @@
             app:layout_constraintTop_toTopOf="parent"
            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="40dp"
-            android:hint="card num"
+            android:hint="@string/card_num"
             android:textSize="15dp"
             android:textColorHint="@color/light_grey"
             android:paddingLeft="10dp"/>
@@ -60,7 +61,7 @@
             android:background="@drawable/search_bar_style"
            app:layout_constraintTop_toBottomOf="@id/card_num"
             android:layout_marginHorizontal="20dp"
-            android:hint="exp date"
+            android:hint="@string/exp_date"
             android:textSize="15dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="20dp"
@@ -73,7 +74,7 @@
             android:background="@drawable/search_bar_style"
             app:layout_constraintTop_toBottomOf="@id/card_num"
             android:layout_marginHorizontal="20dp"
-            android:hint="cvv"
+            android:hint="@string/cvv"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="20dp"

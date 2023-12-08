@@ -3,6 +3,7 @@ package com.example.onlineshoppoizon.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.adapters.ItemsPaymentsAdapter
@@ -34,6 +35,7 @@ class OrderDetailsActivity : BaseActivity<OrderDetailsViewModel, ActivityOrderDe
 
                 }
                 is Resource.Failure -> {
+                    Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
 
                 }
             }
@@ -54,6 +56,7 @@ class OrderDetailsActivity : BaseActivity<OrderDetailsViewModel, ActivityOrderDe
 
                 }
                 is Resource.Failure -> {
+                    Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
 
                 }
             }

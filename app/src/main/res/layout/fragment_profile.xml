@@ -107,7 +107,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/change_profile_data"
+                android:text="@string/profile_data"
                 android:textSize="28sp"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="20dp"

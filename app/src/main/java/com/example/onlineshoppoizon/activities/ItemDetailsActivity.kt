@@ -54,12 +54,11 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                 is Resource.Success -> {
                     binding.productName.text = it.value.nameClothes
                     binding.productBarcode.text = it.value.barcode
-                    binding.productPrice.text = it.value.priceClothes + " p"
+                    binding.productPrice.text = it.value.priceClothes + getString(R.string.p)
                 }
 
                 is Resource.Failure -> {
-                    //TODO
-                    Toast.makeText(this, it.errorCode.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -78,8 +77,7 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                 }
 
                 is Resource.Failure -> {
-                    //TODO
-                    Toast.makeText(this, it.errorCode.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -102,14 +100,13 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                     adapter.setOnItemClickListener(object : ColorsAdapter.OnItemClickListener {
                         override fun onItemClick(position: Int) {
                             selectedColor = listColors[position].colorId.toInt()
-                            binding.colorText.text =
-                                "Selected color: ${listColors[position].nameColor}"
+                            binding.colorText.text = getString(R.string.selected_color) + listColors[position].nameColor
                         }
                     })
                 }
 
                 is Resource.Failure -> {
-                    Toast.makeText(this, it.errorCode.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -132,12 +129,13 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                         override fun onItemClick(position: Int) {
                             selectedSize = listSizes[position].id
                             binding.sizesText.text =
-                                "Selected size: ${listSizes[position].nameSize}"
+                                getString(R.string.selected_size) + listSizes[position].nameSize
                         }
                     })
                 }
                 is Resource.Failure -> {
-                    Toast.makeText(this, it.errorCode.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -148,7 +146,8 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
 
         binding.itemAvailability.setOnClickListener {
             if (selectedSize == 0 || selectedColor == 0){
-                Toast.makeText(this, "Choose size and color first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.choose_size_and_color_first), Toast.LENGTH_SHORT).show()
             }
             else {
                 val activity = ItemAvailabilityActivity::class.java
@@ -161,7 +160,7 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
         }
         binding.addToCart.setOnClickListener {
             if (selectedSize == 0 || selectedColor == 0){
-                Toast.makeText(this, "Choose size and color first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.choose_size_and_color_first), Toast.LENGTH_SHORT).show()
             }
             else {
                 val foundColor = list.find { it.colors.colorId.toInt() == selectedColor }
@@ -183,7 +182,7 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                                             is Resource.Success -> {
                                                 Toast.makeText(
                                                     this,
-                                                    "Item already exists in cart updating quantity",
+                                                    getString(R.string.item_already_exists_in_cart_updating_quantity),
                                                     Toast.LENGTH_SHORT
                                                 ).show()
                                                 this.finish()

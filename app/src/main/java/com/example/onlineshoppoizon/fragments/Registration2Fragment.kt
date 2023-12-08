@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
+import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.activities.MainActivity
 import com.example.onlineshoppoizon.activities.MainMenuActivity
 import com.example.onlineshoppoizon.databinding.FragmentRegistration2Binding
@@ -34,12 +35,10 @@ class Registration2Fragment : BaseFragment<RegisterViewModel,FragmentRegistratio
             when (it) {
                 is Resource.Success -> {
                     requireActivity().startNewActivityFromActivity(MainActivity::class.java)
-                    activity?.finish()
                 }
 
                 is Resource.Failure -> {
-                    Toast.makeText(requireContext(), it.errorCode.toString(), Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -69,7 +68,8 @@ class Registration2Fragment : BaseFragment<RegisterViewModel,FragmentRegistratio
                     profilePhoto,
                     bundle.getString("username")!!,
                     bundle.getString("password")!!,)
-                Toast.makeText(requireContext(), "Successfully registered", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(),
+                    getString(R.string.successfully_registered), Toast.LENGTH_SHORT)
                     .show()
             }
         }

@@ -57,5 +57,26 @@
     <string name="delivery_type">Delivery type:</string>
     <string name="payment_card">Payment card:</string>
     <string name="delivery_pick_up_address">Delivery / pick up address:</string>
+    <string name="card_num">card num</string>
+    <string name="exp_date">exp date</string>
+    <string name="cvv">cvv</string>
+    <string name="confirm_changes">confirm changes</string>
+    <string name="profile_data">profile info</string>
+    <string name="selected_size">"Selected size: "</string>
+    <string name="check_internet_connection">Check internet connection</string>
+    <string name="selected_color">"Selected color: "</string>
+    <string name="choose_size_and_color_first">Choose size and color first</string>
+    <string name="item_already_exists_in_cart_updating_quantity">Item already exists in cart updating quantity</string>
+    <string name="p">" p."</string>
+    <string name="delete_this_address">Delete this address?</string>
+    <string name="yes">Yes</string>
+    <string name="successfully_deleted">Successfully deleted</string>
+    <string name="no">No</string>
+    <string name="delete_this_card">Delete this card?</string>
+    <string name="cannot_add_more_than_of_single_item">Cannot add more than 9 of single item</string>
+    <string name="delete_this_item">Delete this item?</string>
+    <string name="invalid_email_or_password">Invalid email or password</string>
+    <string name="fill_out_all_fields">Fill out all fields</string>
+    <string name="successfully_registered">Successfully registered</string>
 
 </resources>

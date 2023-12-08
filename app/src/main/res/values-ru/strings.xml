@@ -40,7 +40,8 @@
     <string name="gender"><b>Пол</b></string>
     <string name="exit"><b>Выход</b></string>
     <string name="settings"><b>Настройки</b></string>
-    <string name="change_profile_data"><b>Данные профиля</b></string>
+    <string name="profile_data"><b>Данные профиля</b></string>
+    <string name="change_profile_data"><b>Изменить данные профиля</b></string>
     <string name="my_orders"><b>Мои заказы</b></string>
     <string name="username_profile"><b>Логин</b></string>
     <string name="order_date"><b>Номер заказа</b></string>
@@ -75,16 +76,36 @@
     <string name="product_barcode"><b>Артикул</b></string>
     <string name="choose_size"><b>Выберите размер</b></string>
     <string name="product_price"><b>Цена</b></string>
-    <string name="add_to_cart"><font size="17" weight="bold"><b>Добавить в корзину</b></font></string>
+    <string name="add_to_cart"><font size="17"><b>Добавить в корзину</b></font></string>
     <string name="my_addresses"><b>Мои адресы</b></string>
     <string name="add_new_address"><b>Добавить новый адрес</b></string>
     <string name="city"><b>Город</b></string>
     <string name="direction"><b>Точный адрес</b></string>
     <string name="name_address"><b>Название</b></string>
-    <string name="add_address">add address</string>
-    <string name="order_details">order details</string>
-    <string name="order_total_sum">Order total sum: </string>
-    <string name="delivery_type">Delivery type: </string>
-    <string name="payment_card">Payment card:</string>
-    <string name="delivery_pick_up_address">Delivery / pick up address:</string>
+    <string name="add_address"><b>Добавить адрес</b></string>
+    <string name="order_details"><b>Детали заказа</b></string>
+    <string name="order_total_sum"><b>Итог: </b></string>
+    <string name="delivery_type"><b>Тип доставки:</b> </string>
+    <string name="payment_card"><b>Карта оплаты:</b></string>
+    <string name="delivery_pick_up_address"><b>Адрес доставки:</b></string>
+    <string name="card_num"><b>Номер карты</b></string>
+    <string name="exp_date"><b>Срок</b></string>
+    <string name="cvv">cvv</string>
+    <string name="confirm_changes"><b>Подтвердить изменения</b></string>
+    <string name="selected_size"><b>Выбранный размер: </b></string>
+    <string name="check_internet_connection"><b>Проверьте соединение с интернетом</b></string>
+    <string name="selected_color"><b>Выбранный цвет: </b></string>
+    <string name="choose_size_and_color_first"><b>Сначала выберите цвет и размер</b></string>
+    <string name="item_already_exists_in_cart_updating_quantity"><b>Данный товар уже есть в корзине, обновление количества</b></string>
+    <string name="p"> p.</string>
+    <string name="delete_this_address"><b>Удалить адрес?</b></string>
+    <string name="yes"><b>Да</b></string>
+    <string name="successfully_deleted"><b>Успешно удалено</b></string>
+    <string name="no"><b>Нет</b></string>
+    <string name="delete_this_card"><b>Удалить карту?</b></string>
+    <string name="cannot_add_more_than_of_single_item"><b>Нельзя добавить больше чем</b></string>
+    <string name="delete_this_item"><b>Удалить товар из корзины?</b></string>
+    <string name="invalid_email_or_password"><b>Неверная связка логин-пароль</b></string>
+    <string name="fill_out_all_fields"><b>Заполните все поля </b></string>
+    <string name="successfully_registered"><b>Успешная регистрация</b></string>
 </resources>

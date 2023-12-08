@@ -43,11 +43,10 @@ class UserOrdersActivity : BaseActivity<UserOrdersViewModel, ActivityUserOrdersB
 
                         }
                     })
-                    Toast.makeText(this, "+", Toast.LENGTH_SHORT).show()
                     
                 }
                 is Resource.Failure -> {
-                    Toast.makeText(this, "-", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -8,5 +8,5 @@ data class Clothes(
     val priceClothes: String = "",
     val barcode: String = "",
     val clothesPhoto: String = "",
-    val typeClothes: TypeClothesResponse = TypeClothesResponse(),
+    val typeClothes: TypeClothes= TypeClothes(),
 )

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.lifecycle.asLiveData
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.activities.DeliveryActivity
@@ -79,14 +80,13 @@ class DeliveryFragment : BaseFragment<DeliveryFragmentViewModel, FragmentDeliver
                         }
 
                         override fun onNothingSelected(parent: AdapterView<*>?) {
-                            TODO("Not yet implemented")
                         }
 
                     }
 
                 }
                 is Resource.Failure -> {
-
+                    Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }

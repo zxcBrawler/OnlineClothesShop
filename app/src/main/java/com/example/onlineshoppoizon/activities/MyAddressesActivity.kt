@@ -44,13 +44,13 @@ class MyAddressesActivity : BaseActivity<MyAddressesViewModel, ActivityMyAddress
 
                     adapter.setOnItemClickListener(object : AddressAdapter.OnItemClickListener{
                         override fun onItemClick(position: Long) {
-                            TODO("Not yet implemented")
                         }
 
                         override fun onItemDelete(position: Long) {
                             var dialog = MaterialAlertDialogBuilder(this@MyAddressesActivity, R.style.CustomDialogTheme)
-                            dialog.setTitle("Delete this address?")
-                                .setPositiveButton("Yes"
+                            dialog.setTitle(getString(R.string.delete_this_address))
+                                .setPositiveButton(
+                                    getString(R.string.yes)
                                 ) {
                                         newDialog, _ ->
                                     newDialog.dismiss()
@@ -58,7 +58,8 @@ class MyAddressesActivity : BaseActivity<MyAddressesViewModel, ActivityMyAddress
                                     viewModel.deleteResponse.observe(this@MyAddressesActivity){ its ->
                                         when (its){
                                             is Resource.Success -> {
-                                                Toast.makeText(applicationContext, "Successfully deleted", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(applicationContext,
+                                                    getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show()
                                                 this@MyAddressesActivity.finish()
                                             }
                                             is Resource.Failure -> {
@@ -67,7 +68,8 @@ class MyAddressesActivity : BaseActivity<MyAddressesViewModel, ActivityMyAddress
                                         }
                                     }
 
-                                }.setNegativeButton("No"
+                                }.setNegativeButton(
+                                    getString(R.string.no)
                                 ) { newDialog, _ ->
                                     newDialog.dismiss()
                                 }
@@ -77,6 +79,7 @@ class MyAddressesActivity : BaseActivity<MyAddressesViewModel, ActivityMyAddress
                     })
                 }
                 is Resource.Failure -> {
+                    Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
 
                 }
             }

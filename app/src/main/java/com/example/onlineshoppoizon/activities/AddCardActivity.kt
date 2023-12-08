@@ -30,11 +30,10 @@ class AddCardActivity : BaseActivity<AddCardViewModel, ActivityAddCardBinding, A
             viewModel.cardResponse.observe(this){
                 when(it){
                     is Resource.Success -> {
-                        Toast.makeText(this, "+", Toast.LENGTH_SHORT).show()
-                        this.finish()
+                        finishActivity()
                     }
                     is Resource.Failure -> {
-                        Toast.makeText(this, "-", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                     }
                 }
             }

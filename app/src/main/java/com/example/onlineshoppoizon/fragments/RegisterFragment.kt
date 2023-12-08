@@ -47,7 +47,8 @@ class RegisterFragment : BaseFragment<RegisterViewModel,FragmentRegisterBinding,
                 FragmentHelper.openRegisterFragment(requireContext(), R.id.fragmentContainerView,secondFragment)
             }
             else {
-                Toast.makeText(requireContext(), "Fill out all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.fill_out_all_fields), Toast.LENGTH_SHORT).show()
             }
         }
     }

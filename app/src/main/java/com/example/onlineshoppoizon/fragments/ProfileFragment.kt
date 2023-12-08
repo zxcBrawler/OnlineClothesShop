@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.activities.ChangeProfileActivity
 import com.example.onlineshoppoizon.activities.MainActivity
 import com.example.onlineshoppoizon.activities.MyAddressesActivity
@@ -54,7 +55,7 @@ class ProfileFragment: BaseFragment<ProfileViewModel,FragmentProfileBinding,Prof
                 }
 
                 is Resource.Failure -> {
-                    Toast.makeText(context, "-", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }

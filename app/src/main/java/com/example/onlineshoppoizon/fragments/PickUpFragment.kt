@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.activities.DeliveryActivity
 import com.example.onlineshoppoizon.activities.PaymentActivity
@@ -107,7 +108,7 @@ class PickUpFragment : BaseFragment<PickUpViewModel, FragmentPickUpBinding, Pick
 
                 }
                 is Resource.Failure -> {
-
+                    Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }

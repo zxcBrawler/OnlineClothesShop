@@ -29,7 +29,6 @@ class CatalogueFragment : BaseFragment<CatalogueViewModel, FragmentCatalogueBind
         viewModel.catalogueResponse.observe(viewLifecycleOwner){
             when(it){
                 is Resource.Success -> {
-                    Toast.makeText(requireContext(), "123", Toast.LENGTH_SHORT).show()
                     binding.categoriesRecyclerView.layoutManager = LinearLayoutManager(view.context)
                     adapter = CategoriesAdapter(it.value)
                     binding.categoriesRecyclerView.adapter = adapter
@@ -46,7 +45,7 @@ class CatalogueFragment : BaseFragment<CatalogueViewModel, FragmentCatalogueBind
 
                 }
                 is Resource.Failure -> {
-                    Toast.makeText(requireContext(), "1234", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
                 }
             }
         }
