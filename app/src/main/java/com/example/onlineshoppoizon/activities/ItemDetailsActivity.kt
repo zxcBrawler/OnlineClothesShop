@@ -44,6 +44,7 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
     private var userId = 0
     private var token = ""
 
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -173,7 +174,7 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                 ).show()
             } else {
                 val activity = ItemAvailabilityActivity::class.java
-                val foundColor = list.find { it.colors.colorId.toInt() == selectedColor }
+                 val foundColor = list.find { it.colors.colorId.toInt() == selectedColor }
                 val foundSize = listClothesSizes.find { it.id == selectedSize }
                 startNewActivityWithClothesInfo(
                     activity,
@@ -194,12 +195,14 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                val foundColor = list.find { it.colors.colorId.toInt() == selectedColor }
+                val foundSize = listClothesSizes.find { it.id == selectedSize }
                 getUserToken.observe(this) { userToken ->
                     token = userToken
                     viewModel.getItemAvailability(
                         "Bearer $token",
-                        selectedSize.toLong(),
-                        selectedColor.toLong()
+                        foundSize!!.id.toLong(),
+                        foundColor!!.id
                     )
                 }
                 viewModel.itemAvailabilityResponse.observe(this) {its ->
@@ -212,9 +215,6 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                                     Toast.LENGTH_SHORT
                                 ).show()
                             } else {
-                                val foundColor =
-                                    list.find { it.colors.colorId.toInt() == selectedColor }
-                                val foundSize = listClothesSizes.find { it.id == selectedSize }
                                 if (foundSize != null && foundColor != null) {
                                     getUserToken.observe(this) { userToken ->
                                         token = userToken
