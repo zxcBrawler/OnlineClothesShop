@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView
     android:id="@+id/card"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
@@ -17,12 +17,13 @@
         >
     <ImageView
         android:id="@+id/item_photo"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
         android:outlineAmbientShadowColor="@color/light_grey"
         android:background="#D7D7D7"
         android:layout_marginBottom="10dp"
         android:scaleType="centerCrop"
+
         app:layout_constraintBottom_toTopOf="@id/item_name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -65,4 +65,13 @@ class ItemDetailsRepository
         safeApiCall {
             apiInterface.updateQuantity(token, id, updateType, userId)
         }
+
+    suspend fun getItemAvailability(
+        token: String,
+        colorId : Long,
+        sizeId : Long
+    ) =
+        safeApiCall {
+            apiInterface.getItemAvailability(token, colorId, sizeId)
+        }
 }

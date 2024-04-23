@@ -3,7 +3,9 @@ package com.example.onlineshoppoizon.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.onlineshoppoizon.model.Cart
 import com.example.onlineshoppoizon.model.ShopAddresses
+import com.example.onlineshoppoizon.model.ShopGarnish
 import com.example.onlineshoppoizon.model.UserCard
 import com.example.onlineshoppoizon.repository.CartRepository
 import com.example.onlineshoppoizon.repository.PickUpRepository
@@ -18,9 +20,29 @@ class PickUpViewModel @Inject constructor(private val repository: PickUpReposito
     private val _shopsResponse : MutableLiveData<Resource<List<ShopAddresses>>> = MutableLiveData()
     val shopsResponse : LiveData<Resource<List<ShopAddresses>>>
         get() = _shopsResponse
+    private val _cartResponse : MutableLiveData<Resource<List<Cart>>> = MutableLiveData()
+    val cartResponse : LiveData<Resource<List<Cart>>>
+        get() = _cartResponse
 
-    fun getShops( token : String,) =
+    private val _itemAvailabilityResponse : MutableLiveData<Resource<List<ShopGarnish>>> = MutableLiveData()
+    val itemAvailabilityResponse : LiveData<Resource<List<ShopGarnish>>>
+        get() = _itemAvailabilityResponse
+
+    fun getItemAvailability(
+        token : String,
+        colorId : Long,
+        sizeId : Long
+    ) =
         viewModelScope.launch {
-            _shopsResponse.value = repository.getShops(token)
+            _itemAvailabilityResponse.value = repository.getItemAvailability(token, colorId, sizeId)
+        }
+
+
+    fun getCart(
+        token : String,
+        id : Long
+    ) =
+        viewModelScope.launch {
+            _cartResponse.value = repository.getCartItems(token, id)
         }
 }

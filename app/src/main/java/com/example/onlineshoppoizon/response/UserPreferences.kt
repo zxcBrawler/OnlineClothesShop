@@ -29,14 +29,18 @@ class UserPreferences (
     val userId: Flow<Int?>
         get() = dataStore.data.map { it ->
             it[USER_ID]
-
+        }
+    val userGender: Flow<String?>
+        get() = dataStore.data.map { it ->
+            it[USER_GENDER]
         }
 
 
-    suspend fun saveAuthToken(token: String, id : Int){
+    suspend fun saveAuthToken(token: String, id : Int, gender: String){
         dataStore.edit { it ->
             it[KEY_AUTH] = token
             it[USER_ID] = id
+            it[USER_GENDER] = gender
         }
     }
 
@@ -56,6 +60,13 @@ class UserPreferences (
                 token
             }
     }
+    fun getGender() : Flow<String>{
+        return  dataStore.data
+            .map {
+                val token = it[USER_GENDER] ?: ""
+                token
+            }
+    }
 
 
     suspend fun clear(){
@@ -65,5 +76,6 @@ class UserPreferences (
     companion object {
         val KEY_AUTH =  preferencesKey<String>("key_auth")
         val USER_ID =  preferencesKey<Int>("user_id")
+        val USER_GENDER =  preferencesKey<String>("user_gender")
     }
 }

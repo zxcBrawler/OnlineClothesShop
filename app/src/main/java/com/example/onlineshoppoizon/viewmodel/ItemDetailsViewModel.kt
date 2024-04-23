@@ -8,6 +8,7 @@ import com.example.onlineshoppoizon.model.Clothes
 import com.example.onlineshoppoizon.model.ClothesColors
 import com.example.onlineshoppoizon.model.ClothesSizeClothes
 import com.example.onlineshoppoizon.model.PhotosOfClothes
+import com.example.onlineshoppoizon.model.ShopGarnish
 import com.example.onlineshoppoizon.repository.ItemDetailsRepository
 import com.example.onlineshoppoizon.response.CartResponse
 import com.example.onlineshoppoizon.retrofit.Resource
@@ -45,6 +46,19 @@ class ItemDetailsViewModel @Inject constructor(
     private val _existsResponse : MutableLiveData<Resource<Long>> = MutableLiveData()
     val existsResponse : LiveData<Resource<Long>>
         get() = _existsResponse
+
+    private val _itemAvailabilityResponse : MutableLiveData<Resource<List<ShopGarnish>>> = MutableLiveData()
+    val itemAvailabilityResponse : LiveData<Resource<List<ShopGarnish>>>
+        get() = _itemAvailabilityResponse
+
+    fun getItemAvailability(
+        token : String,
+        colorId : Long,
+        sizeId : Long
+    ) =
+        viewModelScope.launch {
+            _itemAvailabilityResponse.value = repository.getItemAvailability(token, colorId, sizeId)
+        }
 
 
     fun getClothesById(id : Int,  token : String,) =

@@ -24,7 +24,7 @@ class CardAdapter (private val cards: List<UserCard>): RecyclerView.Adapter<Card
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        holder.binding.orderNum.text = cards[position].card.cardNum
+        holder.binding.orderNum.text = cards[position].card.cardNum.takeLast(4)
         holder.binding.deleteCard.setOnClickListener {
             mListener.onItemDelete(cards[position].card.id)
             notifyDataSetChanged()

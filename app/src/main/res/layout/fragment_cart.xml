@@ -31,12 +31,32 @@
         app:layout_constraintTop_toBottomOf="@id/cart_text"
         android:background="@color/dark_brown"
         android:layout_marginTop="20dp"/>
+        <RelativeLayout
+            android:id="@+id/spinner_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:visibility="gone"
+            android:background="@drawable/input_fields"
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            android:layout_marginTop="15dp">
+            <Spinner
+                android:id="@+id/addresses"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingStart="13dp"
+                android:paddingEnd="20dp"
+                android:focusedByDefault="false"
+                />
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cart_items"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/separator"
+            app:layout_constraintTop_toBottomOf="@id/spinner_layout"
             android:visibility="gone"
             android:layout_marginTop="10dp"/>
         <TextView

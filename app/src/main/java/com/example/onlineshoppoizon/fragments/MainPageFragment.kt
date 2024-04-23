@@ -16,6 +16,7 @@ import com.example.onlineshoppoizon.activities.MainMenuActivity
 import com.example.onlineshoppoizon.adapters.ClothesAdapter
 import com.example.onlineshoppoizon.databinding.FragmentMainPageBinding
 import com.example.onlineshoppoizon.model.Cart
+import com.example.onlineshoppoizon.model.Clothes
 import com.example.onlineshoppoizon.repository.MainPageRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
@@ -29,17 +30,17 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
     private lateinit var adapter : ClothesAdapter
     private var userId = 0
     private var token = ""
+    private var gender = ""
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val getUserId = userPreferences.userId.asLiveData()
         val getUserToken = userPreferences.authToken.asLiveData()
+        val getUserGender = userPreferences.userGender.asLiveData()
 
         getUserId.observe(viewLifecycleOwner) {
             if (it != null) {
                 userId = it
             }
-
-
         }
         getUserToken.observe(viewLifecycleOwner){ userToken ->
             if (userToken != null) {
@@ -48,6 +49,7 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
             viewModel.getCart("Bearer $token", userId.toLong())
             viewModel.getClothes("Bearer $token")
         }
+
 
 
 
@@ -74,18 +76,28 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
 
 
         viewModel.clothesResponse.observe(viewLifecycleOwner) {
+            val clothesRecommendations : MutableList<Clothes> = mutableListOf()
             when (it) {
                 is Resource.Success -> {
                     binding.itemsRecycler.layoutManager = LinearLayoutManager(view.context)
+                    getUserGender.observe(viewLifecycleOwner){ userGender ->
+                        if (userGender != null) {
+                            gender = userGender
+                        }
 
-                    adapter = ClothesAdapter(it.value)
-
+                        for (item in it.value) {
+                            if (item.typeClothes.categoryClothes.nameCategory == gender){
+                                clothesRecommendations.add(item)
+                            }
+                        }
+                        adapter = ClothesAdapter(clothesRecommendations)
+                    }
                     binding.itemsRecycler.adapter = setAnimationAlpha(adapter)
 
                     adapter.setOnItemClickListener(object : ClothesAdapter.OnItemClickListener {
                         override fun onItemClick(position: Int) {
                             val activity = ItemDetailsActivity::class.java
-                            startNewActivityWithId(activity, it.value[position].idClothes)
+                            startNewActivityWithId(activity, clothesRecommendations[position].idClothes)
                         }
 
                     })

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
@@ -15,6 +17,7 @@ import com.example.onlineshoppoizon.activities.MainMenuActivity
 import com.example.onlineshoppoizon.adapters.CartAdapter
 import com.example.onlineshoppoizon.databinding.FragmentCartBinding
 import com.example.onlineshoppoizon.model.Cart
+import com.example.onlineshoppoizon.model.ShopAddresses
 import com.example.onlineshoppoizon.repository.CartRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
@@ -45,6 +48,65 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
         getUserToken.observe(viewLifecycleOwner){ userToken ->
             token = userToken
             viewModel.getCart("Bearer $token", userId.toLong()) // getting user cart info
+            viewModel.getShops("Bearer $token")
+        }
+        viewModel.shopsResponse.observe(viewLifecycleOwner){
+            when (it) {
+                is Resource.Success -> {
+                    val shopAddresses: MutableList<String> = arrayListOf()
+                    val itr = it.value.iterator()
+
+                    while (itr.hasNext()) {
+                        val item = itr.next()
+                        shopAddresses.add(item.shopAddressDirection)
+                    }
+
+                    val arrayAdapter =
+                        ArrayAdapter(
+                            requireContext(),
+                            android.R.layout.simple_spinner_dropdown_item,
+                            shopAddresses
+                        )
+                    binding.addresses.adapter = arrayAdapter
+                    binding.addresses.setSelection(0)
+                    // Store the currently selected position
+                    var currentSelectedPosition = 0
+
+                    binding.addresses.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                            // Check if the selected position has changed
+                            if (currentSelectedPosition != position) {
+                                MaterialAlertDialogBuilder(requireContext(), R.style.CustomDialogTheme)
+                                    .setTitle("Some items might not be available here")
+                                    .setMessage("The cart is needed to be cleared. Do you want to continue?")
+                                    .setPositiveButton(getString(R.string.yes)) { newDialog, _ ->
+                                        newDialog.dismiss()
+                                        // Update the currentSelectedPosition with the newly selected position
+                                        currentSelectedPosition = position
+                                        getUserToken.observe(viewLifecycleOwner){ userToken ->
+                                            token = userToken
+                                            viewModel.clearUserCart("Bearer $token", userId.toLong())
+                                        }
+                                        // Add your logic here for when the user clicks "Yes"
+                                    }
+                                    .setNegativeButton(getString(R.string.no)) { newDialog, _ ->
+                                        newDialog.dismiss()
+                                        // Reset the selected position to the previously selected position
+                                        binding.addresses.setSelection(currentSelectedPosition)
+                                    }
+                                    .show()
+                            }
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                        }
+                    }
+
+
+                }
+                is Resource.Failure -> {
+                }
+            }
         }
         viewModel.cartResponse.observe(viewLifecycleOwner) { // observing data that was returned from API`
             when (it) {
@@ -77,7 +139,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                         }
 
                         override fun onDeleteItem(position: Long) {
-                            var dialog = MaterialAlertDialogBuilder(context!!, R.style.CustomDialogTheme)
+                            val dialog = MaterialAlertDialogBuilder(context!!, R.style.CustomDialogTheme)
                             dialog.setTitle(getString(R.string.delete_this_item))
                                 .setPositiveButton(getString(R.string.yes)
                                 ) { newDialog, _ ->
@@ -226,7 +288,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
             viewModel.getCart("Bearer $token", userId.toLong())
         }
 
-        viewModel.getCart("Bearer $token", userId.toLong())
+
         viewModel.cartResponse.observe(viewLifecycleOwner){ new ->
             when(new){
                 is Resource.Success -> {
@@ -286,6 +348,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
         binding.continueButton.visible(false)
         binding.emptyCart.visible(true)
         binding.emptyCartText.visible(true)
+        binding.spinnerLayout.visible(false)
     }
     private fun showElements(){
         binding.cartItems.visible(true)
@@ -294,9 +357,8 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
         binding.continueButton.visible(true)
         binding.emptyCart.visible(false)
         binding.emptyCartText.visible(false)
+        binding.spinnerLayout.visible(true)
     }
-
-
 
     override fun getViewModel(): Class<CartViewModel>
             = CartViewModel::class.java

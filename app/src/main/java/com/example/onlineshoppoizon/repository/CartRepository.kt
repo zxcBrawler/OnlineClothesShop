@@ -33,4 +33,16 @@ class CartRepository @Inject constructor(private val apiInterface: ApiInterface)
             safeApiCall {
                 apiInterface.updateQuantity(token, id, updateType, userId)
             }
+    suspend fun getShops(token : String) =
+        safeApiCall {
+            apiInterface.getShops(token)
+        }
+    suspend fun clearUserCart(
+        token : String,
+        id : Long,
+    )
+            =
+        safeApiCall {
+            apiInterface.clearUserCart(token, id)
+        }
 }

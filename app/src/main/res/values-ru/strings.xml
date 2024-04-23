@@ -108,5 +108,11 @@
     <string name="invalid_email_or_password"><b>Неверная связка логин-пароль</b></string>
     <string name="fill_out_all_fields"><b>Заполните все поля </b></string>
     <string name="successfully_registered"><b>Успешная регистрация</b></string>
-    <string name="invalid_email_format">Invalid email format</string>
+    <string name="invalid_email_format">Неправильный формат почты</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="confirm_new_password">Подтвердить новый пароль</string>
+    <string name="change_password">Изменить пароль</string>
+    <string name="enter_your_username_and_new_password">Введите логин и новый пароль</string>
+    <string name="enter_all_fields">Fill out all fields</string>
+    <string name="enter_valid_data">Enter valid data</string>
 </resources>

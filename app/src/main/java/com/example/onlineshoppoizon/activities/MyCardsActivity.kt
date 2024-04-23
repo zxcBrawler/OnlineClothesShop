@@ -81,8 +81,6 @@ class MyCardsActivity : BaseActivity<MyCardsViewModel, ActivityMyCardsBinding, M
                                         }
                                     }
 
-
-
                             }.setNegativeButton(getString(R.string.no)
                             ) { newDialog, _ ->
                                 newDialog.dismiss()

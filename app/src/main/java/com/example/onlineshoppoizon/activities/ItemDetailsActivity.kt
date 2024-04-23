@@ -11,12 +11,14 @@ import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.adapters.ColorsAdapter
+import com.example.onlineshoppoizon.adapters.ItemAvailabilityAdapter
 import com.example.onlineshoppoizon.adapters.SizesAdapter
 import com.example.onlineshoppoizon.databinding.ActivityItemDetailsBinding
 import com.example.onlineshoppoizon.model.ClothesColors
 import com.example.onlineshoppoizon.model.ClothesSizeClothes
 import com.example.onlineshoppoizon.model.Colors
 import com.example.onlineshoppoizon.model.PhotosOfClothes
+import com.example.onlineshoppoizon.model.ShopGarnish
 import com.example.onlineshoppoizon.model.SizeClothes
 import com.example.onlineshoppoizon.repository.ItemDetailsRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
@@ -25,17 +27,20 @@ import com.example.onlineshoppoizon.ui.base.BaseActivity
 import com.example.onlineshoppoizon.utils.finishActivity
 import com.example.onlineshoppoizon.utils.startNewActivityWithClothesInfo
 import com.example.onlineshoppoizon.viewmodel.ItemDetailsViewModel
+import com.yandex.mapkit.geometry.Point
+import com.yandex.mapkit.map.CameraPosition
+import com.yandex.runtime.image.ImageProvider
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetailsBinding, ItemDetailsRepository>() {
 
-    private lateinit var adapter : ColorsAdapter
+    private lateinit var adapter: ColorsAdapter
     private lateinit var sizesAdapter: SizesAdapter
-    private var selectedColor : Int = 0
-    private var selectedSize : Int = 0
-    private val list : MutableList<ClothesColors> = ArrayList()
-    private val listClothesSizes : MutableList<ClothesSizeClothes> = ArrayList()
-    private val photoList : MutableList<PhotosOfClothes> = ArrayList()
+    private var selectedColor: Int = 0
+    private var selectedSize: Int = 0
+    private val list: MutableList<ClothesColors> = ArrayList()
+    private val listClothesSizes: MutableList<ClothesSizeClothes> = ArrayList()
+    private val photoList: MutableList<PhotosOfClothes> = ArrayList()
     private var userId = 0
     private var token = ""
 
@@ -51,7 +56,7 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
             userId = it
 
         }
-        getUserToken.observe(this){ userToken ->
+        getUserToken.observe(this) { userToken ->
             token = userToken
             viewModel.getClothesById(clothesId, "Bearer $token")
             viewModel.getPhotos("Bearer $token", clothesId.toLong())
@@ -69,7 +74,11 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                 }
 
                 is Resource.Failure -> {
-                    Toast.makeText(this,getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.check_internet_connection),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -88,7 +97,11 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                 }
 
                 is Resource.Failure -> {
-                    Toast.makeText(this, getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.check_internet_connection),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -105,13 +118,18 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                     adapter.setOnItemClickListener(object : ColorsAdapter.OnItemClickListener {
                         override fun onItemClick(position: Int) {
                             selectedColor = list[position].colors.colorId.toInt()
-                            binding.colorText.text = getString(R.string.selected_color) + list[position].colors.nameColor
+                            binding.colorText.text =
+                                getString(R.string.selected_color) + list[position].colors.nameColor
                         }
                     })
                 }
 
                 is Resource.Failure -> {
-                    Toast.makeText(this, getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.check_internet_connection),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -133,9 +151,12 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                         }
                     })
                 }
+
                 is Resource.Failure -> {
-                    Toast.makeText(this,
-                        getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.check_internet_connection), Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -145,89 +166,146 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
         }
 
         binding.itemAvailability.setOnClickListener {
-            if (selectedSize == 0 || selectedColor == 0){
-                Toast.makeText(this,
-                    getString(R.string.choose_size_and_color_first), Toast.LENGTH_SHORT).show()
-            }
-            else {
+            if (selectedSize == 0 || selectedColor == 0) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.choose_size_and_color_first), Toast.LENGTH_SHORT
+                ).show()
+            } else {
                 val activity = ItemAvailabilityActivity::class.java
                 val foundColor = list.find { it.colors.colorId.toInt() == selectedColor }
                 val foundSize = listClothesSizes.find { it.id == selectedSize }
-                startNewActivityWithClothesInfo(activity,clothesId, foundSize!!.id, foundColor!!.id.toInt())
+                startNewActivityWithClothesInfo(
+                    activity,
+                    clothesId,
+                    foundSize!!.id,
+                    foundColor!!.id.toInt()
+                )
             }
-
         }
         binding.back.setOnClickListener {
             finishActivity()
         }
         binding.addToCart.setOnClickListener {
-            if (selectedSize == 0 || selectedColor == 0){
-                Toast.makeText(this, getString(R.string.choose_size_and_color_first), Toast.LENGTH_SHORT).show()
-            }
-            else {
-                val foundColor = list.find { it.colors.colorId.toInt() == selectedColor }
-                val foundSize = listClothesSizes.find { it.id == selectedSize }
-                if (foundSize != null && foundColor != null) {
-                    getUserToken.observe(this){ userToken ->
-                        token = userToken
-                        viewModel.checkIfItemExistsInCart("Bearer $token",
-                            foundSize.sizeClothes.id.toLong(),
-                            foundColor.colors.colorId,
-                            userId.toLong(),
-                            clothesId.toLong()
-                        )
-                    }
-
-                    viewModel.existsResponse.observe(this) { exists ->
-                        when(exists) {
-                            is Resource.Success -> {
-                                if (exists.value.toInt() != -1){
-                                    getUserToken.observe(this){ userToken ->
+            if (selectedSize == 0 || selectedColor == 0) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.choose_size_and_color_first),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                getUserToken.observe(this) { userToken ->
+                    token = userToken
+                    viewModel.getItemAvailability(
+                        "Bearer $token",
+                        selectedSize.toLong(),
+                        selectedColor.toLong()
+                    )
+                }
+                viewModel.itemAvailabilityResponse.observe(this) {its ->
+                    when (its) {
+                        is Resource.Success -> {
+                            if (its.value.isEmpty()) {
+                                Toast.makeText(
+                                    this,
+                                    "This item is out of stock in every shop",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                val foundColor =
+                                    list.find { it.colors.colorId.toInt() == selectedColor }
+                                val foundSize = listClothesSizes.find { it.id == selectedSize }
+                                if (foundSize != null && foundColor != null) {
+                                    getUserToken.observe(this) { userToken ->
                                         token = userToken
-                                        viewModel.updateQuantity("Bearer $token", exists.value, 1, userId.toLong())
+                                        viewModel.checkIfItemExistsInCart(
+                                            "Bearer $token",
+                                            foundSize.sizeClothes.id.toLong(),
+                                            foundColor.colors.colorId,
+                                            userId.toLong(),
+                                            clothesId.toLong()
+                                        )
                                     }
 
-                                    viewModel.existsResponse.observe(this){ r ->
-                                        when(r){
+                                    viewModel.existsResponse.observe(this) { exists ->
+                                        when (exists) {
                                             is Resource.Success -> {
-                                                Toast.makeText(
-                                                    this,
-                                                    getString(R.string.item_already_exists_in_cart_updating_quantity),
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                                this.finish()
+                                                if (exists.value.toInt() != -1) {
+                                                    getUserToken.observe(this) { userToken ->
+                                                        token = userToken
+                                                        viewModel.updateQuantity(
+                                                            "Bearer $token",
+                                                            exists.value,
+                                                            1,
+                                                            userId.toLong()
+                                                        )
+                                                    }
+
+                                                    viewModel.existsResponse.observe(this) { r ->
+                                                        when (r) {
+                                                            is Resource.Success -> {
+                                                                Toast.makeText(
+                                                                    this,
+                                                                    getString(R.string.item_already_exists_in_cart_updating_quantity),
+                                                                    Toast.LENGTH_SHORT
+                                                                ).show()
+                                                                this.finish()
+                                                            }
+
+                                                            is Resource.Failure -> {
+                                                            }
+                                                        }
+                                                    }
+                                                } else {
+                                                    getUserToken.observe(this) { userToken ->
+                                                        token = userToken
+                                                        viewModel.addToCart(
+                                                            "Bearer $token",
+                                                            userId,
+                                                            foundColor.id.toInt(),
+                                                            1,
+                                                            foundSize.id
+                                                        )
+                                                    }
+                                                    viewModel.cartResponse.observe(this) {
+                                                        when (it) {
+                                                            is Resource.Success -> {
+                                                                this.finish()
+                                                            }
+                                                            is Resource.Failure -> {
+                                                                Toast.makeText(
+                                                                    this,
+                                                                    it.errorCode.toString(),
+                                                                    Toast.LENGTH_SHORT
+                                                                ).show()
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
-                                            is Resource.Failure -> {
-                                            }
-                                        }
-                                    }
-                                }
-                                else {
-                                    getUserToken.observe(this){ userToken ->
-                                        token = userToken
-                                        viewModel.addToCart("Bearer $token", userId, foundColor.id.toInt(),1, foundSize.id)
-                                    }
-                                    viewModel.cartResponse.observe(this) {
-                                        when (it) {
-                                            is Resource.Success -> {
-                                                this.finish()
-                                            }
-                                            is Resource.Failure -> {
-                                                Toast.makeText(
-                                                    this,
-                                                    it.errorCode.toString(),
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
+
+                                            is Resource.Failure -> {}
                                         }
                                     }
                                 }
                             }
-                            is Resource.Failure -> {}
                         }
-                    }
+
+
+
+                    is Resource.Failure -> {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.check_internet_connection),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
                 }
             }
+        }
+
+
         }
     }
     override fun getViewModel(): Class<ItemDetailsViewModel> =

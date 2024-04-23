@@ -7,6 +7,7 @@ import com.example.onlineshoppoizon.repository.AddCardRepository
 import com.example.onlineshoppoizon.repository.AuthRepository
 import com.example.onlineshoppoizon.repository.CartRepository
 import com.example.onlineshoppoizon.repository.CatalogueRepository
+import com.example.onlineshoppoizon.repository.ChangePasswordRepository
 import com.example.onlineshoppoizon.repository.ChangeProfileRepository
 import com.example.onlineshoppoizon.repository.DeliveryActivityRepository
 import com.example.onlineshoppoizon.repository.DeliveryFragmentRepository
@@ -31,6 +32,7 @@ import com.example.onlineshoppoizon.viewmodel.AddCardViewModel
 import com.example.onlineshoppoizon.viewmodel.AuthViewModel
 import com.example.onlineshoppoizon.viewmodel.CartViewModel
 import com.example.onlineshoppoizon.viewmodel.CatalogueViewModel
+import com.example.onlineshoppoizon.viewmodel.ChangePasswordViewModel
 import com.example.onlineshoppoizon.viewmodel.ChangeProfileViewModel
 import com.example.onlineshoppoizon.viewmodel.DeliveryActivityViewModel
 import com.example.onlineshoppoizon.viewmodel.DeliveryFragmentViewModel
@@ -87,6 +89,7 @@ class ViewModelFactory @Inject constructor (
              modelClass.isAssignableFrom(CatalogueViewModel::class.java) -> CatalogueViewModel(repository as CatalogueRepository) as T
              modelClass.isAssignableFrom(TypeClothesViewModel::class.java) -> TypeClothesViewModel(repository as TypeClothesRepository) as T
              modelClass.isAssignableFrom(FilteredCatalogueViewModel::class.java) -> FilteredCatalogueViewModel(repository as FilteredCatalogueRepository) as T
+             modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> ChangePasswordViewModel(repository as ChangePasswordRepository) as T
 
             else -> throw IllegalArgumentException("ViewModelClass not found")
          }
