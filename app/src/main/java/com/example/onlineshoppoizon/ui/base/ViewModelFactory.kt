@@ -58,6 +58,7 @@ class ViewModelFactory @Inject constructor (
     private val repository: BaseRepository
 ) : ViewModelProvider.NewInstanceFactory()
  {
+     val provider = ViewModelProvider.NewInstanceFactory()
      override fun <T : ViewModel> create(modelClass: Class<T>): T {
          return when{
              //create this line for every viewmodel in project

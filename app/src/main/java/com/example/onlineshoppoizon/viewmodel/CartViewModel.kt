@@ -18,25 +18,28 @@ class CartViewModel @Inject constructor(private val repository: CartRepository)
             get() = _cartResponse
 
     fun getCart(
+        token : String,
         id : Long
     ) =
         viewModelScope.launch {
-            _cartResponse.value = repository.getCartItems(id)
+            _cartResponse.value = repository.getCartItems(token, id)
         }
 
     fun deleteFromCart(
+        token : String,
         id : Long,
         userId : Long
     ) = viewModelScope.launch {
-        _cartResponse.value = repository.deleteFromCart(id, userId)
+        _cartResponse.value = repository.deleteFromCart(token, id, userId)
     }
 
     fun updateQuantity(
+        token : String,
         id : Long,
         updateType : Int,
         userId : Long,
     ) =
         viewModelScope.launch {
-            _cartResponse.value = repository.updateQuantity(id, updateType, userId)
+            _cartResponse.value = repository.updateQuantity(token, id, updateType, userId)
         }
 }

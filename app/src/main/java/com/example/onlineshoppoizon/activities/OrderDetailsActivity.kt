@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.adapters.ItemsPaymentsAdapter
@@ -19,12 +20,19 @@ import com.example.onlineshoppoizon.viewmodel.OrderDetailsViewModel
 
 class OrderDetailsActivity : BaseActivity<OrderDetailsViewModel, ActivityOrderDetailsBinding, OrderDetailsRepository>() {
     private lateinit var adapter : OrderCompositionAdapter
+    private var token = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val intent = intent.getIntExtra("id", 0)
+        val getUserToken = userPreferences.getToken().asLiveData()
 
-        viewModel.getOrderComposition(intent.toLong())
+        getUserToken.observe(this){ userToken ->
+            token = userToken
+            viewModel.getOrderComposition("Bearer $token", intent.toLong())
+            viewModel.getOrderDeliveryInfo("Bearer $token", intent.toLong())
+        }
+
         viewModel.compositionResponse.observe(this){
             when(it) {
                 is Resource.Success -> {
@@ -40,7 +48,7 @@ class OrderDetailsActivity : BaseActivity<OrderDetailsViewModel, ActivityOrderDe
                 }
             }
         }
-        viewModel.getOrderDeliveryInfo(intent.toLong())
+
         viewModel.deliveryResponse.observe(this){
             when(it) {
                 is Resource.Success -> {

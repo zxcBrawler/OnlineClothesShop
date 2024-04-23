@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
+import androidx.lifecycle.asLiveData
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.databinding.ActivityChangeProfileBinding
 import com.example.onlineshoppoizon.repository.ChangeProfileRepository
@@ -21,11 +22,18 @@ import com.example.onlineshoppoizon.viewmodel.ChangeProfileViewModel
 
 class ChangeProfileActivity : BaseActivity<ChangeProfileViewModel, ActivityChangeProfileBinding, ChangeProfileRepository> () {
     private lateinit var path : String
+    private var token = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val intent = intent.getIntExtra("id", 0)
+        val getUserToken = userPreferences.getToken().asLiveData()
 
-        viewModel.getUserById(intent.toLong())
+        getUserToken.observe(this){ userToken ->
+            token = userToken
+            viewModel.getUserById("Bearer $token", intent.toLong())
+        }
+
+
 
         viewModel.profileResponse.observe(this){
             when(it){
@@ -54,13 +62,17 @@ class ChangeProfileActivity : BaseActivity<ChangeProfileViewModel, ActivityChang
         }
 
         binding.additionalInfoButton.setOnClickListener {
-            viewModel.changeProfile(intent.toLong(),
-                binding.email.text.toString(),
-                binding.password.text.toString(),
-                binding.gender.selectedItemId,
-                binding.phoneNum.text.toString(),
-                path,
-                binding.username.text.toString())
+            getUserToken.observe(this){ userToken ->
+                token = userToken
+                viewModel.changeProfile("Bearer $token", intent.toLong(),
+                    binding.email.text.toString(),
+                    binding.password.text.toString(),
+                    binding.gender.selectedItemId,
+                    binding.phoneNum.text.toString(),
+                    path,
+                    binding.username.text.toString(), 4)
+            }
+
         }
         viewModel.userResponse.observe(this){ user ->
             when(user){

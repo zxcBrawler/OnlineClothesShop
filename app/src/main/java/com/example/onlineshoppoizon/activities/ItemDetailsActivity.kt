@@ -3,6 +3,7 @@ package com.example.onlineshoppoizon.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -36,6 +37,7 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
     private val listClothesSizes : MutableList<ClothesSizeClothes> = ArrayList()
     private val photoList : MutableList<PhotosOfClothes> = ArrayList()
     private var userId = 0
+    private var token = ""
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,16 +45,25 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
         val intent = intent
         val clothesId = intent.getIntExtra("id", 0)
         val getUserId = userPreferences.get().asLiveData()
+        val getUserToken = userPreferences.getToken().asLiveData()
 
         getUserId.observe(this) {
             userId = it
+
+        }
+        getUserToken.observe(this){ userToken ->
+            token = userToken
+            viewModel.getClothesById(clothesId, "Bearer $token")
+            viewModel.getPhotos("Bearer $token", clothesId.toLong())
+            viewModel.getClothesColors("Bearer $token", clothesId.toLong())
+            viewModel.getClothesSizes("Bearer $token", clothesId.toLong())
         }
 
-        viewModel.getClothesById(clothesId)
+
         viewModel.clothesByIdResponse.observe(this) {
             when (it) {
                 is Resource.Success -> {
-                    binding.productName.text = it.value.nameClothes
+                    binding.productName.text = it.value.nameClothesEn
                     binding.productBarcode.text = it.value.barcode
                     binding.productPrice.text = it.value.priceClothes + getString(R.string.p)
                 }
@@ -62,7 +73,7 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                 }
             }
         }
-        viewModel.getPhotos(clothesId.toLong())
+
         viewModel.clothesPhotoResponse.observe(this) {
             when (it) {
                 is Resource.Success -> {
@@ -82,25 +93,19 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
             }
         }
 
-        viewModel.getClothesColors(clothesId.toLong())
+
         viewModel.clothesColorsResponse.observe(this) {
             when (it) {
                 is Resource.Success -> {
-                    val listColors: MutableList<Colors> = ArrayList()
                     list.addAll(it.value)
-
-                    for (color in list) {
-                        listColors.add(color.colors)
-                    }
-
                     binding.colorsRecycler.layoutManager =
                         LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                    adapter = ColorsAdapter(listColors)
+                    adapter = ColorsAdapter(list)
                     binding.colorsRecycler.adapter = adapter
                     adapter.setOnItemClickListener(object : ColorsAdapter.OnItemClickListener {
                         override fun onItemClick(position: Int) {
-                            selectedColor = listColors[position].colorId.toInt()
-                            binding.colorText.text = getString(R.string.selected_color) + listColors[position].nameColor
+                            selectedColor = list[position].colors.colorId.toInt()
+                            binding.colorText.text = getString(R.string.selected_color) + list[position].colors.nameColor
                         }
                     })
                 }
@@ -110,26 +115,21 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                 }
             }
         }
-        viewModel.getClothesSizes(clothesId.toLong())
+
         viewModel.clothesSizesResponse.observe(this) {
             when (it) {
                 is Resource.Success -> {
-
-                    val listSizes: MutableList<SizeClothes> = ArrayList()
                     listClothesSizes.addAll(it.value)
-                    for (size in listClothesSizes) {
-                        listSizes.add(size.sizeClothes)
-                    }
-
+                    Log.e("123", listClothesSizes.size.toString())
                     binding.sizesRecycler.layoutManager =
                         LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                    sizesAdapter = SizesAdapter(listSizes)
+                    sizesAdapter = SizesAdapter(listClothesSizes)
                     binding.sizesRecycler.adapter = sizesAdapter
                     sizesAdapter.setOnItemClickListener(object : SizesAdapter.OnItemClickListener {
                         override fun onItemClick(position: Int) {
-                            selectedSize = listSizes[position].id
+                            selectedSize = listClothesSizes[position].id
                             binding.sizesText.text =
-                                getString(R.string.selected_size) + listSizes[position].nameSize
+                                getString(R.string.selected_size) + listClothesSizes[position].sizeClothes.nameSize
                         }
                     })
                 }
@@ -151,7 +151,9 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
             }
             else {
                 val activity = ItemAvailabilityActivity::class.java
-                startNewActivityWithClothesInfo(activity,clothesId, selectedSize, selectedColor)
+                val foundColor = list.find { it.colors.colorId.toInt() == selectedColor }
+                val foundSize = listClothesSizes.find { it.id == selectedSize }
+                startNewActivityWithClothesInfo(activity,clothesId, foundSize!!.id, foundColor!!.id.toInt())
             }
 
         }
@@ -164,19 +166,27 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
             }
             else {
                 val foundColor = list.find { it.colors.colorId.toInt() == selectedColor }
-                val foundSize = listClothesSizes.find { it.sizeClothes.id == selectedSize }
+                val foundSize = listClothesSizes.find { it.id == selectedSize }
                 if (foundSize != null && foundColor != null) {
-                    viewModel.checkIfItemExistsInCart(
-                        foundSize.sizeClothes.id.toLong(),
-                        foundColor.colors.colorId,
-                        userId.toLong(),
-                        clothesId.toLong()
-                    )
+                    getUserToken.observe(this){ userToken ->
+                        token = userToken
+                        viewModel.checkIfItemExistsInCart("Bearer $token",
+                            foundSize.sizeClothes.id.toLong(),
+                            foundColor.colors.colorId,
+                            userId.toLong(),
+                            clothesId.toLong()
+                        )
+                    }
+
                     viewModel.existsResponse.observe(this) { exists ->
                         when(exists) {
                             is Resource.Success -> {
                                 if (exists.value.toInt() != -1){
-                                    viewModel.updateQuantity(exists.value, 1, userId.toLong())
+                                    getUserToken.observe(this){ userToken ->
+                                        token = userToken
+                                        viewModel.updateQuantity("Bearer $token", exists.value, 1, userId.toLong())
+                                    }
+
                                     viewModel.existsResponse.observe(this){ r ->
                                         when(r){
                                             is Resource.Success -> {
@@ -193,15 +203,13 @@ class ItemDetailsActivity : BaseActivity<ItemDetailsViewModel, ActivityItemDetai
                                     }
                                 }
                                 else {
-                                    viewModel.addToCart(userId, foundColor.id.toInt(),1, foundSize.id)
+                                    getUserToken.observe(this){ userToken ->
+                                        token = userToken
+                                        viewModel.addToCart("Bearer $token", userId, foundColor.id.toInt(),1, foundSize.id)
+                                    }
                                     viewModel.cartResponse.observe(this) {
                                         when (it) {
                                             is Resource.Success -> {
-                                                Toast.makeText(
-                                                    this,
-                                                    it.value.toString(),
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
                                                 this.finish()
                                             }
                                             is Resource.Failure -> {

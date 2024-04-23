@@ -124,7 +124,7 @@ object RealPathUtil {
          * @param uri The Uri to check.
          * @return Whether the Uri authority is ExternalStorageProvider.
          */
-        fun isExternalStorageDocument(uri: Uri): Boolean {
+        private fun isExternalStorageDocument(uri: Uri): Boolean {
             return "com.android.externalstorage.documents" == uri.authority
         }
 
@@ -132,7 +132,7 @@ object RealPathUtil {
          * @param uri The Uri to check.
          * @return Whether the Uri authority is DownloadsProvider.
          */
-        fun isDownloadsDocument(uri: Uri): Boolean {
+        private fun isDownloadsDocument(uri: Uri): Boolean {
             return "com.android.providers.downloads.documents" == uri.authority
         }
 
@@ -140,7 +140,7 @@ object RealPathUtil {
          * @param uri The Uri to check.
          * @return Whether the Uri authority is MediaProvider.
          */
-        fun isMediaDocument(uri: Uri): Boolean {
+        private fun isMediaDocument(uri: Uri): Boolean {
             return "com.android.providers.media.documents" == uri.authority
         }
 
@@ -148,7 +148,7 @@ object RealPathUtil {
          * @param uri The Uri to check.
          * @return Whether the Uri authority is Google Photos.
          */
-        fun isGooglePhotosUri(uri: Uri): Boolean {
+        private fun isGooglePhotosUri(uri: Uri): Boolean {
             return "com.google.android.apps.photos.content" == uri.authority
         }
 }

@@ -21,8 +21,9 @@ class ProfileViewModel @Inject constructor (
         get() = _profileResponse
 
     fun getUserById (
+        token : String,
         id : Long
     ) = viewModelScope.launch {
-            _profileResponse.value = repository.getUserById(id)
+            _profileResponse.value = repository.getUserById(token, id)
         }
 }

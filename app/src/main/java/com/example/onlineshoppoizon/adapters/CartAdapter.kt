@@ -35,7 +35,7 @@ class CartAdapter(private val cart: List<Cart>): RecyclerView.Adapter<CartAdapte
     }
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
-        holder.binding.itemName.text = cart[position].sizeClothes.clothes.nameClothes
+        holder.binding.itemName.text = cart[position].sizeClothes.clothes.nameClothesEn
         holder.binding.itemPrice.text = cart[position].sizeClothes.clothes.priceClothes
         holder.binding.itemSize.text = cart[position].sizeClothes.sizeClothes.nameSize
         holder.binding.itemQuantity.text = cart[position].quantity

@@ -22,13 +22,19 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MyAddressesActivity : BaseActivity<MyAddressesViewModel, ActivityMyAddressesBinding, MyAddressesRepository>() {
     var userId : Long = 0
+    private var token = ""
     private lateinit var adapter : AddressAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val getUserToken = userPreferences.getToken().asLiveData()
 
         userPreferences.get().asLiveData().observe(this){
             userId = it.toLong()
-            viewModel.getUserAddresses(userId)
+
+        }
+        getUserToken.observe(this){ userToken ->
+            token = userToken
+            viewModel.getUserAddresses("Bearer $token", userId)
         }
 
         viewModel.addressResponse.observe(this){
@@ -54,19 +60,26 @@ class MyAddressesActivity : BaseActivity<MyAddressesViewModel, ActivityMyAddress
                                 ) {
                                         newDialog, _ ->
                                     newDialog.dismiss()
-                                    viewModel.deleteAddress(position)
-                                    viewModel.deleteResponse.observe(this@MyAddressesActivity){ its ->
-                                        when (its){
-                                            is Resource.Success -> {
-                                                Toast.makeText(applicationContext,
-                                                    getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show()
-                                                this@MyAddressesActivity.finish()
-                                            }
-                                            is Resource.Failure -> {
-
+                                    getUserToken.observe(this@MyAddressesActivity){ userToken ->
+                                        token = userToken
+                                        viewModel.deleteAddress("Bearer $token", position)
+                                        viewModel.deleteResponse.observe(this@MyAddressesActivity){ its ->
+                                            when (its){
+                                                is Resource.Success -> {
+                                                    Toast.makeText(applicationContext,
+                                                        getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show()
+                                                    this@MyAddressesActivity.finish()
+                                                }
+                                                is Resource.Failure -> {
+                                                    Toast.makeText(applicationContext,
+                                                        getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show()
+                                                    this@MyAddressesActivity.finish()
+                                                }
                                             }
                                         }
                                     }
+
+
 
                                 }.setNegativeButton(
                                     getString(R.string.no)

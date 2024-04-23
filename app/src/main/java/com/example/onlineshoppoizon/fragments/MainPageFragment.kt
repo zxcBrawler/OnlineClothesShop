@@ -8,6 +8,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.activities.ItemDetailsActivity
@@ -27,14 +28,28 @@ import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding,MainPageRepository >() {
     private lateinit var adapter : ClothesAdapter
     private var userId = 0
+    private var token = ""
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val getUserId = userPreferences.get().asLiveData()
+        val getUserId = userPreferences.userId.asLiveData()
+        val getUserToken = userPreferences.authToken.asLiveData()
 
         getUserId.observe(viewLifecycleOwner) {
-            userId = it
-            viewModel.getCart(userId.toLong())
+            if (it != null) {
+                userId = it
+            }
+
+
         }
+        getUserToken.observe(viewLifecycleOwner){ userToken ->
+            if (userToken != null) {
+                token = userToken
+            }
+            viewModel.getCart("Bearer $token", userId.toLong())
+            viewModel.getClothes("Bearer $token")
+        }
+
+
 
         viewModel.cartResponse.observe(viewLifecycleOwner) {
             when (it) {
@@ -56,12 +71,12 @@ class MainPageFragment : BaseFragment<MainPageViewModel, FragmentMainPageBinding
             }
         }
 
-        viewModel.getClothes()
+
 
         viewModel.clothesResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
-                    binding.itemsRecycler.layoutManager = GridLayoutManager(view.context, 2)
+                    binding.itemsRecycler.layoutManager = LinearLayoutManager(view.context)
 
                     adapter = ClothesAdapter(it.value)
 

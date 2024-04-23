@@ -103,9 +103,10 @@
     <string name="successfully_deleted"><b>Успешно удалено</b></string>
     <string name="no"><b>Нет</b></string>
     <string name="delete_this_card"><b>Удалить карту?</b></string>
-    <string name="cannot_add_more_than_of_single_item"><b>Нельзя добавить больше чем</b></string>
+    <string name="cannot_add_more_than_of_single_item"><b>Нельзя добавить больше чем 9 товаров</b></string>
     <string name="delete_this_item"><b>Удалить товар из корзины?</b></string>
     <string name="invalid_email_or_password"><b>Неверная связка логин-пароль</b></string>
     <string name="fill_out_all_fields"><b>Заполните все поля </b></string>
     <string name="successfully_registered"><b>Успешная регистрация</b></string>
+    <string name="invalid_email_format">Invalid email format</string>
 </resources>

@@ -26,16 +26,18 @@ class OrderDetailsViewModel @Inject constructor(private val repository: OrderDet
         get() = _compositionResponse
 
     fun getOrderDeliveryInfo(
+        token : String,
         orderId : Long
     ) =
         viewModelScope.launch {
-            _deliveryResponse.value = repository.getOrderDeliveryInfo(orderId)
+            _deliveryResponse.value = repository.getOrderDeliveryInfo(token, orderId)
         }
     fun getOrderComposition (
+        token : String,
         orderId : Long
     ) =
         viewModelScope.launch {
-            _compositionResponse.value = repository.getOrderComposition(orderId)
+            _compositionResponse.value = repository.getOrderComposition(token, orderId)
         }
 
 }

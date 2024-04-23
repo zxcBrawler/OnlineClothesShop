@@ -34,16 +34,22 @@ class DeliveryFragment : BaseFragment<DeliveryFragmentViewModel, FragmentDeliver
     var currentAddress : Address? = Address()
     private var userId : Long = 0
     private var sum : Double = 0.0
+    private var token = ""
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val getUserToken = userPreferences.getToken().asLiveData()
         val activity = requireActivity() as DeliveryActivity
 
         sum = activity.getCartSum()
 
         userPreferences.get().asLiveData().observe(viewLifecycleOwner){
             userId = it.toLong()
-            viewModel.getUserAddresses(userId)
         }
+        getUserToken.observe(viewLifecycleOwner){ userToken ->
+            token = userToken
+            viewModel.getUserAddresses("Bearer $token", userId)
+        }
+
         binding.pickUpRadio.setOnClickListener {
             FragmentHelper.openFragment(requireContext(), R.id.delivery_container, PickUpFragment())
         }
@@ -76,7 +82,6 @@ class DeliveryFragment : BaseFragment<DeliveryFragmentViewModel, FragmentDeliver
                             id: Long
                         ) {
                             currentAddress = findCurrentAddress(addresses)
-
                         }
 
                         override fun onNothingSelected(parent: AdapterView<*>?) {

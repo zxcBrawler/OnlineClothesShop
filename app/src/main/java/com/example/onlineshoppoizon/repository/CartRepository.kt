@@ -1,5 +1,6 @@
 package com.example.onlineshoppoizon.repository
 
+import com.example.onlineshoppoizon.response.UserPreferences
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.ui.base.BaseRepository
 import javax.inject.Inject
@@ -7,26 +8,29 @@ import javax.inject.Inject
 class CartRepository @Inject constructor(private val apiInterface: ApiInterface)
     : BaseRepository() {
         suspend fun getCartItems(
+            token: String,
             id : Long
         ) =
             safeApiCall {
-                apiInterface.getCart(id)
+                apiInterface.getCart(token, id)
             }
 
         suspend fun deleteFromCart(
+            token: String,
             id : Long,
             userId : Long
         ) =
             safeApiCall {
-                apiInterface.deleteItem(id, userId)
+                apiInterface.deleteItem(token, id, userId)
             }
 
         suspend fun updateQuantity(
+            token: String,
             id : Long,
             updateType : Int,
             userId : Long
         ) =
             safeApiCall {
-                apiInterface.updateQuantity(id, updateType, userId)
+                apiInterface.updateQuantity(token, id, updateType, userId)
             }
 }

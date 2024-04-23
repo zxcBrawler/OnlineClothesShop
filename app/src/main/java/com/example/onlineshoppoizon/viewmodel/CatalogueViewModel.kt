@@ -18,7 +18,7 @@ class CatalogueViewModel @Inject constructor(private val repository: CatalogueRe
     val catalogueResponse : LiveData<Resource<List<CategoryClothes>>>
         get() = _catalogueResponse
 
-    fun getCategories() = viewModelScope.launch {
-       _catalogueResponse.value = repository.getCategories()
+    fun getCategories(token : String) = viewModelScope.launch {
+       _catalogueResponse.value = repository.getCategories(token)
     }
 }

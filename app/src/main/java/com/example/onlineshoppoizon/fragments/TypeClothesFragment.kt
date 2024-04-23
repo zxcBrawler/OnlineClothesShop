@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.activities.FilteredCatalogueActivity
@@ -24,11 +25,17 @@ import com.example.onlineshoppoizon.viewmodel.TypeClothesViewModel
 
 class TypeClothesFragment : BaseFragment<TypeClothesViewModel, FragmentTypeClothesBinding, TypeClothesRepository>() {
     private lateinit var adapter : TypeClothesAdapter
+    private var token = ""
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val id = arguments?.getLong("id")
-        viewModel.getTypeClothes(id!!)
+        val getUserToken = userPreferences.getToken().asLiveData()
+        getUserToken.observe(viewLifecycleOwner){ userToken ->
+            token = userToken
+            viewModel.getTypeClothes("Bearer $token", id!!)
+        }
+
 
         viewModel.typeClothesResponse.observe((viewLifecycleOwner)){
             when(it){

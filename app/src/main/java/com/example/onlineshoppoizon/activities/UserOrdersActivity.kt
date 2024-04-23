@@ -6,6 +6,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.onlineshoppoizon.R
@@ -25,10 +26,16 @@ import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 class UserOrdersActivity : BaseActivity<UserOrdersViewModel, ActivityUserOrdersBinding, UserOrdersRepository>() {
 
     private lateinit var adapter : OrderAdapter
+    private var token = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val userId = intent.getIntExtra("id", 0)
-        viewModel.getUserOrders(userId.toLong())
+        val getUserToken = userPreferences.getToken().asLiveData()
+        getUserToken.observe(this){ userToken ->
+            token = userToken
+            viewModel.getUserOrders("Bearer $token", userId.toLong())
+        }
+
         viewModel.userOrderResponse.observe(this){
             when(it){
                 is Resource.Success -> {

@@ -30,26 +30,30 @@ class PaymentViewModel @Inject constructor(private val repository: PaymentReposi
         get() = _deleteResponse
 
     fun clearUserCart(
+        token : String,
         id : Long
     ) =
         viewModelScope.launch {
-            _deleteResponse.value = repository.clearUserCart(id)
+            _deleteResponse.value = repository.clearUserCart(token, id)
         }
 
     fun getUserCards(
+        token : String,
         id : Long
     ) =
         viewModelScope.launch {
-            _cardResponse.value = repository.getUserCards(id)
+            _cardResponse.value = repository.getUserCards(token, id)
         }
     fun getCart(
+        token : String,
         id : Long
     ) =
         viewModelScope.launch {
-            _cartResponse.value = repository.getCartItems(id)
+            _cartResponse.value = repository.getCartItems(token, id)
         }
 
     fun placeNewOrder(
+        token : String,
         sumOrder : String,
         userCardId : Long,
         typeDelivery : Long,
@@ -58,6 +62,6 @@ class PaymentViewModel @Inject constructor(private val repository: PaymentReposi
         orderComp : List<Long>
     ) =
         viewModelScope.launch {
-            _orderResponse.value = repository.placeNewOrder(sumOrder, userCardId, typeDelivery, shopAddress, userAddress, orderComp)
+            _orderResponse.value = repository.placeNewOrder(token, sumOrder, userCardId, typeDelivery, shopAddress, userAddress, orderComp)
         }
 }

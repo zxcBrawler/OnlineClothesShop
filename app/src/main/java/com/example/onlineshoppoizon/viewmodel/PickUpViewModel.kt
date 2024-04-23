@@ -19,8 +19,8 @@ class PickUpViewModel @Inject constructor(private val repository: PickUpReposito
     val shopsResponse : LiveData<Resource<List<ShopAddresses>>>
         get() = _shopsResponse
 
-    fun getShops() =
+    fun getShops( token : String,) =
         viewModelScope.launch {
-            _shopsResponse.value = repository.getShops()
+            _shopsResponse.value = repository.getShops(token)
         }
 }

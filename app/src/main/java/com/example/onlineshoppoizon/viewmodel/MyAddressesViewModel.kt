@@ -23,17 +23,19 @@ class MyAddressesViewModel @Inject constructor(private val repository: MyAddress
         get() = _deleteResponse
 
         fun getUserAddresses(
+            token : String,
             id : Long
         ) =
             viewModelScope.launch {
-                _addressResponse.value = repository.getUserAddresses(id)
+                _addressResponse.value = repository.getUserAddresses(token, id)
 
             }
 
     fun deleteAddress (
+        token : String,
         id : Long
     ) =
         viewModelScope.launch {
-            _deleteResponse.value = repository.deleteAddress(id)
+            _deleteResponse.value = repository.deleteAddress(token, id)
         }
 }

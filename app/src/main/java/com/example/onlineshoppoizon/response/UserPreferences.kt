@@ -21,16 +21,21 @@ class UserPreferences (
     = applicationContext.createDataStore(name = "my_data_store")
 
 
-    val authToken: Flow<Int?>
+    val authToken: Flow<String?>
     get() = dataStore.data.map { it ->
-            it[USER_ID]
-          //it[KEY_AUTH]
+          it[KEY_AUTH]
     }
 
+    val userId: Flow<Int?>
+        get() = dataStore.data.map { it ->
+            it[USER_ID]
 
-    suspend fun saveAuthToken(/*token: String*/ id : Int){
+        }
+
+
+    suspend fun saveAuthToken(token: String, id : Int){
         dataStore.edit { it ->
-            //it[KEY_AUTH] = token
+            it[KEY_AUTH] = token
             it[USER_ID] = id
         }
     }
@@ -40,6 +45,15 @@ class UserPreferences (
             .map {
                 val id = it[USER_ID] ?: -1
                 id
+
+
+            }
+    }
+    fun getToken() : Flow<String>{
+        return  dataStore.data
+            .map {
+                val token = it[KEY_AUTH] ?: ""
+                token
             }
     }
 

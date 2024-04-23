@@ -22,15 +22,16 @@ class MainPageViewModel @Inject constructor (
     val cartResponse : LiveData<Resource<List<Cart>>>
         get() = _cartResponse
 
-    fun getClothes()
+    fun getClothes(token : String)
     = viewModelScope.launch {
-        _clothesResponse.value = repository.getClothes()
+        _clothesResponse.value = repository.getClothes(token)
     }
 
     fun getCart(
+        token : String,
         id : Long
     ) =
         viewModelScope.launch {
-            _cartResponse.value = repository.getCartItems(id)
+            _cartResponse.value = repository.getCartItems(token,id)
         }
 }

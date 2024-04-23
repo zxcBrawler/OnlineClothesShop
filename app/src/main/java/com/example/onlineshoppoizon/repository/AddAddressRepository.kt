@@ -1,5 +1,6 @@
 package com.example.onlineshoppoizon.repository
 
+import com.example.onlineshoppoizon.response.UserPreferences
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.ui.base.BaseRepository
 import retrofit2.http.Field
@@ -9,13 +10,14 @@ class AddAddressRepository @Inject constructor(private val apiInterface: ApiInte
     : BaseRepository(){
 
         suspend fun addAddress(
+            token : String,
            userId: Long,
            city: String,
            nameAddress: String,
            directionAddress: String
         ) =
             safeApiCall {
-                apiInterface.addAddress(userId, city, nameAddress, directionAddress)
+                apiInterface.addAddress(token,userId, city, nameAddress, directionAddress)
             }
 
 }

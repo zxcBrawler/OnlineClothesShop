@@ -78,5 +78,6 @@
     <string name="invalid_email_or_password">Invalid email or password</string>
     <string name="fill_out_all_fields">Fill out all fields</string>
     <string name="successfully_registered">Successfully registered</string>
+    <string name="invalid_email_format">Invalid email format</string>
 
 </resources>

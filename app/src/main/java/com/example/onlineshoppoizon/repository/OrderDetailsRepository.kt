@@ -1,5 +1,6 @@
 package com.example.onlineshoppoizon.repository
 
+import com.example.onlineshoppoizon.response.UserPreferences
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.ui.base.BaseRepository
 import retrofit2.http.Field
@@ -10,17 +11,19 @@ class OrderDetailsRepository @Inject constructor(private val apiInterface: ApiIn
     : BaseRepository(){
 
     suspend fun getOrderDeliveryInfo(
+        token : String,
         orderId : Long
     ) =
         safeApiCall {
-            apiInterface.getOrderDeliveryInfo(orderId)
+            apiInterface.getOrderDeliveryInfo(token, orderId)
         }
 
     suspend fun getOrderComposition(
+        token : String,
         orderId: Long
     ) =
         safeApiCall {
-            apiInterface.getOrderComposition(orderId)
+            apiInterface.getOrderComposition(token, orderId)
         }
 
 }

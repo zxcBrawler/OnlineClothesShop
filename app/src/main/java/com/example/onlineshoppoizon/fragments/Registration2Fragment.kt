@@ -18,6 +18,7 @@ import com.example.onlineshoppoizon.repository.RegisterRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
+import com.example.onlineshoppoizon.ui.base.FragmentHelper
 import com.example.onlineshoppoizon.utils.RealPathUtil
 import com.example.onlineshoppoizon.utils.startNewActivityFromActivity
 import com.example.onlineshoppoizon.viewmodel.RegisterViewModel
@@ -45,6 +46,9 @@ class Registration2Fragment : BaseFragment<RegisterViewModel,FragmentRegistratio
 
         binding.back.setOnClickListener {
             bundle?.clear()
+        }
+        binding.back.setOnClickListener {
+            FragmentHelper.backToLoginFragment(requireContext(), R.id.fragmentContainerView, RegisterFragment())
         }
 
         binding.profilePhoto.setOnClickListener {

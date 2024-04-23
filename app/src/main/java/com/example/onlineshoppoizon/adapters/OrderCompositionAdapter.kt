@@ -23,7 +23,7 @@ class OrderCompositionAdapter (private val clothesList: List<OrderComposition>):
         holder: OrderCompViewHolder,
         position: Int
     ) {
-        holder.binding.itemName.text = clothesList[position].clothesComp.nameClothes
+        holder.binding.itemName.text = clothesList[position].clothesComp.nameClothesEn
         holder.binding.itemPrice.text =
             "${clothesList[position].quantity} X ${clothesList[position].clothesComp.priceClothes}"
         holder.binding.itemSize.text = clothesList[position].sizeClothes.nameSize

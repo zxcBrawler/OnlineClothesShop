@@ -18,10 +18,11 @@ class DeliveryFragmentViewModel @Inject constructor(private val repository: Deli
         get() = _addressResponse
 
     fun getUserAddresses(
+        token : String,
         id : Long
     ) =
         viewModelScope.launch {
-            _addressResponse.value = repository.getUserAddresses(id)
+            _addressResponse.value = repository.getUserAddresses(token, id)
 
         }
 }

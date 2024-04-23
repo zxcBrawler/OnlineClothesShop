@@ -16,12 +16,13 @@ class AddAddressViewModel @Inject constructor(private val repository: AddAddress
     val addressResponse : LiveData<Resource<UserAddress>>
         get() = _addressResponse
         fun addAddress(
+            token : String,
             userId: Long,
             city: String,
             nameAddress: String,
             directionAddress: String
         ) =
             viewModelScope.launch {
-                _addressResponse.value = repository.addAddress(userId, city, nameAddress, directionAddress)
+                _addressResponse.value = repository.addAddress(token,userId, city, nameAddress, directionAddress)
             }
 }

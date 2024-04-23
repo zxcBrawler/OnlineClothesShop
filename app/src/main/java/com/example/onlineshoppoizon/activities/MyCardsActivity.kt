@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -27,14 +28,20 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class MyCardsActivity : BaseActivity<MyCardsViewModel, ActivityMyCardsBinding, MyCardsRepository>() {
     private lateinit var adapter : CardAdapter
     private var userId : Long = 0
+    private var token = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val getUserToken = userPreferences.getToken().asLiveData()
+
         val intent = intent.getIntExtra("id", 0)
         userId = intent.toLong()
+        getUserToken.observe(this){ userToken ->
+            token = userToken
+            viewModel.getUserCards("Bearer $token", userId)
+        }
 
-        viewModel.getUserCards(userId)
 
         viewModel.cardResponse.observe(this){
             when(it){
@@ -57,18 +64,24 @@ class MyCardsActivity : BaseActivity<MyCardsViewModel, ActivityMyCardsBinding, M
                             ) {
                                     newDialog, _ ->
                                 newDialog.dismiss()
-                                viewModel.deleteCard(position)
-                                viewModel.deleteResponse.observe(this@MyCardsActivity){ its ->
-                                    when (its){
-                                        is Resource.Success -> {
-                                            Toast.makeText(applicationContext, getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show()
-                                            this@MyCardsActivity.finish()
-                                        }
-                                        is Resource.Failure -> {
-
+                                    getUserToken.observe(this@MyCardsActivity){ userToken ->
+                                        token = userToken
+                                        viewModel.deleteCard("Bearer $token", position)
+                                        viewModel.deleteResponse.observe(this@MyCardsActivity){ its ->
+                                            when (its){
+                                                is Resource.Success -> {
+                                                    Toast.makeText(applicationContext, getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show()
+                                                    this@MyCardsActivity.finish()
+                                                }
+                                                is Resource.Failure -> {
+                                                    Toast.makeText(applicationContext, getString(R.string.successfully_deleted), Toast.LENGTH_SHORT).show()
+                                                    this@MyCardsActivity.finish()
+                                                }
+                                            }
                                         }
                                     }
-                                }
+
+
 
                             }.setNegativeButton(getString(R.string.no)
                             ) { newDialog, _ ->

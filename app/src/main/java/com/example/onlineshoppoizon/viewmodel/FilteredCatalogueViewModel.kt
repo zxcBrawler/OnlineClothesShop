@@ -19,9 +19,10 @@ class FilteredCatalogueViewModel @Inject constructor(private val repository: Fil
         get() = _typeClothesResponse
 
     fun getTypeClothes(
+        token : String,
         id : Long
     ) =
         viewModelScope.launch {
-            _typeClothesResponse.value = repository.getTypeClothes(id)
+            _typeClothesResponse.value = repository.getTypeClothes(token, id)
         }
 }

@@ -47,30 +47,34 @@ class ItemDetailsViewModel @Inject constructor(
         get() = _existsResponse
 
 
-    fun getClothesById(id : Int) =
+    fun getClothesById(id : Int,  token : String,) =
         viewModelScope.launch {
-            _clothesByIdResponse.value = repository.getClothesById(id)
+            _clothesByIdResponse.value = repository.getClothesById(id, token)
         }
     fun getPhotos(
+        token : String,
         id : Long
     ) =
         viewModelScope.launch {
-            _clothesPhotoResponse.value = repository.getClothesPhoto(id)
+            _clothesPhotoResponse.value = repository.getClothesPhoto(token, id)
         }
     fun getClothesColors(
+        token : String,
         id : Long
     ) =
         viewModelScope.launch {
-            _clothesColorsResponse.value = repository.getClothesColors(id)
+            _clothesColorsResponse.value = repository.getClothesColors(token, id)
         }
     fun getClothesSizes(
+        token : String,
         id : Long
     ) =
         viewModelScope.launch {
-            _clothesSizesResponse.value = repository.getClothesSizes(id)
+            _clothesSizesResponse.value = repository.getClothesSizes(token, id)
         }
 
     fun addToCart(
+        token : String,
         user: Int,
         colorClothes: Int,
         quantity: Int,
@@ -78,10 +82,11 @@ class ItemDetailsViewModel @Inject constructor(
     ) =
         viewModelScope.launch {
             _cartResponse.value = repository.
-            addToCart(user, colorClothes, quantity, sizeClothes)
+            addToCart(token, user, colorClothes, quantity, sizeClothes)
         }
 
     fun checkIfItemExistsInCart (
+        token : String,
         size : Long,
         color: Long,
         user : Long,
@@ -89,15 +94,16 @@ class ItemDetailsViewModel @Inject constructor(
     ) =
         viewModelScope.launch {
             _existsResponse.value =
-            repository.checkIfItemExistsInCart(size, color, user, clothes)
+            repository.checkIfItemExistsInCart(token, size, color, user, clothes)
         }
 
     fun updateQuantity(
+        token : String,
         id : Long,
         updateType : Int,
         userId : Long
     ) =
         viewModelScope.launch {
-            _updateResponse.value = repository.updateQuantity(id, updateType, userId)
+            _updateResponse.value = repository.updateQuantity(token, id, updateType, userId)
         }
 }

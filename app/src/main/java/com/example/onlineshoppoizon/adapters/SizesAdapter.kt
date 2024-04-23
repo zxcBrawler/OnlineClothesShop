@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.onlineshoppoizon.databinding.ColorsCardBinding
 import com.example.onlineshoppoizon.databinding.SizeCardBinding
+import com.example.onlineshoppoizon.model.ClothesSizeClothes
 import com.example.onlineshoppoizon.model.Colors
 import com.example.onlineshoppoizon.model.SizeClothes
 
-class SizesAdapter(private val sizesList: List<SizeClothes>): RecyclerView.Adapter<SizesAdapter.SizesViewHolder>()  {
+class SizesAdapter(private val sizesList: List<ClothesSizeClothes>): RecyclerView.Adapter<SizesAdapter.SizesViewHolder>()  {
     private lateinit var mListener : OnItemClickListener
     interface OnItemClickListener {
         fun onItemClick(position: Int)
@@ -33,7 +34,7 @@ class SizesAdapter(private val sizesList: List<SizeClothes>): RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: SizesViewHolder, position: Int) {
-        holder.binding.sizeButton.text = sizesList[position].nameSize
+        holder.binding.sizeButton.text = sizesList[position].sizeClothes.nameSize
     }
 
     override fun getItemCount(): Int

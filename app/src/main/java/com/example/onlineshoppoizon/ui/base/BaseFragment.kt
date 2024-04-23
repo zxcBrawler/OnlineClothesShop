@@ -43,4 +43,5 @@ abstract class BaseFragment<vm: BaseViewModel, b: ViewBinding, r: BaseRepository
     abstract fun getViewModel() : Class<vm>
     abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): b
     abstract fun getFragmentRepository() : r
+
 }

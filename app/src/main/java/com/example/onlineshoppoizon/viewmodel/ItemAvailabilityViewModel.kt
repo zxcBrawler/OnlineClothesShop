@@ -19,10 +19,11 @@ class ItemAvailabilityViewModel @Inject constructor(
         get() = _itemAvailabilityResponse
 
     fun getItemAvailability(
+        token : String,
         colorId : Long,
         sizeId : Long
     ) =
         viewModelScope.launch {
-            _itemAvailabilityResponse.value = repository.getItemAvailability(colorId, sizeId)
+            _itemAvailabilityResponse.value = repository.getItemAvailability(token, colorId, sizeId)
         }
 }

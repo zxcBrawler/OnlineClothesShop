@@ -16,17 +16,23 @@ import com.example.onlineshoppoizon.viewmodel.AddCardViewModel
 
 class AddCardActivity : BaseActivity<AddCardViewModel, ActivityAddCardBinding, AddCardRepository>() {
     private var userId : Long = 0
+    private var token = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val getUserToken = userPreferences.getToken().asLiveData()
         userPreferences.get().asLiveData().observe(this){
             userId = it.toLong()
+            getUserToken.observe(this){ userToken ->
+                token = userToken
+
+            }
         }
         binding.addCard.setOnClickListener {
             val cardNum = binding.cardNum.text.toString()
             val cvv = binding.cvv.text.toString()
             val expDate = binding.expDate.text.toString()
             //implement null check on fields
-            viewModel.addUserCard(userId,cardNum,expDate,cvv)
+            viewModel.addUserCard("Bearer $token", userId,cardNum,expDate,cvv)
             viewModel.cardResponse.observe(this){
                 when(it){
                     is Resource.Success -> {

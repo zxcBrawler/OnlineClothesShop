@@ -17,6 +17,7 @@ class AddCardViewModel @Inject constructor(private val repository: AddCardReposi
     val cardResponse : LiveData<Resource<UserCard>>
         get() = _cardResponse
         fun addUserCard(
+            token : String,
             userId : Long,
             cardNum: String,
             expDate: String,
@@ -24,7 +25,7 @@ class AddCardViewModel @Inject constructor(private val repository: AddCardReposi
         ) =
             viewModelScope.launch {
                 _cardResponse.value = repository
-                    .addCard(userId, cardNum, expDate, cvv)
+                    .addCard(token, userId, cardNum, expDate, cvv)
             }
 
 }

@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.lifecycle.asLiveData
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.activities.DeliveryActivity
 import com.example.onlineshoppoizon.activities.PaymentActivity
@@ -34,9 +35,15 @@ import com.yandex.runtime.image.ImageProvider
 class PickUpFragment : BaseFragment<PickUpViewModel, FragmentPickUpBinding, PickUpRepository>() {
     var currentAddress : ShopAddresses? = ShopAddresses()
     private var sum : Double = 0.0
+    private var token = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val getUserToken = userPreferences.getToken().asLiveData()
+        getUserToken.observe(viewLifecycleOwner){ userToken ->
+            token = userToken
+            viewModel.getShops("Bearer $token")
+        }
 
         val activity = requireActivity() as DeliveryActivity
 
@@ -48,7 +55,7 @@ class PickUpFragment : BaseFragment<PickUpViewModel, FragmentPickUpBinding, Pick
             FragmentHelper.openFragment(requireContext(), R.id.delivery_container, DeliveryFragment())
         }
 
-        viewModel.getShops()
+
         viewModel.shopsResponse.observe(viewLifecycleOwner){
             when(it){
                 is Resource.Success -> {

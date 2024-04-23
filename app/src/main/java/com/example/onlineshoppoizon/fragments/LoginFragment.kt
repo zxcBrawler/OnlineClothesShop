@@ -8,13 +8,17 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.onlineshoppoizon.activities.MainMenuActivity
 import com.example.onlineshoppoizon.R
+import com.example.onlineshoppoizon.activities.ForgotPasswordActivity
 import com.example.onlineshoppoizon.databinding.FragmentLoginBinding
 import com.example.onlineshoppoizon.repository.AuthRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
 import com.example.onlineshoppoizon.ui.base.FragmentHelper
+import com.example.onlineshoppoizon.utils.EmailValidator
+import com.example.onlineshoppoizon.utils.PasswordValidator
 import com.example.onlineshoppoizon.utils.startNewActivityFromActivity
+import com.example.onlineshoppoizon.utils.startNewActivityFromFragment
 import com.example.onlineshoppoizon.utils.visible
 import com.example.onlineshoppoizon.viewmodel.AuthViewModel
 import kotlinx.coroutines.launch
@@ -30,7 +34,7 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
             when (it) {
                 is Resource.Success -> {
                     lifecycleScope.launch {
-                        userPreferences.saveAuthToken(it.value.user.id.toInt())
+                        userPreferences.saveAuthToken(it.value.accessToken ?: "",it.value.user.id.toInt())
                     }
                     requireActivity().startNewActivityFromActivity(MainMenuActivity::class.java)
                     activity?.finish()
@@ -46,14 +50,26 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
         }
 
         binding.loginButton.setOnClickListener {
-            val email = binding.email.text.toString().trim()
+            val username = binding.username.text.toString().trim()
             val password = binding.password.text.toString().trim()
             binding.loading.visible(true)
-            viewModel.login(email, password)
+            viewModel.login(username, password)
+           // if(EmailValidator.isValidEmail(email) && PasswordValidator.validatePassword(password).isSuccess){
+
+           // }
+           /* else {
+                Toast.makeText(requireContext(),
+                    getString(R.string.invalid_email_format), Toast.LENGTH_SHORT).show()
+            }*/
+
         }
 
         binding.registerButton.setOnClickListener {
             FragmentHelper.openRegisterFragment(requireContext(), R.id.fragmentContainerView, RegisterFragment())
+        }
+
+        binding.forgotPassword.setOnClickListener {
+            startNewActivityFromFragment(ForgotPasswordActivity::class.java)
         }
     }
 

@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.adapters.ClothesAdapter
@@ -22,11 +24,18 @@ import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 
 class FilteredCatalogueActivity : BaseActivity<FilteredCatalogueViewModel, ActivityFilteredCatalogueBinding, FilteredCatalogueRepository>() {
     private lateinit var adapter : ClothesAdapter
+    private var token = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val intent = intent.getIntExtra("id", 0)
-        viewModel.getTypeClothes(intent.toLong())
+        val getUserToken = userPreferences.getToken().asLiveData()
+
+        getUserToken.observe(this){ userToken ->
+            token = userToken
+            viewModel.getTypeClothes("Bearer $token", intent.toLong())
+        }
+
 
         viewModel.typeClothesResponse.observe(this){
             when(it){
@@ -39,7 +48,7 @@ class FilteredCatalogueActivity : BaseActivity<FilteredCatalogueViewModel, Activ
                         binding.nameType.text = list[0].typeClothes.nameType
                     }
 
-                    binding.itemsRecycler.layoutManager = GridLayoutManager(applicationContext, 2)
+                    binding.itemsRecycler.layoutManager = LinearLayoutManager(applicationContext)
                     adapter = ClothesAdapter(it.value)
                     binding.itemsRecycler.adapter = setAnimationAlpha(adapter)
                     adapter.setOnItemClickListener(object : ClothesAdapter.OnItemClickListener {

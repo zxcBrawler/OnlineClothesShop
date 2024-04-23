@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.onlineshoppoizon.databinding.ColorsCardBinding
+import com.example.onlineshoppoizon.model.Clothes
+import com.example.onlineshoppoizon.model.ClothesColors
 import com.example.onlineshoppoizon.model.Colors
 
 
-class ColorsAdapter(private val colorsList: List<Colors>): RecyclerView.Adapter<ColorsAdapter.ColorsViewHolder>() {
+class ColorsAdapter(private val colorsList: List<ClothesColors>): RecyclerView.Adapter<ColorsAdapter.ColorsViewHolder>() {
     private lateinit var mListener : OnItemClickListener
     interface OnItemClickListener {
         fun onItemClick(position: Int)
@@ -33,7 +35,7 @@ class ColorsAdapter(private val colorsList: List<Colors>): RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: ColorsViewHolder, position: Int) {
-        holder.binding.colorButton.setBackgroundColor(Color.parseColor(colorsList[position].hex))
+        holder.binding.colorButton.setBackgroundColor(Color.parseColor(colorsList[position].colors.hex))
     }
 
     override fun getItemCount(): Int =

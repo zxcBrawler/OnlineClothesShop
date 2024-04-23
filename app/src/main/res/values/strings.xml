@@ -102,10 +102,11 @@
     <string name="successfully_deleted">Successfully deleted</string>
     <string name="no">No</string>
     <string name="delete_this_card">Delete this card?</string>
-    <string name="cannot_add_more_than_of_single_item">Cannot add more than %1$s of single item</string>
+        <string name="cannot_add_more_than_of_single_item">Cannot add more than 9 of single item</string>
     <string name="delete_this_item">Delete this item?</string>
     <string name="invalid_email_or_password">Invalid email or password</string>
     <string name="fill_out_all_fields">Fill out all fields</string>
     <string name="successfully_registered">Successfully registered</string>
+    <string name="invalid_email_format">Invalid email format</string>
 
 </resources>

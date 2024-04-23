@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlineshoppoizon.R
@@ -28,16 +29,24 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
     private lateinit var adapter : CartAdapter
     private var userId = 0
     private var doublePrice = 0.0
+    private var totalPrice = ""
+    private var token = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val getUserId = userPreferences.get().asLiveData()
+        val getUserToken = userPreferences.getToken().asLiveData()
 
+        //getting userID from userPreferences
         getUserId.observe(viewLifecycleOwner) {
             userId = it
-            viewModel.getCart(userId.toLong())
         }
-        viewModel.cartResponse.observe(viewLifecycleOwner) {
+
+        getUserToken.observe(viewLifecycleOwner){ userToken ->
+            token = userToken
+            viewModel.getCart("Bearer $token", userId.toLong()) // getting user cart info
+        }
+        viewModel.cartResponse.observe(viewLifecycleOwner) { // observing data that was returned from API`
             when (it) {
                 is Resource.Success -> {
                     val list: MutableList<Cart> = ArrayList()
@@ -47,14 +56,14 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                         showElements()
                     }
 
-
+                    // Getting every item price from cart in for() cycle
                     for (price in list) {
                         doublePrice += (price.sizeClothes.clothes.priceClothes.toBigDecimal() *
-                                price.quantity.toBigDecimal()).toDouble()
+                                price.quantity.toBigDecimal()).toDouble() // counting total of each item based on item quantity
 
-                        val totalPrice = String.format("%.3f", doublePrice)
+                        val totalPrice = String.format("%.3f", doublePrice) // format number to sting with 3 digits after point
 
-                        binding.totalPrice.text = totalPrice
+                        binding.totalPrice.text = totalPrice // setting totalPrice TextView value to total price that had been counted
                     }
 
 
@@ -73,7 +82,10 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                                 .setPositiveButton(getString(R.string.yes)
                                 ) { newDialog, _ ->
                                     newDialog.dismiss()
-                                    viewModel.deleteFromCart(position, userId.toLong())
+                                    getUserToken.observe(viewLifecycleOwner){ userToken ->
+                                        token = userToken
+                                        viewModel.deleteFromCart("Bearer $token",position, userId.toLong())
+                                    }
                                     list.removeIf { l -> l.id == position }
                                     viewModel.cartResponse.observe(viewLifecycleOwner) { its ->
                                         when (its) {
@@ -92,13 +104,70 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                                         newDialog, _ ->
                                     newDialog.dismiss()
                                 }. show()
-                            updateList(list)
+                            getUserToken.observe(viewLifecycleOwner){ userToken ->
+                                token = userToken
+                                viewModel.getCart("Bearer $token", userId.toLong()) // getting user cart info
+                            }
+
+                            viewModel.cartResponse.observe(viewLifecycleOwner){ new ->
+                                when(new){
+                                    is Resource.Success -> {
+                                        list.clear()
+                                        list.addAll(new.value)
+                                        binding.totalPrice.text = "0"
+                                        doublePrice = 0.0
+                                        for (price in list) {
+                                            doublePrice += (price.sizeClothes.clothes.priceClothes.toBigDecimal() *
+                                                    price.quantity.toBigDecimal()).toDouble()
+
+                                            totalPrice = String.format("%.3f", doublePrice)
+
+                                            binding.totalPrice.text = totalPrice
+                                        }
+                                        val itr = list.iterator()
+
+                                        while (itr.hasNext()){
+                                            val item = itr.next()
+                                            if (item.quantity.toInt() == 0){
+
+                                                getUserToken.observe(viewLifecycleOwner){ userToken ->
+                                                    token = userToken
+                                                    viewModel.deleteFromCart("Bearer $token", item.id, userId.toLong())
+                                                }
+                                                itr.remove()
+                                                viewModel.cartResponse.observe(viewLifecycleOwner) { u ->
+                                                    when (u) {
+                                                        is Resource.Success -> {
+                                                            if (list.isEmpty()) {
+                                                                hideElements()
+                                                            }
+                                                        }
+                                                        is Resource.Failure -> {
+                                                            Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    is Resource.Failure -> {
+                                        Toast.makeText(requireContext(),getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            }
+                            if (list.isNotEmpty()) {
+                                showElements()
+                            }
                         }
 
                         override fun onAddItem(position: Long) {
                             for (item in list) {
                                 if (item.quantity.toInt() < Const.MAX_ITEM_COUNT) {
-                                    viewModel.updateQuantity(position, Const.ADD_ITEM, userId.toLong())
+                                    getUserToken.observe(viewLifecycleOwner){ userToken ->
+                                        token = userToken
+                                        viewModel.updateQuantity("Bearer $token", position, Const.ADD_ITEM, userId.toLong())
+                                    }
+
                                     viewModel.cartResponse.observe(viewLifecycleOwner) { p ->
                                         when (p) {
                                             is Resource.Success -> {
@@ -117,11 +186,15 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                                         Toast.LENGTH_SHORT).show()
                                 }
                             }
-                            updateList(list)
+                            updateList(list, getUserToken)
                         }
 
                         override fun onDecreaseItem(position: Long) {
-                            viewModel.updateQuantity(position, Const.DECREASE_ITEM, userId.toLong())
+                            getUserToken.observe(viewLifecycleOwner){ userToken ->
+                                token = userToken
+                                viewModel.updateQuantity("Bearer $token", position, Const.DECREASE_ITEM, userId.toLong())
+                            }
+
                             viewModel.cartResponse.observe(viewLifecycleOwner) { a ->
                                 when (a) {
                                     is Resource.Success -> {}
@@ -130,7 +203,7 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                                     }
                                 }
                             }
-                            updateList(list)
+                            updateList(list, getUserToken)
                         }
 
                     })
@@ -147,8 +220,13 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
         }
     }
 
-    private fun updateList(list : MutableList<Cart>){
-        viewModel.getCart(userId.toLong())
+    private fun updateList(list : MutableList<Cart>, getUserToken : LiveData<String>){
+        getUserToken.observe(viewLifecycleOwner){ userToken ->
+            token = userToken
+            viewModel.getCart("Bearer $token", userId.toLong())
+        }
+
+        viewModel.getCart("Bearer $token", userId.toLong())
         viewModel.cartResponse.observe(viewLifecycleOwner){ new ->
             when(new){
                 is Resource.Success -> {
@@ -169,7 +247,11 @@ class CartFragment : BaseFragment<CartViewModel, FragmentCartBinding, CartReposi
                     while (itr.hasNext()){
                         val item = itr.next()
                         if (item.quantity.toInt() == 0){
-                            viewModel.deleteFromCart(item.id, userId.toLong())
+                            getUserToken.observe(viewLifecycleOwner){ userToken ->
+                                token = userToken
+                                viewModel.deleteFromCart("Bearer $token", item.id, userId.toLong())
+                            }
+
                             itr.remove()
                             viewModel.cartResponse.observe(viewLifecycleOwner) { u ->
                                 when (u) {

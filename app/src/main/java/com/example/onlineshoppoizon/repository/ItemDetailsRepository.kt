@@ -2,6 +2,7 @@ package com.example.onlineshoppoizon.repository
 
 import com.example.onlineshoppoizon.model.ClothesColors
 import com.example.onlineshoppoizon.model.ClothesSizeClothes
+import com.example.onlineshoppoizon.response.UserPreferences
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.ui.base.BaseRepository
 import javax.inject.Inject
@@ -9,53 +10,59 @@ import javax.inject.Inject
 class ItemDetailsRepository
 @Inject constructor(private val apiInterface: ApiInterface)
     : BaseRepository() {
-        suspend fun getClothesById(id : Int) = safeApiCall {
-            apiInterface.getClothesById(id)
+        suspend fun getClothesById(id : Int, token : String) = safeApiCall {
+            apiInterface.getClothesById(token, id)
         }
     suspend fun getClothesPhoto(
+        token : String,
         id : Long
     ) =
         safeApiCall {
-            apiInterface.getClothesPhotos(id)
+            apiInterface.getClothesPhotos(token, id)
         }
     suspend fun getClothesSizes(
+        token : String,
         id : Long
     ) =
         safeApiCall {
-            apiInterface.getSizes(id)
+            apiInterface.getSizes(token, id)
         }
     suspend fun getClothesColors(
+        token : String,
         id : Long
     ) =
         safeApiCall {
-            apiInterface.getColorsClothes(id)
+            apiInterface.getColorsClothes(token, id)
         }
     suspend fun addToCart(
+        token : String,
         userId: Int,
         colorClothesId : Int,
         quantity : Int,
         sizeClothesId : Int
     ) =
         safeApiCall {
-            apiInterface.addToCart(userId, colorClothesId, sizeClothesId, quantity)
+            apiInterface.addToCart(token, userId, colorClothesId, sizeClothesId, quantity)
         }
 
     suspend fun checkIfItemExistsInCart(
+        token : String,
         size : Long,
         color: Long,
         user : Long,
         clothes : Long
     ) =
         safeApiCall {
-            apiInterface.checkIfItemExistsInCart(size, color, user, clothes)
+            apiInterface.checkIfItemExistsInCart(token, size, color, user, clothes)
         }
 
     suspend fun updateQuantity(
+        token : String,
         id : Long,
         updateType : Int,
         userId: Long
     ) =
         safeApiCall {
-            apiInterface.updateQuantity(id, updateType, userId)
+            apiInterface.updateQuantity(token, id, updateType, userId)
         }
 }

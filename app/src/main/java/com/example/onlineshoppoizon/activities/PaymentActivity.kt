@@ -28,6 +28,7 @@ class PaymentActivity : BaseActivity<PaymentViewModel, ActivityPaymentBinding, P
     private lateinit var adapterCart : ItemsPaymentsAdapter
     var selectedCardId : Long  = 0
     private val cartIds : MutableList<Long> = arrayListOf()
+    private var token = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val typeDelivery = intent.getLongExtra("typeDelivery", 0)
@@ -37,10 +38,16 @@ class PaymentActivity : BaseActivity<PaymentViewModel, ActivityPaymentBinding, P
 
         var userId : Long = 0
 
+        val getUserToken = userPreferences.getToken().asLiveData()
+
         userPreferences.get().asLiveData().observe(this){
             userId = it.toLong()
-            viewModel.getUserCards(userId)
-            viewModel.getCart(userId)
+            getUserToken.observe(this){ userToken ->
+                token = userToken
+                viewModel.getUserCards("Bearer $token", userId)
+                viewModel.getCart("Bearer $token", userId)
+            }
+
         }
 
         if (typeDelivery.toInt() == 2){
@@ -109,11 +116,18 @@ class PaymentActivity : BaseActivity<PaymentViewModel, ActivityPaymentBinding, P
 
         binding.pay.setOnClickListener {
             if (typeDelivery.toInt() == 1){
-                viewModel.placeNewOrder(sum.toString(),selectedCardId,typeDelivery,shopAddress,null,cartIds)
+                getUserToken.observe(this){ userToken ->
+                    token = userToken
+                    viewModel.placeNewOrder("Bearer $token", sum.toString(),selectedCardId,typeDelivery,shopAddress,null,cartIds)
+
+                }
             }
             else {
                 sum += 0.3
-                viewModel.placeNewOrder(sum.toString(),selectedCardId,typeDelivery,null,address,cartIds)
+                getUserToken.observe(this){ userToken ->
+                    token = userToken
+                    viewModel.placeNewOrder("Bearer $token", sum.toString(),selectedCardId,typeDelivery,null,address,cartIds)
+                }
             }
 
 
@@ -122,7 +136,11 @@ class PaymentActivity : BaseActivity<PaymentViewModel, ActivityPaymentBinding, P
             viewModel.orderResponse.observe(this){
                 when(it){
                     is Resource.Success -> {
-                        viewModel.clearUserCart(userId)
+                        getUserToken.observe(this){ userToken ->
+                            token = userToken
+                            viewModel.clearUserCart("Bearer $token", userId)
+                        }
+
                         viewModel.deleteResponse.observe(this){ its ->
                             when(its){
                                 is Resource.Success -> {

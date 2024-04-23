@@ -16,7 +16,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-abstract class BaseActivity<vm : BaseViewModel, b : ViewBinding, r: BaseRepository> : AppCompatActivity(){
+abstract class BaseActivity<vm : BaseViewModel, b : ViewBinding, r: BaseRepository>
+    : AppCompatActivity() {
 
     lateinit var binding: b
     lateinit var viewModel: vm
@@ -33,19 +34,13 @@ abstract class BaseActivity<vm : BaseViewModel, b : ViewBinding, r: BaseReposito
         lifecycleScope.launch {
             userPreferences.authToken.first()
         }
-        onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                finishAfterTransition()
-                overridePendingTransition(0, android.R.anim.fade_out);
-            }
-        })
+
     }
-
-
-
-
 
     abstract fun getViewModel() : Class<vm>
     abstract fun getActivityBinding(inflater: LayoutInflater): b
     abstract fun getActivityRepository() : r
+
+    override fun onBackPressed() {
+    }
 }

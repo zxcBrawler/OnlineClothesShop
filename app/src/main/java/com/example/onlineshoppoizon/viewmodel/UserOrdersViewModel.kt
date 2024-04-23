@@ -21,10 +21,11 @@ class UserOrdersViewModel  @Inject constructor (
         get() = _userOrderResponse
 
     fun getUserOrders (
+        token : String,
         userId : Long
     ) =
         viewModelScope.launch {
-            _userOrderResponse.value = repository.getUserOrders(userId)
+            _userOrderResponse.value = repository.getUserOrders(token, userId)
         }
 
 }

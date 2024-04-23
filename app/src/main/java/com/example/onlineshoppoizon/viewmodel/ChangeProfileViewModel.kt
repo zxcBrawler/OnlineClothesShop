@@ -22,28 +22,31 @@ class ChangeProfileViewModel @Inject constructor(private val repository: ChangeP
         get() = _profileResponse
 
     fun getUserById (
+        token : String,
         id : Long
     ) = viewModelScope.launch {
-        _profileResponse.value = repository.getUserById(id)
+        _profileResponse.value = repository.getUserById(id, token)
     }
 
         fun changeProfile (
+            token : String,
             id : Long,
             email: String,
             passwordHash: String,
             gender: Long,
             phoneNumber: String,
             profilePhoto: String,
-            username: String
+            username: String,
+            role : Long
         ) =
             viewModelScope.launch {
                 _userResponse.value = repository
-                    .changeProfile(id,
+                    .changeProfile(token, id,
                         email,
-                        passwordHash,
+                       passwordHash,
                         gender,
                         phoneNumber,
                         profilePhoto,
-                        username)
+                        username, role)
             }
 }

@@ -27,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="**0798"
+            android:maxLength="4"
             android:textColor="@color/dark_brown"
             android:layout_margin="20dp"
             app:layout_constraintBottom_toBottomOf="parent"

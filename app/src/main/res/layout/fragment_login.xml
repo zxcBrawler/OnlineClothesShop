@@ -37,7 +37,7 @@
        android:layout_marginBottom="80dp"
        >
    <EditText
-       android:id="@+id/email"
+       android:id="@+id/username"
        android:freezesText="true"
        android:layout_width="match_parent"
        android:layout_height="50dp"
@@ -47,7 +47,7 @@
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintTop_toTopOf="@id/login_frame"
-       android:hint="@string/email"
+       android:hint="@string/username"
        android:paddingStart="20dp"
        android:paddingEnd="20dp"
        android:letterSpacing="0.1"
@@ -63,7 +63,7 @@
        android:background="@drawable/input_fields"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintTop_toBottomOf="@id/email"
+       app:layout_constraintTop_toBottomOf="@id/username"
        android:hint="@string/password"
        android:paddingStart="20dp"
        android:paddingEnd="20dp"

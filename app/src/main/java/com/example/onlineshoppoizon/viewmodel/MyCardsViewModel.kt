@@ -22,16 +22,18 @@ class MyCardsViewModel @Inject constructor(private val repository: MyCardsReposi
     val deleteResponse : LiveData<Resource<Message>>
         get() = _deleteResponse
         fun getUserCards(
+            token : String,
             id : Long
         ) =
             viewModelScope.launch {
-                _cardResponse.value = repository.getUserCards(id)
+                _cardResponse.value = repository.getUserCards(token, id)
             }
 
         fun deleteCard (
+            token : String,
             id : Long
         ) =
             viewModelScope.launch {
-                _deleteResponse.value = repository.deleteCard(id)
+                _deleteResponse.value = repository.deleteCard(token, id)
             }
 }

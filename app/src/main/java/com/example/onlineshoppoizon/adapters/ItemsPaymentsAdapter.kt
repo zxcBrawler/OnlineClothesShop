@@ -24,7 +24,7 @@ class ItemsPaymentsAdapter (private val clothesList: List<Cart>): RecyclerView.A
         holder: ItemsPaymentViewHolder,
         position: Int
     ) {
-        holder.binding.itemName.text = clothesList[position].colorClothesCart.clothes.nameClothes
+        holder.binding.itemName.text = clothesList[position].colorClothesCart.clothes.nameClothesEn
         holder.binding.itemPrice.text =
             "${clothesList[position].quantity} X ${clothesList[position].colorClothesCart.clothes.priceClothes}"
         holder.binding.itemSize.text = clothesList[position].sizeClothes.sizeClothes.nameSize

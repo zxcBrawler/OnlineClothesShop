@@ -23,6 +23,7 @@ import com.example.onlineshoppoizon.repository.ProfileRepository
 import com.example.onlineshoppoizon.retrofit.ApiInterface
 import com.example.onlineshoppoizon.retrofit.Resource
 import com.example.onlineshoppoizon.ui.base.BaseFragment
+import com.example.onlineshoppoizon.utils.finishActivity
 import com.example.onlineshoppoizon.utils.startNewActivityFromActivity
 import com.example.onlineshoppoizon.utils.startNewActivityFromFragment
 import com.example.onlineshoppoizon.utils.startNewActivityWithId
@@ -33,14 +34,18 @@ import kotlinx.coroutines.launch
 class ProfileFragment: BaseFragment<ProfileViewModel,FragmentProfileBinding,ProfileRepository> () {
     private lateinit var path : Uri
     private var userId = 0
+    private var token = ""
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val getUserId = userPreferences.get().asLiveData()
-
+        val getUserToken = userPreferences.getToken().asLiveData()
         getUserId.observe(viewLifecycleOwner) {
             userId = it
-            viewModel.getUserById(userId.toLong())
+        }
+        getUserToken.observe(viewLifecycleOwner){ userToken ->
+            token = userToken
+            viewModel.getUserById("Bearer $token", userId.toLong())
         }
 
         viewModel.profileResponse.observe(viewLifecycleOwner) {
@@ -91,7 +96,7 @@ class ProfileFragment: BaseFragment<ProfileViewModel,FragmentProfileBinding,Prof
            userPreferences.clear()
         }
         requireActivity().startNewActivityFromActivity(MainActivity::class.java)
-        requireActivity().finish()
+        requireActivity().finishActivity()
     }
 
     override fun getViewModel(): Class<ProfileViewModel> =

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlineshoppoizon.R
 import com.example.onlineshoppoizon.adapters.CartAdapter
@@ -21,11 +22,18 @@ import com.example.onlineshoppoizon.viewmodel.CatalogueViewModel
 
 class CatalogueFragment : BaseFragment<CatalogueViewModel, FragmentCatalogueBinding, CatalogueRepository>() {
     private lateinit var adapter : CategoriesAdapter
+    private var token = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val getUserToken = userPreferences.getToken().asLiveData()
 
-        viewModel.getCategories()
+        getUserToken.observe(viewLifecycleOwner){ userToken ->
+            token = userToken
+            viewModel.getCategories("Bearer $token")
+        }
+
+
         viewModel.catalogueResponse.observe(viewLifecycleOwner){
             when(it){
                 is Resource.Success -> {

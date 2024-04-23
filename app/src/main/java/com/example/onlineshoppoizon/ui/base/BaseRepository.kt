@@ -16,12 +16,18 @@ abstract class BaseRepository {
             }catch (throwable : Throwable){
                 when(throwable){
                     is HttpException -> {
-                        Log.e("fail", throwable.toString())
-                        Resource.Failure(false, throwable.code(), throwable.response()?.errorBody())
+                        Log.e("http exception", throwable.toString())
+                        Resource.Failure(
+                            false,
+                            throwable.code(),
+                            throwable.response()?.errorBody())
                     }
                     else -> {
-                        Log.e("fail", throwable.toString())
-                        Resource.Failure(true, throwable.hashCode(),null)
+                        Log.e("something went wrong", throwable.toString())
+                        Resource.Failure(
+                            true,
+                            throwable.hashCode(),
+                            null)
                     }
                 }
             }
